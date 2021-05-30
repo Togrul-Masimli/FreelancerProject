@@ -1,0 +1,35 @@
+{% extends "sign-layout.html" %} {% block css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/sign-in.css') }}"> {% endblock %} {% block content %}
+<div class="sign">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 d-flex-alg-center">
+                <div class="sign-in-content">
+                    <form action="#" class="sign-form">
+                        <a href="#" class="sign-logo">
+                            <img src="{{ url_for('static',filename='img/logo.svg') }}" alt="logo">
+                        </a>
+                        <div class="sign-group">
+                            <input type="text" class="sign-input" placeholder="Name">
+                        </div>
+                        <div class="sign-group">
+                            <input type="text" class="sign-input" placeholder="Email">
+                        </div>
+                        <div class="sign-group">
+                            <input type="password" class="sign-input" placeholder="Password">
+                        </div>
+                        <div class="sign-group sign-group-checkbox">
+                            <input type="checkbox" id="remember" name="remember" checked>
+                            <label for="remember">I agree to the <a href="#">Privacy Policy</a></label>
+                        </div>
+                        <button class="sign-button" type="button">Sign up</button>
+                        <span class="sign-text">Allready have an account?
+                                <a href="{{url_for('sign_in')}}">Sign in!</a>
+                            </span>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

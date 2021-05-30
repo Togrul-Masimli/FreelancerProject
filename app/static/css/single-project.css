@@ -1,0 +1,179 @@
+@import url(style.css);
+@import url(grid.css);
+@import url(projects.css);
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css);
+.single-post {
+    width: 952px;
+    margin-left: 0;
+}
+
+.post-description-ul {
+    font-size: 14px;
+    line-height: 24px;
+    color: #8599ab;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.post-description-ul li {
+    padding-left: 20px;
+    position: relative;
+}
+
+.post-description-ul li::before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    left: 0;
+    top: 37%;
+    background-color: #3796f6;
+}
+
+.freelancer-bid-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #364e65;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    line-height: 100%;
+    padding-left: 20px;
+    position: relative;
+}
+
+.freelancer-bid-title::before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 3.5px;
+    border-radius: 3px;
+    background-color: #3796f6;
+    box-shadow: 0 0 10px 0 rgb(55 150 246 / 30%);
+    top: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.freelancer-bid {
+    width: 950px;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid rgba(133, 153, 171, 0.2);
+    box-shadow: 0 2px 26px 0 rgb(133 153 171 / 10%);
+    border-radius: 4px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.freelancer-bid:last-child {
+    margin-bottom: 40px;
+}
+
+.freelancer-bid-left {
+    display: flex;
+    align-items: center;
+}
+
+.freelancer-bid-left .bid-profile-photo {
+    display: block;
+    width: 46px;
+    height: 46px;
+    margin-right: 12px;
+}
+
+.freelancer-name a:hover {
+    color: #fa7268;
+}
+
+.freelancer-bid-left a img {
+    border-radius: 50%;
+}
+
+.freelancer h5 a {
+    font-size: 16px;
+    font-weight: 600;
+    color: #364e65;
+}
+
+.freelancer p i {
+    font-size: 16px;
+    color: #5bceae;
+    margin-right: 4px;
+    line-height: 18px;
+}
+
+.freelancer p span {
+    font-size: 14px;
+    color: #8599ab;
+    line-height: 18px;
+}
+
+.freelancer-bid-cost {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.freelancer-bid-cost p {
+    font-size: 18px;
+    color: #364e65;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.freelancer-bid-cost span {
+    display: block;
+    font-size: 14px;
+    color: #8599ab;
+    line-height: 20px;
+}
+
+.filter {
+    margin-left: 22px;
+}
+
+
+/* Reusable Social */
+
+.sidebox-social {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    border: 1px solid rgba(133, 153, 171, 0.2);
+    border-radius: 4px;
+    padding: 10px 20px;
+    margin-top: 20px;
+    margin-left: 22px;
+}
+
+.sidebox-social span {
+    font-size: 14px;
+    font-weight: 400;
+    color: #364e65;
+}
+
+.sidebox-social ul {
+    display: flex;
+}
+
+.sidebox-social ul a {
+    display: flex;
+    align-items: center;
+}
+
+.sidebox-social ul li {
+    margin-right: 15px;
+}
+
+.sidebox-social ul li a img {
+    width: 19px;
+    height: 19px;
+}
+
+
+/* End of the reusable Social */

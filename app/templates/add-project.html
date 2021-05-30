@@ -1,0 +1,100 @@
+{% extends "layout.html" %} {% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/add-project.css') }}"> {% endblock %} {% block content %}
+<main>
+    <div class="projects-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <ul class="page-to-page">
+                        <li class="page_home"><a href="#">Home</a></li>
+                        <span><i class="fas fa-long-arrow-alt-right"></i></span>
+                        <li class="page_projects"><a href="#">Post a project</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-9">
+                    <form action="#" class="form">
+                        <div class="row">
+                            <div class="col-12 form-area">
+                                <h2 class="form-title">New project</h2>
+                                <div class="form-group">
+                                    <label for="name" class="form-label">Project name:</label>
+                                    <input type="text" name="name" id="name" class="form-input" placeholder="Type name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="description" class="form-label">Description:</label>
+                                    <textarea name="description" id="description" class="form-textarea" placeholder="Type description"></textarea>
+                                </div>
+                                <div class="form-selects d-flex">
+                                    <div class="form-group category">
+                                        <label for="category" class="form-label">Category:</label>
+                                        <select name="category" id="category" class="form-select">
+                            <option value="0">Category 1</option>
+                            <option value="1">Category 2</option>
+                            <option value="2">Category 3</option>
+                            </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="level" class="form-label">Experience level:</label>
+                                        <select name="level" id="level" class="form-select">
+                            <option value="0">Level 1</option>
+                            <option value="1">Level 2</option>
+                            <option value="2">Level 3</option>
+                            </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="category" class="form-label">Budget:</label>
+                                    <select name="category" id="category" class="form-select">
+                            <option value="0">Fixed Price</option>
+                            <option value="1">Hourly Price</option>
+                        </select>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-min-max d-flex">
+                                        <input type="text" class="form-input min" placeholder="Min">
+                                        <input type="text" class="form-input max" placeholder="Max">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="location" class="form-label">Location:</label>
+                                    <input type="text" name="location" id="location" class="form-input" placeholder="Type adress">
+                                </div>
+                                <div class="form-group">
+                                    <label for="skills" class="form-label">Skills:</label>
+                                    <input type="text" name="skills" id="skills" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <button class="form-button" type="button">POST A PROJECT</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-3">
+                    <div class="sidebox-desk sidebox">
+                        <h4 class="sidebox-title">FAQ</h4>
+                        <div class="sidebox-content">
+                            <div class="sidebox-faq">
+                                <h5>Is there a fee to post a project?</h5>
+                                <p>There are pricing plans monthly and yearly for project on Workland. It is a paid service that we offer bith for the employer and the freelancer.</p>
+                            </div>
+                            <div class="sidebox-faq">
+                                <h5>How do I find freelancers for my project?</h5>
+                                <p>Posting a project on Workland will get your project in front of the most qualified freelancers and agencies by bids. You will then get bids for the project with the applicant’s details and reasons why they are the best
+                                    fit for the projects. You can also search for freelancers and invite them to apply.</p>
+                            </div>
+                            <div class="sidebox-faq">
+                                <h5>How do I pay freelancers &amp; agencies?</h5>
+                                <p>You’re free to pay your freelancer and agencies. you can pay automatically for their work through Paypal, Payoneer, or (which allows you to pay via credit card, debit card).</p>
+                            </div>
+                        </div>
+                        <a href="#" class="view-profile">View more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

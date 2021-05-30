@@ -1,0 +1,553 @@
+{% extends "layout.html" %} {% block css %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/profile.css')}}"> {% endblock %} {% block javascript %}
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+{% endblock %} {% block content %}
+<main>
+    <div class="arrow-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <ul class="page-to-page">
+                        <li class="page_home"><a href="#">Home</a></li>
+                        <span><i class="fas fa-long-arrow-alt-right"></i></span>
+                        <li class="page_projects"><a href="#">Projects</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="user-info box">
+                        <div class="common-info">
+                            <figure>
+                                <img src="{{url_for('static',filename='img/user5.jpg')}}" alt="user">
+                            </figure>
+                            <span class="user-name-span">John Doe</span>
+                            <span class="speciality">Front-end Developer</span>
+                        </div>
+                        <div class="profile-buttons profiles-bottom">
+                            <div class="profile-icons">
+                                <div>
+                                    <i class="fas fa-compass"></i>
+                                    <span class="location-span">Vietnam</span>
+                                </div>
+                                <div class="profile-actions">
+                                    <a href="#" class="green-btn">
+                                        <i class="fas fa-bookmark"></i>
+                                    </a>
+                                    <a href="#" class="red-btn">
+                                        <i class="fas fa-envelope"></i>
+                                    </a>
+                                    <a href="#" class="hire">
+                                        <span>Hire</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="about-user">
+                            <ul class="info-about-user">
+                                <li>
+                                    <span>Hourly Rate:</span>
+                                    <span>$50 / hr</span>
+                                </li>
+                                <li>
+                                    <span>Age:</span>
+                                    <span>21</span>
+                                </li>
+                                <li>
+                                    <span>Experience:</span>
+                                    <span>5 Year</span>
+                                </li>
+                                <li>
+                                    <span>Job Done:</span>
+                                    <span>113</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="follow">
+                            <div class="follow-count count-common">
+                                <span class="following">Following</span>
+                                <span class="count">26</span>
+                            </div>
+                            <div class="follower-count count-common">
+                                <span class="followers">Followers</span>
+                                <span class="count">88</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sidebox-social sidebox">
+                        <span>Share:</span>
+                        <ul>
+                            <li class="facebook">
+                                <a href="#">
+                                    <img src="{{url_for('static',filename='img/Facebook.png')}}" alt="">
+                                </a>
+                            </li>
+                            <li class="instagram">
+                                <a href="#">
+                                    <img src="{{url_for('static',filename='img/Instagram.png')}}" alt="">
+                                </a>
+                            </li>
+                            <li class="twitter">
+                                <a href="#">
+                                    <img src="{{url_for('static',filename='img/Twitter.png')}}" alt="">
+                                </a>
+                            </li>
+                            <li class="vkontakte">
+                                <a href="#">
+                                    <img src="{{url_for('static',filename='img/Vkontakte.png')}}" alt="">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <ul class="profile-nav">
+                        <li><a href="#" class="profile-filter" data-filter="feeds">Feed</a></li>
+                        <li><a href="#" class="profile-filter" data-filter="user-information">Profile</a></li>
+                        <li><a href="#" class="profile-filter" data-filter="settings">Settings</a></li>
+                    </ul>
+                    <div class="toggle feeds">
+                        <div class="post">
+                            <div class="post-header">
+                                <a href="#" class="post-user-img">
+                                    <img src="{{url_for('static',filename='img/user5.jpg')}}" alt="user">
+                                </a>
+                                <div>
+                                    <h5>
+                                        <a href="#">John Doe</a>
+                                    </h5>
+                                    <p>24 mins ago</p>
+                                </div>
+                                <div class="dots">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </div>
+                            </div>
+                            <div class="post-icons">
+                                <div class="post-icons-left">
+                                    <div class="post-company">
+                                        <i class="fas fa-briefcase"></i>
+                                        <span>Front-end Developer</span>
+                                    </div>
+                                </div>
+                                <div class="post-icons-right">
+                                    <div class="post-actions">
+                                        <a href="#" class="btn-green">
+                                            <i class="fas fa-bookmark"></i>
+                                        </a>
+                                        <a href="#" class="btn-red">
+                                            <i class="fas fa-envelope"></i>
+                                        </a>
+                                        <a href="#" class="bid-now">
+                                            <span>Bid now</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post-title">
+                                <h2>
+                                    <a href="#">Senior Front-end Developer</a>
+                                </h2>
+                            </div>
+                            <div class="post-options">
+                                <p>$300 - $350</p>
+                            </div>
+                            <div class="post-description">
+                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going
+                                    to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
+                            </div>
+                            <div class="post-tags">
+                                <a href="#">HTML</a>
+                                <a href="#">CSS</a>
+                                <a href="#">PHP</a>
+                            </div>
+                            <div class="post-status">
+                                <div class="heart-comment">
+                                    <div class="like-comment">
+                                        <a href="#">
+                                            <i class="fas fa-heart"></i>
+                                            <span>15</span>
+                                        </a>
+                                    </div>
+                                    <div class="post-comments">
+                                        <div class="like-comment">
+                                            <button class="accordion" data-filter="comment1">
+                                                <i class="fas fa-comment"></i>
+                                            </button>
+                                            <span>2</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="post-views">
+                                    <i class="fas fa-eye"></i>
+                                    <span>214</span>
+                                </div>
+                            </div>
+                            <div class="comment comment1" style="display: none;">
+                                <form action="#" class="comment-form">
+                                    <input type="text" placeholder="Type your comment...">
+                                    <button type="button">
+                                        <i class="fab fa-telegram-plane"></i>
+                                    </button>
+                                </form>
+                                <div class="comment-area">
+                                    <div class="comment-content">
+                                        <div class="comment-photo-text">
+                                            <a href="#" class="comment-photo">
+                                                <img src="{{url_for('static',filename='img/user9.jpg')}}" alt="profile_photo">
+                                            </a>
+                                            <div class="user-comment">
+                                                <h5>Alan Patrick</h5>
+                                                <p>20 min ago</p>
+                                            </div>
+                                        </div>
+                                        <div class="comment-text">
+                                            <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comment-area">
+                                    <div class="comment-content">
+                                        <div class="comment-photo-text">
+                                            <a href="#" class="comment-photo">
+                                                <img src="{{url_for('static',filename='img/user2.jpg')}}" alt="profile_photo">
+                                            </a>
+                                            <div class="user-comment">
+                                                <h5>Diego Costa</h5>
+                                                <p>22 min ago</p>
+                                            </div>
+                                        </div>
+                                        <div class="comment-text">
+                                            <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="post">
+                            <div class="post-header">
+                                <a href="#" class="post-user-img">
+                                    <img src="{{url_for('static',filename='img/user5.jpg')}}" alt="user">
+                                </a>
+                                <div>
+                                    <h5>
+                                        <a href="#">John Doe</a>
+                                    </h5>
+                                    <p>24 mins ago</p>
+                                </div>
+                                <div class="dots">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </div>
+                            </div>
+                            <div class="post-icons">
+                                <div class="post-icons-left">
+                                    <div class="post-company">
+                                        <i class="fas fa-briefcase"></i>
+                                        <span>Front-end Developer</span>
+                                    </div>
+                                </div>
+                                <div class="post-icons-right">
+                                    <div class="post-actions">
+                                        <a href="#" class="btn-green">
+                                            <i class="fas fa-bookmark"></i>
+                                        </a>
+                                        <a href="#" class="btn-red">
+                                            <i class="fas fa-envelope"></i>
+                                        </a>
+                                        <a href="#" class="bid-now">
+                                            <span>Bid now</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post-title">
+                                <h2>
+                                    <a href="#">Senior Front-end Developer</a>
+                                </h2>
+                            </div>
+                            <div class="post-options">
+                                <p>$300 - $350</p>
+                            </div>
+                            <div class="post-description">
+                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going
+                                    to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
+                            </div>
+                            <div class="post-tags">
+                                <a href="#">HTML</a>
+                                <a href="#">CSS</a>
+                                <a href="#">PHP</a>
+                            </div>
+                            <div class="post-status">
+                                <div class="heart-comment">
+                                    <div class="like-comment">
+                                        <a href="#">
+                                            <i class="fas fa-heart"></i>
+                                            <span>15</span>
+                                        </a>
+                                    </div>
+                                    <div class="post-comments">
+                                        <div class="like-comment">
+                                            <button class="accordion" data-filter="comment2">
+                                                <i class="fas fa-comment"></i>
+                                            </button>
+                                            <span>0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="post-views">
+                                    <i class="fas fa-eye"></i>
+                                    <span>214</span>
+                                </div>
+                            </div>
+                            <div class="comment comment2" style="display: none;">
+                                <form action="#" class="comment-form">
+                                    <input type="text" placeholder="Type your comment...">
+                                    <button type="button">
+                                        <i class="fab fa-telegram-plane"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="post">
+                            <div class="post-header">
+                                <a href="#" class="post-user-img">
+                                    <img src="{{url_for('static',filename='img/user5.jpg')}}" alt="user">
+                                </a>
+                                <div>
+                                    <h5>
+                                        <a href="#">John Doe</a>
+                                    </h5>
+                                    <p>24 mins ago</p>
+                                </div>
+                                <div class="dots">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </div>
+                            </div>
+                            <div class="post-icons">
+                                <div class="post-icons-left">
+                                    <div class="post-company">
+                                        <i class="fas fa-briefcase"></i>
+                                        <span>Front-end Developer</span>
+                                    </div>
+                                </div>
+                                <div class="post-icons-right">
+                                    <div class="post-actions">
+                                        <a href="#" class="btn-green">
+                                            <i class="fas fa-bookmark"></i>
+                                        </a>
+                                        <a href="#" class="btn-red">
+                                            <i class="fas fa-envelope"></i>
+                                        </a>
+                                        <a href="#" class="bid-now">
+                                            <span>Bid now</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post-title">
+                                <h2>
+                                    <a href="#">Senior Front-end Developer</a>
+                                </h2>
+                            </div>
+                            <div class="post-options">
+                                <p>$300 - $350</p>
+                            </div>
+                            <div class="post-description">
+                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going
+                                    to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
+                            </div>
+                            <div class="post-tags">
+                                <a href="#">HTML</a>
+                                <a href="#">CSS</a>
+                                <a href="#">PHP</a>
+                            </div>
+                            <div class="post-status">
+                                <div class="heart-comment">
+                                    <div class="like-comment">
+                                        <a href="#">
+                                            <i class="fas fa-heart"></i>
+                                            <span>15</span>
+                                        </a>
+                                    </div>
+                                    <div class="post-comments">
+                                        <div class="like-comment">
+                                            <button class="accordion" data-filter="comment3">
+                                                <i class="fas fa-comment"></i>
+                                            </button>
+                                            <span>0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="post-views">
+                                    <i class="fas fa-eye"></i>
+                                    <span>214</span>
+                                </div>
+                            </div>
+                            <div class="comment comment3" style="display: none;">
+                                <form action="#" class="comment-form">
+                                    <input type="text" placeholder="Type your comment...">
+                                    <button type="button">
+                                        <i class="fab fa-telegram-plane"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <button class="more-post" type="button">Load more</button>
+                    </div>
+                    <div class="toggle user-information" style="display: none;">
+                        <div class="profile-box">
+                            <h3 class="profile-box-title">About</h3>
+                            <p class="profile-box-text">
+                                It is a long fact that a reader will be <b>distracted</b> by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.
+                            </p>
+                            <ul class="post-description-ul">
+                                <li>Theme Forest</li>
+                                <li>Graphic River</li>
+                                <li>Audio Jungle</li>
+                                <li>3D Ocean</li>
+                            </ul>
+                            <p class="profile-box-text">
+                                It is a long fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.
+                            </p>
+                        </div>
+                        <div class="profile-box">
+                            <h3 class="profile-box-title">Education</h3>
+                            <p class="profile-box-text">
+                                <strong>Master of Computer Science</strong>
+                                <br>
+                                <span>2018-2020</span> <br> It is a long fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution
+                                of letters.
+                            </p>
+                        </div>
+                        <div class="profile-tags-box profile-box">
+                            <h3 class="profile-box-title">Skills</h3>
+                            <div class="profile-tags post-tags">
+                                <a href="#">HTML</a>
+                                <a href="#">CSS</a>
+                                <a href="#">PHP</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="toggle settings" style="display: none;">
+                        <form action="#">
+                            <div class="profile-box">
+                                <h3 class="profile-box-title">Profile Details</h3>
+                                <div class="form-group-container">
+                                    <div class="w-100 mr-30">
+                                        <div class="form-group">
+                                            <label for="name" class="form-label">Login:</label>
+                                            <input type="text" name="name" id="name" class="form-input" placeholder="Login">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name" class="form-label">Email:</label>
+                                            <input type="email" name="name" id="name" class="form-input" placeholder="email@email.com">
+                                        </div>
+                                    </div>
+                                    <div class="w-100 mr-30">
+                                        <div class="form-group">
+                                            <label for="name" class="form-label">First name:</label>
+                                            <input type="text" name="name" id="name" class="form-input" placeholder="John">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name" class="form-label">Last name:</label>
+                                            <input type="text" name="name" id="name" class="form-input" placeholder="Doe">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button class="form-button" type="button">SAVE</button>
+                                </div>
+                            </div>
+                        </form>
+                        <form action="#">
+                            <div class="profile-box-last profile-box">
+                                <h3 class="profile-box-title">Change password</h3>
+                                <div class="form-group-container">
+                                    <div class="w-100 mr-30">
+                                        <div class="form-group">
+                                            <label for="name" class="form-label">Old password:</label>
+                                            <input type="password" name="name" id="name" class="form-input">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name" class="form-label">Confirm New Password:</label>
+                                            <input type="password" name="name" id="name" class="form-input">
+                                        </div>
+                                    </div>
+                                    <div class="w-100 mr-30">
+                                        <div class="form-group">
+                                            <label for="name" class="form-label">New Password:</label>
+                                            <input type="password" name="name" id="name" class="form-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button class="form-button" type="button">CHANGE</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="profile-sidebox sidebox hot-projects">
+                        <div class="sidebox-title">
+                            <h4>Hot projects</h4>
+                        </div>
+                        <div class="sidebox-content">
+                            <div class="sidebox-job">
+                                <div class="sidebox-job-title">
+                                    <a href="#">PSD to HTML</a>
+                                    <span>$200 - $250</span>
+                                </div>
+                                <div class="sidebox-job-speciality">
+                                    <i class="fas fa-briefcase"></i>
+                                    <span>Front-end Developer</span>
+                                </div>
+                            </div>
+                            <div class="sidebox-job">
+                                <div class="sidebox-job-title">
+                                    <a href="#">Mobile App</a>
+                                    <span>$7000</span>
+                                </div>
+                                <div class="sidebox-job-speciality">
+                                    <i class="fas fa-briefcase"></i>
+                                    <span>Java Developer</span>
+                                </div>
+                            </div>
+                            <div class="sidebox-job">
+                                <div class="sidebox-job-title">
+                                    <a href="#">Landing Page</a>
+                                    <span>$400</span>
+                                </div>
+                                <div class="sidebox-job-speciality">
+                                    <i class="fas fa-briefcase"></i>
+                                    <span>UX/UI Designer</span>
+                                </div>
+                            </div>
+                            <div class="sidebox-job">
+                                <div class="sidebox-job-title">
+                                    <a href="#">Site design</a>
+                                    <span>$4000 - $5000</span>
+                                </div>
+                                <div class="sidebox-job-speciality">
+                                    <i class="fas fa-briefcase"></i>
+                                    <span>UX/UI Designer</span>
+                                </div>
+                            </div>
+                            <div class="sidebox-job">
+                                <div class="sidebox-job-title">
+                                    <a href="#">WP Plugin</a>
+                                    <span>$3800</span>
+                                </div>
+                                <div class="sidebox-job-speciality">
+                                    <i class="fas fa-briefcase"></i>
+                                    <span>Wordpress Developer</span>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#" class="view-profile">View more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

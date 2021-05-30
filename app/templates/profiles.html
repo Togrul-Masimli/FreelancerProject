@@ -1,0 +1,522 @@
+{% extends "layout.html" %} {% block css %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/profiles.css')}}"> {% endblock %} {% block content %}
+<main>
+    <div class="arrow-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <ul class="page-to-page">
+                        <li class="page_home"><a href="#">Home</a></li>
+                        <span><i class="fas fa-long-arrow-alt-right"></i></span>
+                        <li class="page_projects"><a href="#">Profiles</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="filter">
+                        <div class="sidebox-title">Filters
+                            <button type="button">Clear all</button>
+                        </div>
+                        <div class="filter-group">
+                            <label class="filter-label">Keyword:</label>
+                            <input type="text" class="filter-input" placeholder="Keyword">
+                        </div>
+                        <div class="filter-group">
+                            <label class="filter-label">Sort by:</label>
+                            <select name="sort" id="sort" class="filter-select">
+                                <option value="0">Relevance</option>
+                                <option value="1">Newest</option>
+                                <option value="2">Oldest</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label class="filter-label">Category:</label>
+                            <select name="sort" id="sort" class="filter-select">
+                                <option>Admin Support</option>
+                                <option>Customer Service</option>
+                                <option>Data Analytics</option>
+                                <option>Design & Creative</option>
+                                <option>Legal</option>
+                                <option>Software Developing</option>
+                                <option>IT & Networking</option>
+                                <option>Writing</option>
+                                <option>Translation</option>
+                                <option>Sales & Marketing</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label class="filter-label">Pay Rate / Hr ($):</label>
+                            <div class="filter-range">
+                                <div id="filter-range-start">$18</div>
+                                <div id="filter-range-end">$34</div>
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <label class="filter-label">Location:</label>
+                            <input type="text" class="filter-input" placeholder="Location">
+                        </div>
+                        <div class="filter-group">
+                            <button class="filter-button" type="button">SEARCH</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-9 d-flex flex-wrap">
+                    <div class="profile-card">
+                        <div class="profiles-top">
+                            <a href="#" class="profile-user-img">
+                                <img src="{{url_for('static',filename='img/user5.jpg')}}" alt="">
+                            </a>
+                            <div class="profile-user-title">
+                                <h2 class="prefiles-user-name">John Doe</h2>
+                                <p>Graphic Designer</p>
+                            </div>
+                        </div>
+                        <div class="profiles-bottom">
+                            <div class="profile-icons">
+                                <div>
+                                    <i class="fas fa-compass"></i>
+                                    <span class="location-span">Vietnam</span>
+                                </div>
+                                <div class="profile-actions">
+                                    <a href="#" class="green-btn">
+                                        <i class="fas fa-bookmark"></i>
+                                    </a>
+                                    <a href="#" class="red-btn">
+                                        <i class="fas fa-envelope"></i>
+                                    </a>
+                                    <a href="#" class="hire">
+                                        <span>Hire</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-card">
+                        <div class="profiles-top">
+                            <a href="#" class="profile-user-img">
+                                <img src="{{url_for('static',filename='img/user5.jpg')}}" alt="">
+                            </a>
+                            <div class="profile-user-title">
+                                <h2 class="prefiles-user-name">John Doe</h2>
+                                <p>Graphic Designer</p>
+                            </div>
+                        </div>
+                        <div class="profiles-bottom">
+                            <div class="profile-icons">
+                                <div>
+                                    <i class="fas fa-compass"></i>
+                                    <span class="location-span">Vietnam</span>
+                                </div>
+                                <div class="profile-actions">
+                                    <a href="#" class="green-btn">
+                                        <i class="fas fa-bookmark"></i>
+                                    </a>
+                                    <a href="#" class="red-btn">
+                                        <i class="fas fa-envelope"></i>
+                                    </a>
+                                    <a href="#" class="hire">
+                                        <span>Hire</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-card">
+                        <div class="profiles-top">
+                            <a href="#" class="profile-user-img">
+                                <img src="{{url_for('static',filename='img/user5.jpg')}}" alt="">
+                            </a>
+                            <div class="profile-user-title">
+                                <h2 class="prefiles-user-name">John Doe</h2>
+                                <p>Graphic Designer</p>
+                            </div>
+                        </div>
+                        <div class="profiles-bottom">
+                            <div class="profile-icons">
+                                <div>
+                                    <i class="fas fa-compass"></i>
+                                    <span class="location-span">Vietnam</span>
+                                </div>
+                                <div class="profile-actions">
+                                    <a href="#" class="green-btn">
+                                        <i class="fas fa-bookmark"></i>
+                                    </a>
+                                    <a href="#" class="red-btn">
+                                        <i class="fas fa-envelope"></i>
+                                    </a>
+                                    <a href="#" class="hire">
+                                        <span>Hire</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-card">
+                        <div class="profiles-top">
+                            <a href="#" class="profile-user-img">
+                                <img src="{{url_for('static',filename='img/user5.jpg')}}" alt="">
+                            </a>
+                            <div class="profile-user-title">
+                                <h2 class="prefiles-user-name">John Doe</h2>
+                                <p>Graphic Designer</p>
+                            </div>
+                        </div>
+                        <div class="profiles-bottom">
+                            <div class="profile-icons">
+                                <div>
+                                    <i class="fas fa-compass"></i>
+                                    <span class="location-span">Vietnam</span>
+                                </div>
+                                <div class="profile-actions">
+                                    <a href="#" class="green-btn">
+                                        <i class="fas fa-bookmark"></i>
+                                    </a>
+                                    <a href="#" class="red-btn">
+                                        <i class="fas fa-envelope"></i>
+                                    </a>
+                                    <a href="#" class="hire">
+                                        <span>Hire</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-card">
+                        <div class="profiles-top">
+                            <a href="#" class="profile-user-img">
+                                <img src="{{url_for('static',filename='img/user5.jpg')}}" alt="">
+                            </a>
+                            <div class="profile-user-title">
+                                <h2 class="prefiles-user-name">John Doe</h2>
+                                <p>Graphic Designer</p>
+                            </div>
+                        </div>
+                        <div class="profiles-bottom">
+                            <div class="profile-icons">
+                                <div>
+                                    <i class="fas fa-compass"></i>
+                                    <span class="location-span">Vietnam</span>
+                                </div>
+                                <div class="profile-actions">
+                                    <a href="#" class="green-btn">
+                                        <i class="fas fa-bookmark"></i>
+                                    </a>
+                                    <a href="#" class="red-btn">
+                                        <i class="fas fa-envelope"></i>
+                                    </a>
+                                    <a href="#" class="hire">
+                                        <span>Hire</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-card">
+                        <div class="profiles-top">
+                            <a href="#" class="profile-user-img">
+                                <img src="{{url_for('static',filename='img/user5.jpg')}}" alt="">
+                            </a>
+                            <div class="profile-user-title">
+                                <h2 class="prefiles-user-name">John Doe</h2>
+                                <p>Graphic Designer</p>
+                            </div>
+                        </div>
+                        <div class="profiles-bottom">
+                            <div class="profile-icons">
+                                <div>
+                                    <i class="fas fa-compass"></i>
+                                    <span class="location-span">Vietnam</span>
+                                </div>
+                                <div class="profile-actions">
+                                    <a href="#" class="green-btn">
+                                        <i class="fas fa-bookmark"></i>
+                                    </a>
+                                    <a href="#" class="red-btn">
+                                        <i class="fas fa-envelope"></i>
+                                    </a>
+                                    <a href="#" class="hire">
+                                        <span>Hire</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-card">
+                        <div class="profiles-top">
+                            <a href="#" class="profile-user-img">
+                                <img src="{{url_for('static',filename='img/user5.jpg')}}" alt="">
+                            </a>
+                            <div class="profile-user-title">
+                                <h2 class="prefiles-user-name">John Doe</h2>
+                                <p>Graphic Designer</p>
+                            </div>
+                        </div>
+                        <div class="profiles-bottom">
+                            <div class="profile-icons">
+                                <div>
+                                    <i class="fas fa-compass"></i>
+                                    <span class="location-span">Vietnam</span>
+                                </div>
+                                <div class="profile-actions">
+                                    <a href="#" class="green-btn">
+                                        <i class="fas fa-bookmark"></i>
+                                    </a>
+                                    <a href="#" class="red-btn">
+                                        <i class="fas fa-envelope"></i>
+                                    </a>
+                                    <a href="#" class="hire">
+                                        <span>Hire</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-card">
+                        <div class="profiles-top">
+                            <a href="#" class="profile-user-img">
+                                <img src="{{url_for('static',filename='img/user5.jpg')}}" alt="">
+                            </a>
+                            <div class="profile-user-title">
+                                <h2 class="prefiles-user-name">John Doe</h2>
+                                <p>Graphic Designer</p>
+                            </div>
+                        </div>
+                        <div class="profiles-bottom">
+                            <div class="profile-icons">
+                                <div>
+                                    <i class="fas fa-compass"></i>
+                                    <span class="location-span">Vietnam</span>
+                                </div>
+                                <div class="profile-actions">
+                                    <a href="#" class="green-btn">
+                                        <i class="fas fa-bookmark"></i>
+                                    </a>
+                                    <a href="#" class="red-btn">
+                                        <i class="fas fa-envelope"></i>
+                                    </a>
+                                    <a href="#" class="hire">
+                                        <span>Hire</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-card">
+                        <div class="profiles-top">
+                            <a href="#" class="profile-user-img">
+                                <img src="{{url_for('static',filename='img/user5.jpg')}}" alt="">
+                            </a>
+                            <div class="profile-user-title">
+                                <h2 class="prefiles-user-name">John Doe</h2>
+                                <p>Graphic Designer</p>
+                            </div>
+                        </div>
+                        <div class="profiles-bottom">
+                            <div class="profile-icons">
+                                <div>
+                                    <i class="fas fa-compass"></i>
+                                    <span class="location-span">Vietnam</span>
+                                </div>
+                                <div class="profile-actions">
+                                    <a href="#" class="green-btn">
+                                        <i class="fas fa-bookmark"></i>
+                                    </a>
+                                    <a href="#" class="red-btn">
+                                        <i class="fas fa-envelope"></i>
+                                    </a>
+                                    <a href="#" class="hire">
+                                        <span>Hire</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-card">
+                        <div class="profiles-top">
+                            <a href="#" class="profile-user-img">
+                                <img src="{{url_for('static',filename='img/user5.jpg')}}" alt="">
+                            </a>
+                            <div class="profile-user-title">
+                                <h2 class="prefiles-user-name">John Doe</h2>
+                                <p>Graphic Designer</p>
+                            </div>
+                        </div>
+                        <div class="profiles-bottom">
+                            <div class="profile-icons">
+                                <div>
+                                    <i class="fas fa-compass"></i>
+                                    <span class="location-span">Vietnam</span>
+                                </div>
+                                <div class="profile-actions">
+                                    <a href="#" class="green-btn">
+                                        <i class="fas fa-bookmark"></i>
+                                    </a>
+                                    <a href="#" class="red-btn">
+                                        <i class="fas fa-envelope"></i>
+                                    </a>
+                                    <a href="#" class="hire">
+                                        <span>Hire</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-card">
+                        <div class="profiles-top">
+                            <a href="#" class="profile-user-img">
+                                <img src="{{url_for('static',filename='img/user5.jpg')}}" alt="">
+                            </a>
+                            <div class="profile-user-title">
+                                <h2 class="prefiles-user-name">John Doe</h2>
+                                <p>Graphic Designer</p>
+                            </div>
+                        </div>
+                        <div class="profiles-bottom">
+                            <div class="profile-icons">
+                                <div>
+                                    <i class="fas fa-compass"></i>
+                                    <span class="location-span">Vietnam</span>
+                                </div>
+                                <div class="profile-actions">
+                                    <a href="#" class="green-btn">
+                                        <i class="fas fa-bookmark"></i>
+                                    </a>
+                                    <a href="#" class="red-btn">
+                                        <i class="fas fa-envelope"></i>
+                                    </a>
+                                    <a href="#" class="hire">
+                                        <span>Hire</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-card">
+                        <div class="profiles-top">
+                            <a href="#" class="profile-user-img">
+                                <img src="{{url_for('static',filename='img/user5.jpg')}}" alt="">
+                            </a>
+                            <div class="profile-user-title">
+                                <h2 class="prefiles-user-name">John Doe</h2>
+                                <p>Graphic Designer</p>
+                            </div>
+                        </div>
+                        <div class="profiles-bottom">
+                            <div class="profile-icons">
+                                <div>
+                                    <i class="fas fa-compass"></i>
+                                    <span class="location-span">Vietnam</span>
+                                </div>
+                                <div class="profile-actions">
+                                    <a href="#" class="green-btn">
+                                        <i class="fas fa-bookmark"></i>
+                                    </a>
+                                    <a href="#" class="red-btn">
+                                        <i class="fas fa-envelope"></i>
+                                    </a>
+                                    <a href="#" class="hire">
+                                        <span>Hire</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-card">
+                        <div class="profiles-top">
+                            <a href="#" class="profile-user-img">
+                                <img src="{{url_for('static',filename='img/user5.jpg')}}" alt="">
+                            </a>
+                            <div class="profile-user-title">
+                                <h2 class="prefiles-user-name">John Doe</h2>
+                                <p>Graphic Designer</p>
+                            </div>
+                        </div>
+                        <div class="profiles-bottom">
+                            <div class="profile-icons">
+                                <div>
+                                    <i class="fas fa-compass"></i>
+                                    <span class="location-span">Vietnam</span>
+                                </div>
+                                <div class="profile-actions">
+                                    <a href="#" class="green-btn">
+                                        <i class="fas fa-bookmark"></i>
+                                    </a>
+                                    <a href="#" class="red-btn">
+                                        <i class="fas fa-envelope"></i>
+                                    </a>
+                                    <a href="#" class="hire">
+                                        <span>Hire</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-card">
+                        <div class="profiles-top">
+                            <a href="#" class="profile-user-img">
+                                <img src="{{url_for('static',filename='img/user5.jpg')}}" alt="">
+                            </a>
+                            <div class="profile-user-title">
+                                <h2 class="prefiles-user-name">John Doe</h2>
+                                <p>Graphic Designer</p>
+                            </div>
+                        </div>
+                        <div class="profiles-bottom">
+                            <div class="profile-icons">
+                                <div>
+                                    <i class="fas fa-compass"></i>
+                                    <span class="location-span">Vietnam</span>
+                                </div>
+                                <div class="profile-actions">
+                                    <a href="#" class="green-btn">
+                                        <i class="fas fa-bookmark"></i>
+                                    </a>
+                                    <a href="#" class="red-btn">
+                                        <i class="fas fa-envelope"></i>
+                                    </a>
+                                    <a href="#" class="hire">
+                                        <span>Hire</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-card">
+                        <div class="profiles-top">
+                            <a href="#" class="profile-user-img">
+                                <img src="{{url_for('static',filename='img/user5.jpg')}}" alt="">
+                            </a>
+                            <div class="profile-user-title">
+                                <h2 class="prefiles-user-name">John Doe</h2>
+                                <p>Graphic Designer</p>
+                            </div>
+                        </div>
+                        <div class="profiles-bottom">
+                            <div class="profile-icons">
+                                <div>
+                                    <i class="fas fa-compass"></i>
+                                    <span class="location-span">Vietnam</span>
+                                </div>
+                                <div class="profile-actions">
+                                    <a href="#" class="green-btn">
+                                        <i class="fas fa-bookmark"></i>
+                                    </a>
+                                    <a href="#" class="red-btn">
+                                        <i class="fas fa-envelope"></i>
+                                    </a>
+                                    <a href="#" class="hire">
+                                        <span>Hire</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="more-post" type="button">Load more</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>
+{% endblock %}

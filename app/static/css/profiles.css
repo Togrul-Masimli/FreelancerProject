@@ -1,0 +1,154 @@
+@import url(style.css);
+@import url(grid.css);
+@import url(projects.css);
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css);
+.profile-card {
+    display: flex;
+    flex-direction: column;
+    width: 296px;
+    height: 150px;
+    background-color: #fff;
+    border: 1px solid rgba(133, 153, 171, 0.2);
+    box-shadow: 0 2px 26px 0 rgb(133 153 171 / 10%);
+    border-radius: 4px;
+    padding: 20px;
+    padding: 20px;
+    margin-bottom: 30px;
+    margin-right: 20px;
+}
+
+.profiles-top {
+    display: flex;
+}
+
+.profile-user-img img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.profile-user-title {
+    height: 60px;
+    padding-left: 15px;
+}
+
+.prefiles-user-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #364e65;
+}
+
+.profile-user-title {
+    font-size: 14px;
+    line-height: 24px;
+    color: #8599ab;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.profiles-bottom {
+    padding-bottom: 10px;
+}
+
+.profile-icons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.profile-icons i {
+    font-size: 16px;
+    color: #5bceae;
+    margin-right: 8px;
+    margin-top: 4px;
+}
+
+.profile-icons .location-span {
+    font-size: 14px;
+    color: #8599ab;
+}
+
+.profile-actions {
+    display: flex;
+}
+
+.profile-actions i {
+    color: #fff;
+    font-size: 14px;
+}
+
+.green-btn {
+    display: inline-flex;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    background-color: #5bceae;
+    margin-right: 15px;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    margin-right: 15px;
+    transition: 0.4s;
+}
+
+.green-btn:hover {
+    background: linear-gradient( 45deg, rgba(91, 206, 174, 0.5) 0%, rgba(91, 206, 174, 0.05) 100%);
+    transition: 0.4s;
+}
+
+.green-btn:hover i {
+    color: #5bceae;
+    transition: 0.4s;
+}
+
+.red-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    width: 30px;
+    height: 30px;
+    background-color: #EC547A;
+    margin-right: 15px;
+    transition: 0.4s;
+}
+
+.red-btn:hover {
+    background: linear-gradient( 45deg, rgba(236, 84, 122, 0.5) 0%, rgba(236, 84, 122, 0.05) 100%);
+}
+
+.red-btn:hover i {
+    color: #EC547A;
+}
+
+.green-btn i,
+.red-btn i {
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.hire {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 30px;
+    background-color: #3796F6;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.hire:hover {
+    background: linear-gradient( 45deg, rgba(55, 150, 246, 0.5) 0%, rgba(55, 150, 246, 0.05) 100%);
+}
+
+.hire:hover span {
+    color: #3796F6;
+}
+
+.more-post {
+    margin: 10px auto 40px;
+}
