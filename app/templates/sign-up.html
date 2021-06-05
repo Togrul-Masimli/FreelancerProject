@@ -5,24 +5,29 @@
         <div class="row">
             <div class="col-12 d-flex-alg-center">
                 <div class="sign-in-content">
-                    <form action="#" class="sign-form">
+                    <form method="POST" action="" class="sign-form">
+                        {{ form.hidden_tag() }}
                         <a href="#" class="sign-logo">
                             <img src="{{ url_for('static',filename='img/logo.svg') }}" alt="logo">
                         </a>
                         <div class="sign-group">
-                            <input type="text" class="sign-input" placeholder="Name">
+                            <!--<input type="text" class="sign-input" placeholder="Name">  -->
+                            {{ form.username(class="sign-input") }}
                         </div>
                         <div class="sign-group">
-                            <input type="text" class="sign-input" placeholder="Email">
+                            <!-- <input type="text" class="sign-input" placeholder="Email"> -->
+                            {{ form.email(class="sign-input") }}
                         </div>
                         <div class="sign-group">
-                            <input type="password" class="sign-input" placeholder="Password">
+                            <!-- <input type="password" class="sign-input" placeholder="Password"> -->
+                            {{ form.password(class="sign-input") }}
                         </div>
-                        <div class="sign-group sign-group-checkbox">
-                            <input type="checkbox" id="remember" name="remember" checked>
-                            <label for="remember">I agree to the <a href="#">Privacy Policy</a></label>
+                        <div class="sign-group">
+                            <!-- <input type="password" class="sign-input" placeholder="Password"> -->
+                            {{ form.confirm_password(class="sign-input") }}
                         </div>
-                        <button class="sign-button" type="button">Sign up</button>
+                        <!-- <button class="sign-button" type="button">Sign up</button> -->
+                        {{ form.submit(class='sign-button') }}
                         <span class="sign-text">Allready have an account?
                                 <a href="{{url_for('sign_in')}}">Sign in!</a>
                             </span>
