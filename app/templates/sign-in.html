@@ -1,29 +1,40 @@
 {% extends "sign-layout.html" %} {% block css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/sign-in.css') }}"> {% endblock %} {% block content %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/sign-in.css') }}"> {% endblock %} {% block content %}
 <div class="sign">
     <div class="container">
         <div class="row">
             <div class="col-12 d-flex-alg-center">
                 <div class="sign-in-content">
-                    <form action="#" class="sign-form">
+                    <form method="POST" action="" class="sign-form">
+                        {{ form.hidden_tag() }}
                         <a href="#" class="sign-logo">
-                            <img src="{{ url_for('static', filename='img/logo.svg') }}" alt="logo">
+                            <img src="{{ url_for('static',filename='img/logo.svg') }}" alt="logo">
                         </a>
                         <div class="sign-group">
-                            <input type="text" class="sign-input" placeholder="Email">
+                            {% if form.email.errors %} {{ form.email(class="sign-input is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.email.errors %}
+                                <span>{{ error }}</span> {% endfor %}
+                            </div>
+                            {% else %} {{ form.email(class="sign-input") }} {% endif %}
                         </div>
                         <div class="sign-group">
-                            <input type="password" class="sign-input" placeholder="Password">
+                            {% if form.password.errors %} {{ form.password(class="sign-input is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.password.errors %}
+                                <span>{{ error }}</span> {% endfor %}
+                            </div>
+                            {% else %} {{ form.password(class="sign-input") }} {% endif %}
                         </div>
                         <div class="sign-group sign-group-checkbox">
                             <input type="checkbox" id="remember" name="remember" checked>
                             <label for="remember">Remember me</label>
                         </div>
-                        <button class="sign-button" type="button">Sign in</button>
+                        {{ form.submit(class='sign-button') }}
                         <span class="sign-text">Don't have an account?
-                                <a href="{{url_for('sign_up')}}">Sign up!</a>
-                            </span>
-                        <span class="sign-text"><a href="{{url_for('forgot_password')}}">Forgot password?</a></span>
+                            <a href="sign-up.html">Sign up!</a>
+                        </span>
+                        <span class="sign-text"><a href="forgot-password.html">Forgot password?</a></span>
                     </form>
                 </div>
             </div>

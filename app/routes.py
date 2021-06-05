@@ -28,13 +28,14 @@ def projects():
 def sing_project():
     return render_template('single-project.html', title='Single Project')
 
-@app.route('/sign-in')
+@app.route('/sign-in', methods=['GET', 'POST'])
 def sign_in():
-    return render_template('sign-in.html', title='Sign In')
+    form = LoginForm()
+    if form.validate_on_submit():
+        if form.email.data == 'admin@gmail.com' and form.password.data == '123':
+            return redirect(url_for('index'))
+    return render_template('sign-in.html', title='Sign In', form=form)
 
-# @app.route('/sign-up')
-# def sign_up():
-#     return render_template('sign-up.html', title='Sign Up')
 
 @app.route('/forgot-password')
 def forgot_password():
@@ -47,8 +48,3 @@ def sign_up():
     if form.validate_on_submit():
         return redirect(url_for('index'))
     return render_template('sign-up.html', title='Sign-up', form=form)
-
-@app.route('/login')
-def login():
-    form = LoginForm()
-    return render_template('login.html', title='Login', form=form)

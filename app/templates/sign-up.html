@@ -10,23 +10,38 @@
                         <a href="#" class="sign-logo">
                             <img src="{{ url_for('static',filename='img/logo.svg') }}" alt="logo">
                         </a>
-                        <div class="sign-group">
-                            <!--<input type="text" class="sign-input" placeholder="Name">  -->
-                            {{ form.username(class="sign-input") }}
+                        <div class="form-group sign-group">
+                            {% if form.username.errors %} {{ form.username(class="form-control sign-input is-invalid") }}
+                            <div class="has-error invalid-feedback">
+                                {% for error in form.username.errors %}
+                                <span>{{ error }}</span> {% endfor %}
+                            </div>
+                            {% else %} {{ form.username(class="sign-input") }} {% endif %}
                         </div>
                         <div class="sign-group">
-                            <!-- <input type="text" class="sign-input" placeholder="Email"> -->
-                            {{ form.email(class="sign-input") }}
+                            {% if form.email.errors %} {{ form.email(class="sign-input is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.email.errors %}
+                                <span>{{ error }}</span> {% endfor %}
+                            </div>
+                            {% else %} {{ form.email(class="sign-input") }} {% endif %}
                         </div>
                         <div class="sign-group">
-                            <!-- <input type="password" class="sign-input" placeholder="Password"> -->
-                            {{ form.password(class="sign-input") }}
+                            {% if form.password.errors %} {{ form.password(class="sign-input is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.password.errors %}
+                                <span>{{ error }}</span> {% endfor %}
+                            </div>
+                            {% else %} {{ form.password(class="sign-input") }} {% endif %}
                         </div>
                         <div class="sign-group">
-                            <!-- <input type="password" class="sign-input" placeholder="Password"> -->
-                            {{ form.confirm_password(class="sign-input") }}
+                            {% if form.confirm_password.errors %} {{ form.confirm_password(class="sign-input is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.confirm_password.errors %}
+                                <span>{{ error }}</span> {% endfor %}
+                            </div>
+                            {% else %} {{ form.confirm_password(class="sign-input") }} {% endif %}
                         </div>
-                        <!-- <button class="sign-button" type="button">Sign up</button> -->
                         {{ form.submit(class='sign-button') }}
                         <span class="sign-text">Allready have an account?
                                 <a href="{{url_for('sign_in')}}">Sign in!</a>
