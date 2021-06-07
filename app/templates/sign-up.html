@@ -11,8 +11,8 @@
                             <img src="{{ url_for('static',filename='img/logo.svg') }}" alt="logo">
                         </a>
                         <div class="form-group sign-group">
-                            {% if form.username.errors %} {{ form.username(class="form-control sign-input is-invalid") }}
-                            <div class="has-error invalid-feedback">
+                            {% if form.username.errors %} {{ form.username.label(class="form-control sign-input is-invalid") }}
+                            <div class="invalid-feedback">
                                 {% for error in form.username.errors %}
                                 <span>{{ error }}</span> {% endfor %}
                             </div>

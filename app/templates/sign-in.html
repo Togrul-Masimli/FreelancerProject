@@ -32,7 +32,7 @@
                         </div>
                         {{ form.submit(class='sign-button') }}
                         <span class="sign-text">Don't have an account?
-                            <a href="sign-up.html">Sign up!</a>
+                            <a href="{{ url_for('sign_up') }}">Sign up!</a>
                         </span>
                         <span class="sign-text"><a href="forgot-password.html">Forgot password?</a></span>
                     </form>
