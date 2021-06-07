@@ -5,30 +5,22 @@
         <div class="container">
             <div class="row">
                 <div class="col-3">
+                    {% if current_user.is_authenticated %}
                     <div class="user-info box">
                         <div class="common-info">
                             <figure>
                                 <img src="{{url_for('static', filename='img/user5.jpg')}}" alt="user">
                             </figure>
-                            <span class="user-name-span">John Doe</span>
+                            <span class="user-name-span">{{ current_user.username }}</span>
                             <span class="speciality">Front-end Developer</span>
                         </div>
                         <div class="button-field">
                             <a href="{{url_for('add_prj')}}" class="btn-project">Post a project</a>
                             <a href="{{url_for('projects')}}" class="btn-job">Find a project</a>
                         </div>
-                        <div class="follow">
-                            <div class="follow-count count-common">
-                                <span class="following">Following</span>
-                                <span class="count">26</span>
-                            </div>
-                            <div class="follower-count count-common">
-                                <span class="followers">Followers</span>
-                                <span class="count">88</span>
-                            </div>
-                        </div>
                         <a href="{{url_for('profile')}}" class="view-profile">View profile</a>
                     </div>
+                    {% endif %}
                     <div class="sidebox-candidates sidebox">
                         <div class="sidebox-title">
                             <h4>Best candidates</h4>

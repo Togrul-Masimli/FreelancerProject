@@ -1,9 +1,9 @@
-from flask import render_template, url_for, redirect
+from flask import render_template, url_for, redirect, request
 from wtforms.validators import Email
 from app import app, db, bcrypt
 from app.forms import RegistrationForm, LoginForm
 from app.models import User, Post
-from flask_login import login_user
+from flask_login import login_user, current_user, logout_user, login_required
 
 
 @app.route('/')
@@ -12,10 +12,12 @@ def index():
     return render_template('index.html')
 
 @app.route('/add-project')
+@login_required
 def add_prj():
     return render_template('add-project.html', title='Add Project')
 
 @app.route('/profile')
+@login_required
 def profile():
     return render_template('profile.html', title='Profile')
 
@@ -38,17 +40,22 @@ def forgot_password():
 
 @app.route('/sign-in', methods=['GET', 'POST'])
 def sign_in():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
-            return redirect(url_for('index'))
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page else redirect(url_for('index'))
     return render_template('sign-in.html', title='Sign In', form=form)
 
 
 @app.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -57,3 +64,8 @@ def sign_up():
         db.session.commit()
         return redirect(url_for('sign_in'))
     return render_template('sign-up.html', title='Sign Up', form=form)
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
