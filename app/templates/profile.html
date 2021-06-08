@@ -19,7 +19,7 @@
                     <div class="user-info box">
                         <div class="common-info">
                             <figure>
-                                <img src="{{url_for('static',filename='img/user5.jpg')}}" alt="user">
+                                <img src="{{ image_file }}" alt="user">
                             </figure>
                             <span class="user-name-span">{{ current_user.username }}</span>
                             <span class="speciality">Front-end Developer</span>
@@ -428,28 +428,65 @@
                         </div>
                     </div>
                     <div class="toggle settings" style="display: none;">
-                        <form action="#">
+                        <form action="#", method="POST">
+                            {{ form.hidden_tag() }}
                             <div class="profile-box">
                                 <h3 class="profile-box-title">Profile Details</h3>
                                 <div class="form-group-container">
                                     <div class="w-100 mr-30">
                                         <div class="form-group">
-                                            <label for="name" class="form-label">Login:</label>
-                                            <input type="text" name="name" id="name" class="form-input" placeholder="Login">
+                                            {{ form.username.label(class="form-label") }}
+                                            {% if form.username.errors %} 
+                                                {{ form.username(class="form-input is-invalid") }}
+                                                <div class="invalid-feedback">
+                                                    {% for error in form.username.errors %}
+                                                    <span>{{ error }}</span> 
+                                                    {% endfor %}
+                                                </div>
+                                            {% else %} 
+                                                {{ form.username(class="form-input") }} 
+                                            {% endif %}
                                         </div>
                                         <div class="form-group">
-                                            <label for="name" class="form-label">Email:</label>
-                                            <input type="email" name="name" id="name" class="form-input" placeholder="email@email.com">
+                                            {{ form.email.label(class="form-label") }}
+                                            {% if form.email.errors %} 
+                                                {{ form.email(class="form-input is-invalid") }}
+                                                <div class="invalid-feedback">
+                                                    {% for error in form.email.errors %}
+                                                    <span>{{ error }}</span> 
+                                                    {% endfor %}
+                                                </div>
+                                            {% else %} 
+                                                {{ form.email(class="form-input") }} 
+                                            {% endif %}
                                         </div>
                                     </div>
                                     <div class="w-100 mr-30">
                                         <div class="form-group">
-                                            <label for="name" class="form-label">First name:</label>
-                                            <input type="text" name="name" id="name" class="form-input" placeholder="John">
+                                            {{ form.speciality.label(class="form-label") }}
+                                            {% if form.speciality.errors %} 
+                                                {{ form.speciality(class="form-input is-invalid") }}
+                                                <div class="invalid-feedback">
+                                                    {% for error in form.speciality.errors %}
+                                                    <span>{{ error }}</span> 
+                                                    {% endfor %}
+                                                </div>
+                                            {% else %} 
+                                                {{ form.speciality(class="form-input") }} 
+                                            {% endif %}
                                         </div>
                                         <div class="form-group">
-                                            <label for="name" class="form-label">Last name:</label>
-                                            <input type="text" name="name" id="name" class="form-input" placeholder="Doe">
+                                            {{ form.location.label(class="form-label") }}
+                                            {% if form.location.errors %} 
+                                                {{ form.location(class="form-input is-invalid") }}
+                                                <div class="invalid-feedback">
+                                                    {% for error in form.location.errors %}
+                                                    <span>{{ error }}</span> 
+                                                    {% endfor %}
+                                                </div>
+                                            {% else %} 
+                                                {{ form.location(class="form-input") }} 
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>

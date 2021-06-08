@@ -1,7 +1,7 @@
 from flask import render_template, url_for, redirect, request
 from wtforms.validators import Email
 from app import app, db, bcrypt
-from app.forms import RegistrationForm, LoginForm
+from app.forms import RegistrationForm, LoginForm, UpdateProfileForm
 from app.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -9,6 +9,9 @@ from flask_login import login_user, current_user, logout_user, login_required
 @app.route('/')
 @app.route('/home')
 def index():
+    if current_user.is_authenticated:
+        image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
+        return render_template('index.html', image_file=image_file)
     return render_template('index.html')
 
 @app.route('/add-project')
@@ -19,7 +22,9 @@ def add_prj():
 @app.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html', title='Profile')
+    form = UpdateProfileForm()
+    image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
+    return render_template('profile.html', title='Profile', image_file=image_file, form=form)
 
 @app.route('/profiles')
 def profiles():

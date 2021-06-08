@@ -10,13 +10,17 @@
                         <a href="#" class="sign-logo">
                             <img src="{{ url_for('static',filename='img/logo.svg') }}" alt="logo">
                         </a>
-                        <div class="form-group sign-group">
-                            {% if form.username.errors %} {{ form.username.label(class="form-control sign-input is-invalid") }}
-                            <div class="invalid-feedback">
-                                {% for error in form.username.errors %}
-                                <span>{{ error }}</span> {% endfor %}
-                            </div>
-                            {% else %} {{ form.username(class="sign-input") }} {% endif %}
+                        <div class="sign-group">
+                            {% if form.username.errors %} 
+                                {{ form.username(class="sign-input is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.username.errors %}
+                                    <span>{{ error }}</span> 
+                                    {% endfor %}
+                                </div>
+                            {% else %} 
+                                {{ form.username(class="sign-input") }} 
+                            {% endif %}
                         </div>
                         <div class="sign-group">
                             {% if form.email.errors %} {{ form.email(class="sign-input is-invalid") }}
