@@ -19,10 +19,22 @@ def index():
 def add_prj():
     return render_template('add-project.html', title='Add Project')
 
-@app.route('/profile')
+@app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
     form = UpdateProfileForm()
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.email = form.email.data
+        current_user.speciality = form.speciality.data
+        current_user.location = form.location.data
+        db.session.commit()
+        return redirect(url_for('profile'))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.email.data = current_user.email
+        # form.speciality.data = current_user.speciality
+        # form.location.data = current_user.location
     image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
     return render_template('profile.html', title='Profile', image_file=image_file, form=form)
 

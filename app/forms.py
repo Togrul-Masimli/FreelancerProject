@@ -30,8 +30,8 @@ class LoginForm(FlaskForm):
 
 
 class UpdateProfileForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)], render_kw={"placeholder": "Username"})
-    email = StringField('Email', validators=[DataRequired(), Email()], render_kw={"placeholder": "Email"})
+    username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
+    email = StringField('Email', validators=[DataRequired(), Email()])
     speciality = StringField('Speciality', validators=[DataRequired()])
     location = StringField('Location')
     submit = SubmitField('Save')
@@ -47,3 +47,9 @@ class UpdateProfileForm(FlaskForm):
             user = User.query.filter_by(email=email.data).first()
             if user:
                 raise ValidationError('This email is taken.')
+
+    def validate_speciality(self, speciality):
+        if speciality.data != current_user.speciality:
+            user = User.query.filter_by(username=speciality.data).first()
+            if user:
+                raise ValidationError('This username is taken.')
