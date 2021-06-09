@@ -1,8 +1,11 @@
+import os
+import secrets
+from PIL import Image
 from flask import render_template, url_for, redirect, request
 from wtforms.validators import Email
 from app import app, db, bcrypt
-from app.forms import RegistrationForm, LoginForm, UpdateProfileForm
-from app.models import User, Post
+from app.forms import RegistrationForm, LoginForm, UpdateInfoForm, UpdateProfileForm
+from app.models import User, Post, UserInfo
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -23,20 +26,58 @@ def add_prj():
 @login_required
 def profile():
     form = UpdateProfileForm()
+    image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
+    return render_template('profile.html', title='Profile', image_file=image_file, form=form)
+
+@app.route('/profile/info')
+def info():
+    image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
+    return render_template('profile_info.html', title='User Info', image_file=image_file)
+
+
+def save_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(app.root_path, 'static/profile-pictures', picture_fn)
+
+    output_size = (120, 120)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
+
+    return picture_fn
+
+@app.route('/profile/settings', methods=['GET','POST'])
+def settings():
+    form = UpdateProfileForm()
+    formInfo = UpdateInfoForm()
     if form.validate_on_submit():
+        if form.picture.data:
+            picture_file = save_picture(form.picture.data)
+            current_user.image_file = picture_file
         current_user.username = form.username.data
         current_user.email = form.email.data
-        current_user.speciality = form.speciality.data
-        current_user.location = form.location.data
         db.session.commit()
-        return redirect(url_for('profile'))
+        return redirect(url_for('settings'))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
-        # form.speciality.data = current_user.speciality
-        # form.location.data = current_user.location
+
+    if formInfo.validate_on_submit():
+        current_user.speciality = formInfo.speciality.data
+        current_user.location = formInfo.location.data
+        current_user.age = formInfo.age.data
+        current_user.experience = formInfo.experience.data
+        db.session.commit()
+        return redirect(url_for('settings'))
+    # elif request.method == 'GET':
+    #     formInfo.speciality.data = current_user.speciality
+    #     formInfo.location.data = current_user.location
+    #     formInfo.age.data = current_user.age
+    #     formInfo.experience.data = current_user.experience
     image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
-    return render_template('profile.html', title='Profile', image_file=image_file, form=form)
+    return render_template('profile_settings.html', title='Settings', image_file=image_file, form=form, formInfo=formInfo)
 
 @app.route('/profiles')
 def profiles():

@@ -102,9 +102,9 @@
                 </div>
                 <div class="col-6">
                     <ul class="profile-nav">
-                        <li><a href="#" class="profile-filter" data-filter="feeds">Feed</a></li>
-                        <li><a href="#" class="profile-filter" data-filter="user-information">Profile</a></li>
-                        <li><a href="#" class="profile-filter" data-filter="settings">Settings</a></li>
+                        <li><a href="{{ url_for('profile') }}" class="profile-filter" data-filter="feeds">Feed</a></li>
+                        <li><a href="{{ url_for('info') }}" class="profile-filter" data-filter="user-information">Profile</a></li>
+                        <li><a href="{{ url_for('settings') }}" class="profile-filter" data-filter="settingss">Settings</a></li>
                     </ul>
                     <div class="toggle feeds">
                         <div class="post">
@@ -126,7 +126,7 @@
                                 <div class="post-icons-left">
                                     <div class="post-company">
                                         <i class="fas fa-briefcase"></i>
-                                        <span>Front-end Developer</span>
+                                        <span> {{ current_user.speciality }}</span>
                                     </div>
                                 </div>
                                 <div class="post-icons-right">
@@ -392,135 +392,6 @@
                             </div>
                         </div>
                         <button class="more-post" type="button">Load more</button>
-                    </div>
-                    <div class="toggle user-information" style="display: none;">
-                        <div class="profile-box">
-                            <h3 class="profile-box-title">About</h3>
-                            <p class="profile-box-text">
-                                It is a long fact that a reader will be <b>distracted</b> by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.
-                            </p>
-                            <ul class="post-description-ul">
-                                <li>Theme Forest</li>
-                                <li>Graphic River</li>
-                                <li>Audio Jungle</li>
-                                <li>3D Ocean</li>
-                            </ul>
-                            <p class="profile-box-text">
-                                It is a long fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.
-                            </p>
-                        </div>
-                        <div class="profile-box">
-                            <h3 class="profile-box-title">Education</h3>
-                            <p class="profile-box-text">
-                                <strong>Master of Computer Science</strong>
-                                <br>
-                                <span>2018-2020</span> <br> It is a long fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution
-                                of letters.
-                            </p>
-                        </div>
-                        <div class="profile-tags-box profile-box">
-                            <h3 class="profile-box-title">Skills</h3>
-                            <div class="profile-tags post-tags">
-                                <a href="#">HTML</a>
-                                <a href="#">CSS</a>
-                                <a href="#">PHP</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="toggle settings" style="display: none;">
-                        <form action="#", method="POST">
-                            {{ form.hidden_tag() }}
-                            <div class="profile-box">
-                                <h3 class="profile-box-title">Profile Details</h3>
-                                <div class="form-group-container">
-                                    <div class="w-100 mr-30">
-                                        <div class="form-group">
-                                            {{ form.username.label(class="form-label") }}
-                                            {% if form.username.errors %} 
-                                                {{ form.username(class="form-input is-invalid") }}
-                                                <div class="invalid-feedback">
-                                                    {% for error in form.username.errors %}
-                                                    <span>{{ error }}</span> 
-                                                    {% endfor %}
-                                                </div>
-                                            {% else %} 
-                                                {{ form.username(class="form-input") }} 
-                                            {% endif %}
-                                        </div>
-                                        <div class="form-group">
-                                            {{ form.email.label(class="form-label") }}
-                                            {% if form.email.errors %} 
-                                                {{ form.email(class="form-input is-invalid") }}
-                                                <div class="invalid-feedback">
-                                                    {% for error in form.email.errors %}
-                                                    <span>{{ error }}</span> 
-                                                    {% endfor %}
-                                                </div>
-                                            {% else %} 
-                                                {{ form.email(class="form-input") }} 
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                    <div class="w-100 mr-30">
-                                        <div class="form-group">
-                                            {{ form.speciality.label(class="form-label") }}
-                                            {% if form.speciality.errors %} 
-                                                {{ form.speciality(class="form-input is-invalid") }}
-                                                <div class="invalid-feedback">
-                                                    {% for error in form.speciality.errors %}
-                                                    <span>{{ error }}</span> 
-                                                    {% endfor %}
-                                                </div>
-                                            {% else %} 
-                                                {{ form.speciality(class="form-input") }} 
-                                            {% endif %}
-                                        </div>
-                                        <div class="form-group">
-                                            {{ form.location.label(class="form-label") }}
-                                            {% if form.location.errors %} 
-                                                {{ form.location(class="form-input is-invalid") }}
-                                                <div class="invalid-feedback">
-                                                    {% for error in form.location.errors %}
-                                                    <span>{{ error }}</span> 
-                                                    {% endfor %}
-                                                </div>
-                                            {% else %} 
-                                                {{ form.location(class="form-input") }} 
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    {{ form.submit(class='form-button') }}
-                                </div>
-                            </div>
-                        </form>
-                        <form action="#">
-                            <div class="profile-box-last profile-box">
-                                <h3 class="profile-box-title">Change password</h3>
-                                <div class="form-group-container">
-                                    <div class="w-100 mr-30">
-                                        <div class="form-group">
-                                            <label for="name" class="form-label">Old password:</label>
-                                            <input type="password" name="name" id="name" class="form-input">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="name" class="form-label">Confirm New Password:</label>
-                                            <input type="password" name="name" id="name" class="form-input">
-                                        </div>
-                                    </div>
-                                    <div class="w-100 mr-30">
-                                        <div class="form-group">
-                                            <label for="name" class="form-label">New Password:</label>
-                                            <input type="password" name="name" id="name" class="form-input">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <button class="form-button" type="button">CHANGE</button>
-                                </div>
-                            </div>
-                        </form>
                     </div>
                 </div>
                 <div class="col-3">

@@ -1,9 +1,10 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms import validators
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from app.models import User
+from app.models import User, UserInfo
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)], render_kw={"placeholder": "Username"})
@@ -32,9 +33,8 @@ class LoginForm(FlaskForm):
 class UpdateProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    speciality = StringField('Speciality', validators=[DataRequired()])
-    location = StringField('Location')
-    submit = SubmitField('Save')
+    picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
+    submit = SubmitField('UPDATE')
 
     def validate_username(self, username):
         if username.data != current_user.username:
@@ -48,8 +48,15 @@ class UpdateProfileForm(FlaskForm):
             if user:
                 raise ValidationError('This email is taken.')
 
-    def validate_speciality(self, speciality):
-        if speciality.data != current_user.speciality:
-            user = User.query.filter_by(username=speciality.data).first()
-            if user:
-                raise ValidationError('This username is taken.')
+    # def validate_speciality(self, speciality):
+    #     if speciality.data != current_user.speciality:
+    #         user = User.query.filter_by(username=speciality.data).first()
+    #         if user:
+    #             raise ValidationError('This username is taken.')
+
+class UpdateInfoForm(FlaskForm):
+    speciality = StringField('Speciality', validators=[DataRequired()])
+    location = StringField('Location')
+    age = StringField('Age')
+    experience = StringField('Experience')
+    submit = SubmitField('UPDATE')

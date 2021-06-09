@@ -18,13 +18,13 @@ $(document).ready(function() {
 
 /* For profile page */
 
-$(document).ready(function() {
-    $(".profile-filter").click(function() {
-        const item = $(this).attr("data-filter")
-        $(".toggle").not('.' + item).hide(700);
-        $(".toggle").filter('.' + item).show(700);
-    })
-});
+// $(document).ready(function() {
+//     $(".profile-filter").click(function() {
+//         const item = $(this).attr("data-filter")
+//         $(".toggle").not('.' + item).hide(700);
+//         $(".toggle").filter('.' + item).show(700);
+//     })
+// });
 
 /* For comment button */
 

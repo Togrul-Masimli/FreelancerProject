@@ -29,6 +29,8 @@ class UserInfo(db.Model):
     education = db.Column(db.Text)
     speciality = db.Column(db.String(20))
     location = db.Column(db.String(20))
+    age = db.Column(db.Integer)
+    experience = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
