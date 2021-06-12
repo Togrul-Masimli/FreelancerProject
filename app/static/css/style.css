@@ -554,6 +554,8 @@ a.logo img {
     line-height: 26px;
     margin-top: 5px;
     margin-bottom: 15px;
+    color: #364e65;
+    transition: 0.4s;
 }
 
 .post-title a {

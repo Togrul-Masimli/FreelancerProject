@@ -10,7 +10,7 @@
                         <span><i class="fas fa-long-arrow-alt-right"></i></span>
                         <li class="page_home"><a href="#">Projects</a></li>
                         <span><i class="fas fa-long-arrow-alt-right"></i></span>
-                        <li class="page_projects"><a href="#">PSD to HTML</a></li>
+                        <li class="page_projects"><a href="#">{{ post.title }}</a></li>
                     </ul>
                 </div>
             </div>
@@ -19,13 +19,13 @@
                     <div class="single-post post">
                         <div class="post-header">
                             <a href="#" class="post-user-img">
-                                <img src="{{url_for('static',filename='img/user5.jpg')}}" alt="user">
+                                <img src="{{url_for('static', filename='profile-pictures/' + post.author.image_file )}}" alt="user">
                             </a>
                             <div>
                                 <h5>
-                                    <a href="#">John Doe</a>
+                                    <a href="#">{{ post.author.username }}</a>
                                 </h5>
-                                <p>24 mins ago</p>
+                                <p>{{ post.date_posted.strftime('%Y-%m-%d') }}</p>
                             </div>
                             <div class="dots">
                                 <i class="fas fa-ellipsis-v"></i>
@@ -54,24 +54,14 @@
                         </div>
                         <div class="post-title">
                             <h2>
-                                <a href="#">Senior Front-end Developer</a>
+                                {{ post.title }}
                             </h2>
                         </div>
                         <div class="post-options">
-                            <p>$300 - $350</p>
+                            <p>${{ post.min_pay }} - ${{ post.max_pay }}</p>
                         </div>
                         <div class="post-description">
-                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to
-                                use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
-                            <ul class="post-description-ul">
-                                <li>Envato</li>
-                                <li>Themeforest</li>
-                                <li>Codecanyon</li>
-                                <li>Videohive</li>
-                                <li>Audiojungle</li>
-                            </ul>
-                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to
-                                use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
+                            <p>{{ post.content }}</p>
                         </div>
                         <div class="post-tags">
                             <a href="#">HTML</a>

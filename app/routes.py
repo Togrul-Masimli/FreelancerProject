@@ -1,10 +1,10 @@
 import os
 import secrets
 from PIL import Image
-from flask import render_template, url_for, redirect, request
+from flask import render_template, url_for, redirect, request, abort
 from wtforms.validators import Email
 from app import app, db, bcrypt
-from app.forms import RegistrationForm, LoginForm, UpdateInfoForm, UpdateProfileForm
+from app.forms import RegistrationForm, LoginForm, UpdateInfoForm, UpdateProfileForm, PostForm
 from app.models import User, Post, UserInfo
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -12,15 +12,22 @@ from flask_login import login_user, current_user, logout_user, login_required
 @app.route('/')
 @app.route('/home')
 def index():
+    posts = Post.query.all()
     if current_user.is_authenticated:
         image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
-        return render_template('index.html', image_file=image_file)
-    return render_template('index.html')
+        return render_template('index.html', image_file=image_file, posts=posts)
+    return render_template('index.html', posts=posts)
 
-@app.route('/add-project')
+@app.route('/add-project', methods=['GET','POST'])
 @login_required
 def add_prj():
-    return render_template('add-project.html', title='Add Project')
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(title=form.title.data, content=form.content.data, min_pay=form.cost_min.data, max_pay=form.cost_max.data, author=current_user)
+        db.session.add(post)
+        db.session.commit()
+        return redirect(url_for('index'))
+    return render_template('add-project.html', title='Add Project', form=form, legend='New Project')
 
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
@@ -64,18 +71,25 @@ def settings():
         form.username.data = current_user.username
         form.email.data = current_user.email
 
+    # if formInfo.validate_on_submit():
+    #     owner = current_user
+    #     owner.speciality = formInfo.speciality.data
+    #     current_user.info.location = formInfo.location.data
+    #     current_user.info.age = formInfo.age.data
+    #     current_user.info.experience = formInfo.experience.data
+    #     db.session.commit()
+    #     return redirect(url_for('settings'))
     if formInfo.validate_on_submit():
-        current_user.speciality = formInfo.speciality.data
-        current_user.location = formInfo.location.data
-        current_user.age = formInfo.age.data
-        current_user.experience = formInfo.experience.data
+        userinfo = UserInfo(speciality=formInfo.speciality.data, location=formInfo.location.data, age=formInfo.age.data, experience=formInfo.experience.data, owner=current_user)
+        db.session.add(userinfo)
         db.session.commit()
         return redirect(url_for('settings'))
     # elif request.method == 'GET':
+    #     owner = current_user
     #     formInfo.speciality.data = current_user.speciality
-    #     formInfo.location.data = current_user.location
-    #     formInfo.age.data = current_user.age
-    #     formInfo.experience.data = current_user.experience
+    #     formInfo.location.data = current_user.info.location
+    #     formInfo.age.data = current_user.info.age
+    #     formInfo.experience.data = current_user.info.experience
     image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
     return render_template('profile_settings.html', title='Settings', image_file=image_file, form=form, formInfo=formInfo)
 
@@ -87,14 +101,9 @@ def profiles():
 def projects():
     return render_template('projects.html', title='Projects')
 
-@app.route('/single-project')
-def sing_project():
-    return render_template('single-project.html', title='Single Project')
-
 @app.route('/forgot-password')
 def forgot_password():
     return render_template('forgot-password.html', title='Forgot Password')
-
 
 @app.route('/sign-in', methods=['GET', 'POST'])
 def sign_in():
@@ -108,7 +117,6 @@ def sign_in():
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('index'))
     return render_template('sign-in.html', title='Sign In', form=form)
-
 
 @app.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
@@ -127,3 +135,31 @@ def sign_up():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+@app.route('/projects/<int:post_id>')
+def post(post_id):
+    post = Post.query.get_or_404(post_id)
+    return render_template('single-project.html', title=post.title , post=post)
+
+
+@app.route('/projects/<int:post_id>/update', methods=['GET','POST'])
+@login_required
+def update_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    form = PostForm()
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.content = form.content.data
+        post.min_pay = form.cost_min.data
+        post.max_pay = form.cost_max.data
+        db.session.commit()
+        return redirect(url_for('post', post_id=post.id))
+    elif request.method == 'GET':
+        form.title.data = post.title
+        form.content.data = post.content
+        form.cost_min.data = post.min_pay
+        form.cost_max.data = post.max_pay
+    return render_template('add-project.html', title='Update Post' , post=post, legend='Update Post', form=form)

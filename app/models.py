@@ -23,7 +23,7 @@ class User(db.Model, UserMixin):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
 
-class UserInfo(db.Model):
+class UserInfo(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     about_user = db.Column(db.Text)
     education = db.Column(db.Text)

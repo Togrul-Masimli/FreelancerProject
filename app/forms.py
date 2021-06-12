@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
 from wtforms import validators
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from app.models import User, UserInfo
@@ -60,3 +60,11 @@ class UpdateInfoForm(FlaskForm):
     age = StringField('Age')
     experience = StringField('Experience')
     submit = SubmitField('UPDATE')
+
+
+class PostForm(FlaskForm):
+    title = StringField('Project name', validators=[DataRequired()])
+    content = TextAreaField('Description', validators=[DataRequired()])
+    cost_min = StringField('Min', validators=[DataRequired()], render_kw={"placeholder": "Min"})
+    cost_max = StringField('Max', render_kw={"placeholder": "Max"})
+    submit = SubmitField('POST A PROJECT')
