@@ -53,3 +53,13 @@ document.querySelector('.dropdown-container').addEventListener('click', () => {
         document.querySelector('.dropdown-container').nextElementSibling.style.opacity = "1";
     }
 })
+
+/* For post-dropdown */
+
+document.querySelector('.post-dropdown-container').addEventListener('click', () => {
+    if (document.querySelector('.post-dropdown-container').nextElementSibling.style.opacity == "1") {
+        document.querySelector('.post-dropdown-container').nextElementSibling.style.opacity = "0";
+    } else {
+        document.querySelector('.post-dropdown-container').nextElementSibling.style.opacity = "1";
+    }
+})

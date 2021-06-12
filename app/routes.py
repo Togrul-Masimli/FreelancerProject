@@ -4,8 +4,8 @@ from PIL import Image
 from flask import render_template, url_for, redirect, request, abort
 from wtforms.validators import Email
 from app import app, db, bcrypt
-from app.forms import RegistrationForm, LoginForm, UpdateInfoForm, UpdateProfileForm, PostForm
-from app.models import User, Post, UserInfo
+from app.forms import RegistrationForm, LoginForm, UpdateInfoForm, UpdateProfileForm, PostForm, CommentForm
+from app.models import User, Post, UserInfo, Comment
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -163,3 +163,14 @@ def update_post(post_id):
         form.cost_min.data = post.min_pay
         form.cost_max.data = post.max_pay
     return render_template('add-project.html', title='Update Post' , post=post, legend='Update Post', form=form)
+
+
+@app.route('/projects/<int:post_id>/delete', methods=['GET','POST'])
+@login_required
+def delete_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    db.session.delete(post)
+    db.session.commit()
+    return redirect(url_for('index'))

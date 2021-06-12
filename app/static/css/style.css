@@ -211,12 +211,16 @@ a.logo img {
 /* Dropdown */
 
 .dropdown {
-    position: absolute;
     top: 120%;
     left: 0;
+    min-width: 180px;
+}
+
+.dropdown,
+.post-dropdown {
+    position: absolute;
     background-color: #fff;
     padding: 10px 20px;
-    min-width: 180px;
     border-right: 1px solid rgba(133, 153, 171, 0.2);
     border-left: 1px solid rgba(133, 153, 171, 0.2);
     border-bottom: 1px solid rgba(133, 153, 171, 0.2);
@@ -227,7 +231,15 @@ a.logo img {
     transition: 0.4s;
 }
 
-.dropdown li a {
+.post-dropdown {
+    top: 120%;
+    right: 0;
+    min-width: 140px;
+    z-index: 1;
+}
+
+.dropdown li a,
+.post-dropdown li a {
     font-size: 14px;
     font-weight: 400;
     color: #364e65;
@@ -458,6 +470,9 @@ a.logo img {
     top: 20px;
     right: 20px;
     font-size: 14px;
+}
+
+.post-header .dots a i {
     color: #8599ab;
 }
 

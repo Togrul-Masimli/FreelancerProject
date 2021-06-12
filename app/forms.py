@@ -68,3 +68,8 @@ class PostForm(FlaskForm):
     cost_min = StringField('Min', validators=[DataRequired()], render_kw={"placeholder": "Min"})
     cost_max = StringField('Max', render_kw={"placeholder": "Max"})
     submit = SubmitField('POST A PROJECT')
+
+
+class CommentForm(FlaskForm):
+    content = StringField('Content', validators=[DataRequired()])
+    submit = SubmitField('Submit')

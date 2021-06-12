@@ -27,9 +27,17 @@
                                 </h5>
                                 <p>{{ post.date_posted.strftime('%Y-%m-%d') }}</p>
                             </div>
-                            <div class="dots">
-                                <i class="fas fa-ellipsis-v"></i>
-                            </div>
+                            {% if post.author == current_user %}
+                                <div class="hasDropdown dots">
+                                    <a href="#" class="post-dropdown-container">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                        <ul class="post-dropdown">
+                                            <li><a href="{{url_for('update_post', post_id=post.id)}}">Update</a></li>
+                                            <li><a href="{{url_for('delete_post', post_id=post.id)}}">Delete</a></li>
+                                        </ul>
+                                    </a>
+                                </div>
+                            {% endif %}
                         </div>
                         <div class="post-icons">
                             <div class="post-icons-left">
