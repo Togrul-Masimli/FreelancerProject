@@ -19,9 +19,9 @@
                     <div class="user-info box">
                         <div class="common-info">
                             <figure>
-                                <img src="{{ image_file }}" alt="user">
+                                <img src="{{url_for('static', filename='profile-pictures/' + user.image_file )}}" alt="user">
                             </figure>
-                            <span class="user-name-span">{{ current_user.username }}</span>
+                            <span class="user-name-span">{{ user.username }}</span>
                             <span class="speciality">Front-end Developer</span>
                         </div>
                         <div class="profile-buttons profiles-bottom">
@@ -103,12 +103,11 @@
                 <div class="col-6">
                     <ul class="profile-nav">
                         <li><a href="{{ url_for('profile') }}" class="profile-filter" data-filter="feeds">Feed</a></li>
-                        <li><a href="{{ url_for('info') }}" class="profile-filter" data-filter="user-information">Profile</a></li>
-                        <li><a href="{{ url_for('settings') }}" class="profile-filter" data-filter="settingss">Settings</a></li>
+                        <li><a href="{{ url_for('info') }}" class="profile-filter" data-filter="user-information">About</a></li>
                     </ul>
                     <div class="toggle feeds">
                         {% for post in posts %}
-                        <div class="post">
+                            <div class="post">
                             <div class="post-header">
                                 <a href="#" class="post-user-img">
                                     <img src="{{url_for('static', filename='profile-pictures/' + post.author.image_file )}}" alt="user">
@@ -119,124 +118,124 @@
                                     </h5>
                                     <p>{{ post.date_posted.strftime('%Y-%m-%d') }}</p>
                                 </div>
-                                {% if post.author == current_user %}
-                                    <div class="hasDropdown dots">
-                                        <a href="#" class="post-dropdown-container">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                            <ul class="post-dropdown">
-                                                <li><a href="{{url_for('update_post', post_id=post.id)}}">Update</a></li>
-                                                <li><a href="#">Delete</a></li>
-                                            </ul>
-                                        </a>
-                                    </div>
-                                {% endif %}
-                            </div>
-                            <div class="post-icons">
-                                <div class="post-icons-left">
-                                    <div class="post-company">
-                                        <i class="fas fa-briefcase"></i>
-                                        <span>Front-end Developer</span>
+                            {% if post.author == current_user %}
+                                <div class="hasDropdown dots">
+                                    <div class="post-dropdown-container">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                        <ul class="post-dropdown">
+                                            <li><a href="{{url_for('update_post', post_id=post.id)}}">Update</a></li>
+                                            <li><a href="{{url_for('delete_post', post_id=post.id)}}">Delete</a></li>
+                                        </ul>
                                     </div>
                                 </div>
-                                <div class="post-icons-right">
-                                    <div class="post-actions">
-                                        <a href="#" class="btn-green">
-                                            <i class="fas fa-bookmark"></i>
-                                        </a>
-                                        <a href="#" class="btn-red">
-                                            <i class="fas fa-envelope"></i>
-                                        </a>
-                                        <a href="#" class="bid-now">
-                                            <span>Bid now</span>
-                                        </a>
-                                    </div>
+                            {% endif %}
+                        </div>
+                        <div class="post-icons">
+                            <div class="post-icons-left">
+                                <div class="post-company">
+                                    <i class="fas fa-briefcase"></i>
+                                    <span>Front-end Developer</span>
                                 </div>
                             </div>
-                            <div class="post-title">
-                                <h2>
-                                    <a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a>
-                                </h2>
+                            <div class="post-icons-right">
+                                <div class="post-actions">
+                                    <a href="#" class="btn-green">
+                                        <i class="fas fa-bookmark"></i>
+                                    </a>
+                                    <a href="#" class="btn-red">
+                                        <i class="fas fa-envelope"></i>
+                                    </a>
+                                    <a href="#" class="bid-now">
+                                        <span>Bid now</span>
+                                    </a>
+                                </div>
                             </div>
-                            <div class="post-options">
-                                <p>${{ post.min_pay }} - ${{ post.max_pay }}</p>
-                            </div>
-                            <div class="post-description">
-                                <p>{{ post.content }}</p>
-                            </div>
-                            <div class="post-tags">
-                                <a href="#">HTML</a>
-                                <a href="#">CSS</a>
-                                <a href="#">PHP</a>
-                            </div>
-                            <div class="post-status">
-                                <div class="heart-comment">
+                        </div>
+                        <div class="post-title">
+                            <h2>
+                                <a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a>
+                            </h2>
+                        </div>
+                        <div class="post-options">
+                            <p>${{ post.min_pay }} - ${{ post.max_pay }}</p>
+                        </div>
+                        <div class="post-description">
+                            <p>{{ post.content }}</p>
+                        </div>
+                        <div class="post-tags">
+                            <a href="#">HTML</a>
+                            <a href="#">CSS</a>
+                            <a href="#">PHP</a>
+                        </div>
+                        <div class="post-status">
+                            <div class="heart-comment">
+                                <div class="like-comment">
+                                    <a href="#">
+                                        <i class="fas fa-heart"></i>
+                                        <span>15</span>
+                                    </a>
+                                </div>
+                                <div class="post-comments">
                                     <div class="like-comment">
-                                        <a href="#">
-                                            <i class="fas fa-heart"></i>
-                                            <span>15</span>
-                                        </a>
+                                        <button class="accordion" data-filter="{{ post.id }}">
+                                                <i class="fas fa-comment"></i>
+                                            </button>
+                                        <span>2</span>
                                     </div>
-                                    <div class="post-comments">
-                                        <div class="like-comment">
-                                            <button class="accordion" data-filter="{{ post.id }}">
-                                                    <i class="fas fa-comment"></i>
-                                                </button>
-                                            <span>2</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="post-views">
-                                    <i class="fas fa-eye"></i>
-                                    <span>214</span>
                                 </div>
                             </div>
-                            <div class="comment {{ post.id }}" style="display: none;">
-                                <form action="#" class="comment-form">
-                                    <input type="text" placeholder="Type your comment...">
-                                    <button type="button">
-                                            <i class="fab fa-telegram-plane"></i>
-                                        </button>
-                                </form>
-                                <div class="comment-area">
-                                    <div class="comment-content">
-                                        <div class="comment-photo-text">
-                                            <a href="#" class="comment-photo">
-                                                <img src="{{url_for('static', filename='img/user9.jpg')}}" alt="profile_photo">
-                                            </a>
-                                            <div class="user-comment">
-                                                <h5>Alan Patrick</h5>
-                                                <p>20 min ago</p>
-                                            </div>
-                                        </div>
-                                        <div class="comment-text">
-                                            <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p>
+                            <div class="post-views">
+                                <i class="fas fa-eye"></i>
+                                <span>214</span>
+                            </div>
+                        </div>
+                        <div class="comment {{ post.id }}" style="display: none;">
+                            <form action="#" class="comment-form">
+                                <input type="text" placeholder="Type your comment...">
+                                <button type="button">
+                                        <i class="fab fa-telegram-plane"></i>
+                                    </button>
+                            </form>
+                            <div class="comment-area">
+                                <div class="comment-content">
+                                    <div class="comment-photo-text">
+                                        <a href="#" class="comment-photo">
+                                            <img src="{{url_for('static', filename='img/user9.jpg')}}" alt="profile_photo">
+                                        </a>
+                                        <div class="user-comment">
+                                            <h5>Alan Patrick</h5>
+                                            <p>20 min ago</p>
                                         </div>
                                     </div>
+                                    <div class="comment-text">
+                                        <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p>
+                                    </div>
                                 </div>
-                                <div class="comment-area">
-                                    <div class="comment-content">
-                                        <div class="comment-photo-text">
-                                            <a href="#" class="comment-photo">
-                                                <img src="{{url_for('static', filename='img/user2.jpg')}}" alt="profile_photo">
-                                            </a>
-                                            <div class="user-comment">
-                                                <h5>Diego Costa</h5>
-                                                <p>22 min ago</p>
-                                            </div>
+                            </div>
+                            <div class="comment-area">
+                                <div class="comment-content">
+                                    <div class="comment-photo-text">
+                                        <a href="#" class="comment-photo">
+                                            <img src="{{url_for('static', filename='img/user2.jpg')}}" alt="profile_photo">
+                                        </a>
+                                        <div class="user-comment">
+                                            <h5>Diego Costa</h5>
+                                            <p>22 min ago</p>
                                         </div>
-                                        <div class="comment-text">
-                                            <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p>
-                                        </div>
+                                    </div>
+                                    <div class="comment-text">
+                                        <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                            </div>
+                            {% if len(posts) == 0 %}
+                                <p>{{ user.username }} has no post.</p>
+                            {% endif %}
                         {% endfor %}
-                        {% if count==0 %}
-                            <p>There is no post</p>
-                        {% endif %}
-                        {% if count > 3 %}
-                        <button class="more-post" type="button">Load more</button>
+                        {% if count > 5 %}
+                            <button class="more-post" type="button">Load more</button>
                         {% endif %}
                     </div>
                 </div>

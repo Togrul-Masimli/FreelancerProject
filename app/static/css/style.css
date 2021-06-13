@@ -6,6 +6,7 @@
     box-sizing: border-box;
 }
 
+
 html,
 body {
     height: 100%;
@@ -472,7 +473,7 @@ a.logo img {
     font-size: 14px;
 }
 
-.post-header .dots a i {
+.post-header .dots div i {
     color: #8599ab;
 }
 

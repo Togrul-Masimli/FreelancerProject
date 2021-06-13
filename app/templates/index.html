@@ -26,66 +26,20 @@
                             <h4>Best candidates</h4>
                         </div>
                         <div class="sidebox-content">
+                            {% for user in users.items %}
                             <div class="sidebox-user">
                                 <a href="#" class="sidebox-user-img">
-                                    <img src="{{url_for('static', filename='img/user7.jpg')}}" alt="user-img">
+                                    <img src="{{url_for('static', filename='profile-pictures/' + user.image_file )}}" alt="user-img">
                                 </a>
                                 <div class="sidebox-user-title">
                                     <h5>
-                                        <a href="#">Andy Ramos</a>
-                                    </h5>
-                                    <p>Secretary</p>
-                                </div>
-                                <div class="user-title-price">$99/hr</div>
-                            </div>
-                            <div class="sidebox-user">
-                                <a href="#" class="sidebox-user-img">
-                                    <img src="{{url_for('static', filename='img/user1.jpg')}}" alt="user-img">
-                                </a>
-                                <div class="sidebox-user-title">
-                                    <h5>
-                                        <a href="#">Tony Young</a>
+                                        <a href="#">{{ user.username }}</a>
                                     </h5>
                                     <p>Herbalist</p>
                                 </div>
                                 <div class="user-title-price">$112/hr</div>
                             </div>
-                            <div class="sidebox-user">
-                                <a href="#" class="sidebox-user-img">
-                                    <img src="{{url_for('static', filename='img/user2.jpg')}}" alt="user-img">
-                                </a>
-                                <div class="sidebox-user-title">
-                                    <h5>
-                                        <a href="#">Santiago Robinson</a>
-                                    </h5>
-                                    <p>Fashion Designer</p>
-                                </div>
-                                <div class="user-title-price">$133/hr</div>
-                            </div>
-                            <div class="sidebox-user">
-                                <a href="#" class="sidebox-user-img">
-                                    <img src="{{url_for('static', filename='img/user3.jpg')}}" alt="user-img">
-                                </a>
-                                <div class="sidebox-user-title">
-                                    <h5>
-                                        <a href="#">Sophia Mendoza</a>
-                                    </h5>
-                                    <p>Teaching assistant</p>
-                                </div>
-                                <div class="user-title-price">$80/hr</div>
-                            </div>
-                            <div class="sidebox-user">
-                                <a href="#" class="sidebox-user-img">
-                                    <img src="{{url_for('static', filename='img/user4.jpg')}}" alt="user-img">
-                                </a>
-                                <div class="sidebox-user-title">
-                                    <h5>
-                                        <a href="#">Marsha Baldwin</a>
-                                    </h5>
-                                    <p>Gardener</p>
-                                </div>
-                                <div class="user-title-price">$99/hr</div>
-                            </div>
+                            {% endfor %}
                         </div>
                         <a href="{{ url_for('profiles') }}" class="view-profile">View more</a>
                     </div>
@@ -94,12 +48,12 @@
                     {% for post in posts %}
                     <div class="post">
                         <div class="post-header">
-                            <a href="#" class="post-user-img">
+                            <a href="{{ url_for('user_profile', username=post.author.username) }}" class="post-user-img">
                                 <img src="{{url_for('static', filename='profile-pictures/' + post.author.image_file )}}" alt="user">
                             </a>
                             <div>
                                 <h5>
-                                    <a href="#">{{ post.author.username }}</a>
+                                    <a href="{{ url_for('user_profile', username=post.author.username) }}">{{ post.author.username }}</a>
                                 </h5>
                                 <p>{{ post.date_posted.strftime('%Y-%m-%d') }}</p>
                             </div>
@@ -124,13 +78,10 @@
                             </div>
                             <div class="post-icons-right">
                                 <div class="post-actions">
-                                    <a href="#" class="btn-green">
-                                        <i class="fas fa-bookmark"></i>
-                                    </a>
                                     <a href="#" class="btn-red">
                                         <i class="fas fa-envelope"></i>
                                     </a>
-                                    <a href="#" class="bid-now">
+                                    <a href="{{ url_for('post', post_id=post.id) }}" class="bid-now">
                                         <span>Bid now</span>
                                     </a>
                                 </div>
@@ -224,56 +175,18 @@
                             <h4>Hot projects</h4>
                         </div>
                         <div class="sidebox-content">
+                            {% for post in sidebox_posts.items %}
                             <div class="sidebox-job">
                                 <div class="sidebox-job-title">
-                                    <a href="#">PSD to HTML</a>
-                                    <span>$200 - $250</span>
+                                    <a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a>
+                                    <span>${{ post.min_pay }} - ${{ post.max_pay }}</span>
                                 </div>
                                 <div class="sidebox-job-speciality">
                                     <i class="fas fa-briefcase"></i>
                                     <span>Front-end Developer</span>
                                 </div>
                             </div>
-                            <div class="sidebox-job">
-                                <div class="sidebox-job-title">
-                                    <a href="#">Mobile App</a>
-                                    <span>$7000</span>
-                                </div>
-                                <div class="sidebox-job-speciality">
-                                    <i class="fas fa-briefcase"></i>
-                                    <span>Java Developer</span>
-                                </div>
-                            </div>
-                            <div class="sidebox-job">
-                                <div class="sidebox-job-title">
-                                    <a href="#">Landing Page</a>
-                                    <span>$400</span>
-                                </div>
-                                <div class="sidebox-job-speciality">
-                                    <i class="fas fa-briefcase"></i>
-                                    <span>UX/UI Designer</span>
-                                </div>
-                            </div>
-                            <div class="sidebox-job">
-                                <div class="sidebox-job-title">
-                                    <a href="#">Site design</a>
-                                    <span>$4000 - $5000</span>
-                                </div>
-                                <div class="sidebox-job-speciality">
-                                    <i class="fas fa-briefcase"></i>
-                                    <span>UX/UI Designer</span>
-                                </div>
-                            </div>
-                            <div class="sidebox-job">
-                                <div class="sidebox-job-title">
-                                    <a href="#">WP Plugin</a>
-                                    <span>$3800</span>
-                                </div>
-                                <div class="sidebox-job-speciality">
-                                    <i class="fas fa-briefcase"></i>
-                                    <span>Wordpress Developer</span>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
                         <a href="{{ url_for('projects') }}" class="view-profile">View more</a>
                     </div>
@@ -282,66 +195,20 @@
                             <h4>New candidates</h4>
                         </div>
                         <div class="sidebox-content">
+                            {% for user in new_users.items %}
                             <div class="sidebox-user">
-                                <a href="#" class="sidebox-user-img">
-                                    <img src="{{url_for('static', filename='img/user3.jpg')}}" alt="user-img">
+                                <a href="{{ url_for('user_profile', username=user.username) }}" class="sidebox-user-img">
+                                    <img src="{{url_for('static', filename='profile-pictures/' + user.image_file )}}" alt="user-img">
                                 </a>
                                 <div class="sidebox-user-title">
                                     <h5>
-                                        <a href="#">Marsha Baldwin</a>
-                                    </h5>
-                                    <p>Secretary</p>
-                                </div>
-                                <div class="user-title-price">$99/hr</div>
-                            </div>
-                            <div class="sidebox-user">
-                                <a href="#" class="sidebox-user-img">
-                                    <img src="{{url_for('static', filename='img/user2.jpg')}}" alt="user-img">
-                                </a>
-                                <div class="sidebox-user-title">
-                                    <h5>
-                                        <a href="#">Tony Young</a>
+                                        <a href="{{ url_for('user_profile', username=user.username) }}">{{ user.username }}</a>
                                     </h5>
                                     <p>Herbalist</p>
                                 </div>
                                 <div class="user-title-price">$112/hr</div>
                             </div>
-                            <div class="sidebox-user">
-                                <a href="#" class="sidebox-user-img">
-                                    <img src="{{url_for('static', filename='img/user9.jpg')}}" alt="user-img">
-                                </a>
-                                <div class="sidebox-user-title">
-                                    <h5>
-                                        <a href="#">Santiago Robinson</a>
-                                    </h5>
-                                    <p>Fashion Designer</p>
-                                </div>
-                                <div class="user-title-price">$133/hr</div>
-                            </div>
-                            <div class="sidebox-user">
-                                <a href="#" class="sidebox-user-img">
-                                    <img src="{{url_for('static', filename='img/user4.jpg')}}" alt="user-img">
-                                </a>
-                                <div class="sidebox-user-title">
-                                    <h5>
-                                        <a href="#">Sophia Mendoza</a>
-                                    </h5>
-                                    <p>Teaching assistant</p>
-                                </div>
-                                <div class="user-title-price">$80/hr</div>
-                            </div>
-                            <div class="sidebox-user">
-                                <a href="#" class="sidebox-user-img">
-                                    <img src="{{url_for('static', filename='img/user6.jpg')}}" alt="user-img">
-                                </a>
-                                <div class="sidebox-user-title">
-                                    <h5>
-                                        <a href="#">Marsha Baldwin</a>
-                                    </h5>
-                                    <p>Gardener</p>
-                                </div>
-                                <div class="user-title-price">$99/hr</div>
-                            </div>
+                            {% endfor %}
                         </div>
                         <a href="{{ url_for('profiles') }}" class="view-profile">View more</a>
                     </div>

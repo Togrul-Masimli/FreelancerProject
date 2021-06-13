@@ -1,3 +1,4 @@
+from itertools import count
 import os
 import secrets
 from PIL import Image
@@ -13,10 +14,13 @@ from flask_login import login_user, current_user, logout_user, login_required
 @app.route('/home')
 def index():
     posts = Post.query.all()
+    sidebox_posts = Post.query.order_by(Post.date_posted.desc()).paginate(per_page=5)
+    users = User.query.order_by(User.id).paginate(per_page=5)
+    new_users = User.query.order_by(User.id.desc()).paginate(per_page=5)
     if current_user.is_authenticated:
         image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
-        return render_template('index.html', image_file=image_file, posts=posts)
-    return render_template('index.html', posts=posts)
+        return render_template('index.html', image_file=image_file, posts=posts, sidebox_posts=sidebox_posts, users=users, new_users=new_users)
+    return render_template('index.html', posts=posts, sidebox_posts=sidebox_posts, users=users, new_users=new_users)
 
 @app.route('/add-project', methods=['GET','POST'])
 @login_required
@@ -29,12 +33,12 @@ def add_prj():
         return redirect(url_for('index'))
     return render_template('add-project.html', title='Add Project', form=form, legend='New Project')
 
-@app.route('/profile', methods=['GET', 'POST'])
-@login_required
+@app.route('/profile')
 def profile():
-    form = UpdateProfileForm()
+    posts = Post.query.filter_by(author=current_user)
+    count = posts.count()
     image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
-    return render_template('profile.html', title='Profile', image_file=image_file, form=form)
+    return render_template('profile.html', title='Profile', image_file=image_file, posts=posts, count=count)
 
 @app.route('/profile/info')
 def info():
@@ -97,13 +101,16 @@ def settings():
 @app.route('/profiles')
 def profiles():
     users = User.query.all()
-    return render_template('profiles.html', title='Profiles', users=users)
+    count = len(users)
+    return render_template('profiles.html', title='Profiles', users=users, count=count)
 
 @app.route('/projects')
 def projects():
     projects = Post.query.all()
+    sidebox_posts = Post.query.order_by(Post.date_posted.desc()).paginate(per_page=5)
+    new_users = User.query.order_by(User.id.desc()).paginate(per_page=5)
     # comments = projects.comments
-    return render_template('projects.html', title='Projects', projects=projects)
+    return render_template('projects.html', title='Projects', projects=projects, sidebox_posts=sidebox_posts, new_users=new_users)
 
 @app.route('/forgot-password')
 def forgot_password():
@@ -194,3 +201,11 @@ def delete_post(post_id):
     db.session.delete(post)
     db.session.commit()
     return redirect(url_for('index'))
+
+
+@app.route('/profiles/<string:username>')
+def user_profile(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    posts = Post.query.filter_by(author=user)
+    count = posts.count()
+    return render_template('user.html', posts=posts, user=user, count=count)
