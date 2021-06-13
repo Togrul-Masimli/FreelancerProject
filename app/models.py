@@ -17,7 +17,8 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
     posts = db.relationship('Post', backref='author', lazy=True)
-    posts = db.relationship('Comment', backref='comment-author', lazy=True)
+    comments = db.relationship('Comment', backref='comment_author', lazy=True)
+    bids = db.relationship('Bid', backref='bid_owner', lazy=True)
     info = db.relationship('UserInfo', backref='owner', lazy=True)
 
     def __repr__(self):
@@ -45,8 +46,9 @@ class Post(db.Model):
     min_pay = db.Column(db.Integer, nullable=False)
     max_pay = db.Column(db.Integer)
     content = db.Column(db.Text, nullable=False)
-    comments = db.relationship('Comment', backref='host', lazy=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    comments = db.relationship('Comment', backref='host', lazy=True)
+    bids = db.relationship('Bid', backref='bid_host', lazy=True)
 
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
@@ -58,3 +60,18 @@ class Comment(db.Model):
     content = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Comment('{self.content}"
+
+
+class Bid(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    min_rate = db.Column(db.Integer, nullable=False)
+    max_rate = db.Column(db.Integer, nullable=False)
+    delivery_duration = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Bid('{self.min_rate}"

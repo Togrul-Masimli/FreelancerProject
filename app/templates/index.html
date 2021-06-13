@@ -162,7 +162,7 @@
                                 </div>
                                 <div class="post-comments">
                                     <div class="like-comment">
-                                        <button class="accordion" data-filter="comment1">
+                                        <button class="accordion" data-filter="{{ post.id }}">
                                                 <i class="fas fa-comment"></i>
                                             </button>
                                         <span>2</span>
@@ -174,7 +174,7 @@
                                 <span>214</span>
                             </div>
                         </div>
-                        <div class="comment comment1" style="display: none;">
+                        <div class="comment {{ post.id }}" style="display: none;">
                             <form action="#" class="comment-form">
                                 <input type="text" placeholder="Type your comment...">
                                 <button type="button">

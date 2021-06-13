@@ -63,13 +63,14 @@
                     </div>
                 </div>
                 <div class="col-9 d-flex flex-wrap">
+                    {% for user in users %}
                     <div class="profile-card">
                         <div class="profiles-top">
                             <a href="#" class="profile-user-img">
-                                <img src="{{url_for('static',filename='img/user5.jpg')}}" alt="">
+                                <img src="{{url_for('static', filename='profile-pictures/' + user.image_file )}}" alt="">
                             </a>
                             <div class="profile-user-title">
-                                <h2 class="prefiles-user-name">John Doe</h2>
+                                <h2 class="prefiles-user-name">{{ user.username }}</h2>
                                 <p>Graphic Designer</p>
                             </div>
                         </div>
@@ -93,36 +94,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="profile-card">
-                        <div class="profiles-top">
-                            <a href="#" class="profile-user-img">
-                                <img src="{{url_for('static',filename='img/user5.jpg')}}" alt="">
-                            </a>
-                            <div class="profile-user-title">
-                                <h2 class="prefiles-user-name">John Doe</h2>
-                                <p>Graphic Designer</p>
-                            </div>
-                        </div>
-                        <div class="profiles-bottom">
-                            <div class="profile-icons">
-                                <div>
-                                    <i class="fas fa-compass"></i>
-                                    <span class="location-span">Vietnam</span>
-                                </div>
-                                <div class="profile-actions">
-                                    <a href="#" class="green-btn">
-                                        <i class="fas fa-bookmark"></i>
-                                    </a>
-                                    <a href="#" class="red-btn">
-                                        <i class="fas fa-envelope"></i>
-                                    </a>
-                                    <a href="#" class="hire">
-                                        <span>Hire</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
                     <div class="profile-card">
                         <div class="profiles-top">
                             <a href="#" class="profile-user-img">

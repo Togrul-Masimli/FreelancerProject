@@ -64,20 +64,29 @@
                     </div>
                 </div>
                 <div class="col-6">
+                    {% for post in projects %}
                     <div class="post">
                         <div class="post-header">
                             <a href="#" class="post-user-img">
-                                <img src="{{url_for('static',filename='img/user5.jpg')}}" alt="user">
+                                <img src="{{url_for('static', filename='profile-pictures/' + post.author.image_file )}}" alt="user">
                             </a>
                             <div>
                                 <h5>
-                                    <a href="#">John Doe</a>
+                                    <a href="#">{{ post.author.username }}</a>
                                 </h5>
-                                <p>24 mins ago</p>
+                                <p>{{ post.date_posted.strftime('%Y-%m-%d') }}</p>
                             </div>
-                            <div class="dots">
-                                <i class="fas fa-ellipsis-v"></i>
-                            </div>
+                            {% if post.author == current_user %}
+                                <div class="hasDropdown dots">
+                                    <a href="#" class="post-dropdown-container">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                        <ul class="post-dropdown">
+                                            <li><a href="{{url_for('update_post', post_id=post.id)}}">Update</a></li>
+                                            <li><a href="#">Delete</a></li>
+                                        </ul>
+                                    </a>
+                                </div>
+                            {% endif %}
                         </div>
                         <div class="post-icons">
                             <div class="post-icons-left">
@@ -102,15 +111,14 @@
                         </div>
                         <div class="post-title">
                             <h2>
-                                <a href="#">Senior Front-end Developer</a>
+                                <a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a>
                             </h2>
                         </div>
                         <div class="post-options">
-                            <p>$300 - $350</p>
+                            <p>${{ post.min_pay }} - ${{ post.max_pay }}</p>
                         </div>
                         <div class="post-description">
-                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to
-                                use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
+                            <p>{{ post.content }}</p>
                         </div>
                         <div class="post-tags">
                             <a href="#">HTML</a>
@@ -127,7 +135,7 @@
                                 </div>
                                 <div class="post-comments">
                                     <div class="like-comment">
-                                        <button class="accordion" data-filter="comment1">
+                                        <button class="accordion" data-filter="{{ post.id }}">
                                                 <i class="fas fa-comment"></i>
                                             </button>
                                         <span>2</span>
@@ -139,34 +147,36 @@
                                 <span>214</span>
                             </div>
                         </div>
-                        <div class="comment comment1" style="display: none;">
+                        <div class="comment {{ post.id }}" style="display: none;">
                             <form action="#" class="comment-form">
                                 <input type="text" placeholder="Type your comment...">
                                 <button type="button">
                                         <i class="fab fa-telegram-plane"></i>
                                     </button>
                             </form>
-                            <div class="comment-area">
-                                <div class="comment-content">
-                                    <div class="comment-photo-text">
-                                        <a href="#" class="comment-photo">
-                                            <img src="{{url_for('static',filename='img/user9.jpg')}}" alt="profile_photo">
-                                        </a>
-                                        <div class="user-comment">
-                                            <h5>Alan Patrick</h5>
-                                            <p>20 min ago</p>
+                            {% for comment in comments %}
+                                    <div class="comment-area">
+                                        <div class="comment-content">
+                                            <div class="comment-photo-text">
+                                                <a href="#" class="comment-photo">
+                                                    <img src="{{ url_for('static', filename='profile-pictures/' + comment.comment_author.image_file ) }}" alt="profile_photo">
+                                                </a>
+                                                <div class="user-comment">
+                                                    <h5>{{ comment.comment_author.username }}</h5>
+                                                    <p>{{ comment.date_writed.strftime('%Y-%m-%d') }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="comment-text">
+                                                <p>{{ comment.content }}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="comment-text">
-                                        <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p>
-                                    </div>
-                                </div>
-                            </div>
+                            {% endfor %}
                             <div class="comment-area">
                                 <div class="comment-content">
                                     <div class="comment-photo-text">
                                         <a href="#" class="comment-photo">
-                                            <img src="{{url_for('static',filename='img/user2.jpg')}}" alt="profile_photo">
+                                            <img src="{{url_for('static', filename='img/user2.jpg')}}" alt="profile_photo">
                                         </a>
                                         <div class="user-comment">
                                             <h5>Diego Costa</h5>
@@ -180,6 +190,7 @@
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
                     <div class="post">
                         <div class="post-header">
                             <a href="#" class="post-user-img">

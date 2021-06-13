@@ -71,5 +71,12 @@ class PostForm(FlaskForm):
 
 
 class CommentForm(FlaskForm):
-    content = StringField('Content', validators=[DataRequired()])
+    content = StringField('Content', validators=[DataRequired()], render_kw={"placeholder": "Type your comment..."})
     submit = SubmitField('Submit')
+
+
+class BidForm(FlaskForm):
+    min_rate = StringField('Min', validators=[DataRequired()])
+    max_rate = StringField('Max', validators=[DataRequired()])
+    delivery_duration = StringField('Set Your Delivery Time', validators=[DataRequired()])
+    submit = SubmitField('PLACE A BID')

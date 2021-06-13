@@ -1,5 +1,9 @@
-{% extends "layout.html" %} {% block css %}
-<link rel="stylesheet" href="{{url_for('static',filename='css/single-project.css')}}"> {% endblock %} {% block content %}
+{% extends "layout.html" %} 
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='css/single-project.css')}}"> 
+{% endblock %} 
+{% block content %}
 <main>
     <div class="arrow-content">
         <div class="container">
@@ -86,7 +90,7 @@
                                 </div>
                                 <div class="post-comments">
                                     <div class="like-comment">
-                                        <button class="accordion">
+                                        <button class="accordion" data-filter="{{ post.id }}">
                                             <i class="fas fa-comment"></i>
                                             </button>
                                         <span>2</span>
@@ -98,56 +102,42 @@
                                 <span>214</span>
                             </div>
                         </div>
-                        <div class="comment">
-                            <form action="#" class="comment-form">
-                                <input type="text" placeholder="Type your comment...">
-                                <button type="button">
-                                    <i class="fab fa-telegram-plane"></i>
-                                </button>
+                        <div class="comment {{ post.id }}" style="display: none;">
+                            <form action="#" class="comment-form", method="POST">
+                                {{ form.hidden_tag() }}
+                                {{ form.content }}
+                                <button type="submit", name="submit", value="x"><i class="fab fa-telegram-plane"></i></button>
                             </form>
-                            <div class="comment-area">
-                                <div class="comment-content">
-                                    <div class="comment-photo-text">
-                                        <a href="#" class="comment-photo">
-                                            <img src="{{url_for('static',filename='img/user9.jpg')}}" alt="profile_photo">
-                                        </a>
-                                        <div class="user-comment">
-                                            <h5>Alan Patrick</h5>
-                                            <p>20 min ago</p>
+                            {% for comment in comments %}
+                                    <div class="comment-area">
+                                        <div class="comment-content">
+                                            <div class="comment-photo-text">
+                                                <a href="#" class="comment-photo">
+                                                    <img src="{{ url_for('static', filename='profile-pictures/' + comment.comment_author.image_file ) }}" alt="profile_photo">
+                                                </a>
+                                                <div class="user-comment">
+                                                    <h5>{{ comment.comment_author.username }}</h5>
+                                                    <p>{{ comment.date_writed.strftime('%Y-%m-%d') }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="comment-text">
+                                                <p>{{ comment.content }}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="comment-text">
-                                        <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="comment-area">
-                                <div class="comment-content">
-                                    <div class="comment-photo-text">
-                                        <a href="#" class="comment-photo">
-                                            <img src="{{url_for('static',filename='img/user2.jpg')}}" alt="profile_photo">
-                                        </a>
-                                        <div class="user-comment">
-                                            <h5>Diego Costa</h5>
-                                            <p>22 min ago</p>
-                                        </div>
-                                    </div>
-                                    <div class="comment-text">
-                                        <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p>
-                                    </div>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                     <h3 class="freelancer-bid-title">Freelancers Bidding</h3>
+                    {% for bid in bids %}
                     <div class="freelancer-bid">
                         <div class="freelancer-bid-left">
                             <a href="#" class="bid-profile-photo">
-                                <img src="{{url_for('static',filename='img/user1.jpg')}}" alt="profile">
+                                <img src="{{ url_for('static', filename='profile-pictures/' + bid.bid_owner.image_file ) }}" alt="profile">
                             </a>
                             <div class="freelancer">
                                 <h5 class="freelancer-name">
-                                    <a href="#">Tony Young</a></h5>
+                                    <a href="#">{{ bid.bid_owner.username }}</a></h5>
                                 <p>
                                     <i class="fas fa-compass"></i>
                                     <span>USA</span>
@@ -155,77 +145,35 @@
                             </div>
                         </div>
                         <div class="freelancer-bid-cost">
-                            <p>$300 - $350</p>
-                            <span>in 8 days</span>
+                            <p>${{ bid.min_rate }} - ${{ bid.max_rate }}</p>
+                            <span>in {{ bid.delivery_duration }} days</span>
                         </div>
                     </div>
-                    <div class="freelancer-bid">
-                        <div class="freelancer-bid-left">
-                            <a href="#" class="bid-profile-photo">
-                                <img src="{{url_for('static',filename='img/user5.jpg')}}" alt="profile">
-                            </a>
-                            <div class="freelancer">
-                                <h5 class="freelancer-name">
-                                    <a href="#">John Doe</a></h5>
-                                <p>
-                                    <i class="fas fa-compass"></i>
-                                    <span>Vietnam</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="freelancer-bid-cost">
-                            <p>$300 - $320</p>
-                            <span>in 10 days</span>
-                        </div>
-                    </div>
-                    <div class="freelancer-bid">
-                        <div class="freelancer-bid-left">
-                            <a href="#" class="bid-profile-photo">
-                                <img src="{{url_for('static',filename='img/user6.jpg')}}" alt="profile">
-                            </a>
-                            <div class="freelancer">
-                                <h5 class="freelancer-name">
-                                    <a href="#">Marsha Baldwin</a></h5>
-                                <p>
-                                    <i class="fas fa-compass"></i>
-                                    <span>Poland</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="freelancer-bid-cost">
-                            <p>$280 - $330</p>
-                            <span>in 11 days</span>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
                 <div class="col-3">
-                    <div class="filter">
-                        <div class="sidebox-title">Bid now this job
-                            <button type="button">Clear all</button>
-                        </div>
-                        <div class="filter-group">
-                            <label class="filter-label">Set Your Minimal Rate ($):</label>
-                            <div class="filter-range">
-                                <div id="filter-range-start">$18</div>
-                                <div id="filter-range-end">$34</div>
+                    <form action="" method="POST">
+                        {{ form.hidden_tag() }}
+                        <div class="filter">
+                            <div class="sidebox-title">Bid now this job
+                                <button type="button">Clear all</button>
+                            </div>
+                            <div class="filter-group">
+                                <label class="filter-label">Set Your Minimal Rate ($):</label>
+                                <div class="filter-range">
+                                    {{ bidform.min_rate }}
+                                    {{ bidform.max_rate }}
+                                </div>
+                            </div>
+                            <div class="filter-group">
+                                {{ bidform.delivery_duration.label(class="filter-label") }}
+                                {{ bidform.delivery_duration(class="form-input") }}
+                            </div>
+                            <div class="filter-group">
+                                {{ bidform.submit(class='form-button') }}
                             </div>
                         </div>
-                        <div class="filter-group">
-                            <label class="filter-label">Set Your Delivery Time:</label>
-                            <select name="sort" id="sort" class="filter-select">
-                                <option>3 Days</option>
-                                <option>5 Days</option>
-                                <option>10 Days</option>
-                                <option>15 Days</option>
-                                <option>20 Days</option>
-                                <option>25 Days</option>
-                                <option>30 Days</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <button class="filter-button" type="button">PLACE A BID</button>
-                        </div>
-                    </div>
+                    </form>
                     <div class="sidebox-social sidebox">
                         <span>Share:</span>
                         <ul>

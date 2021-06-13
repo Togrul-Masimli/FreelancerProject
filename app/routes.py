@@ -4,8 +4,8 @@ from PIL import Image
 from flask import render_template, url_for, redirect, request, abort
 from wtforms.validators import Email
 from app import app, db, bcrypt
-from app.forms import RegistrationForm, LoginForm, UpdateInfoForm, UpdateProfileForm, PostForm, CommentForm
-from app.models import User, Post, UserInfo, Comment
+from app.forms import RegistrationForm, LoginForm, UpdateInfoForm, UpdateProfileForm, PostForm, CommentForm, BidForm
+from app.models import User, Post, UserInfo, Comment, Bid
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -71,6 +71,7 @@ def settings():
         form.username.data = current_user.username
         form.email.data = current_user.email
 
+    
     # if formInfo.validate_on_submit():
     #     owner = current_user
     #     owner.speciality = formInfo.speciality.data
@@ -95,11 +96,14 @@ def settings():
 
 @app.route('/profiles')
 def profiles():
-    return render_template('profiles.html', title='Profiles')
+    users = User.query.all()
+    return render_template('profiles.html', title='Profiles', users=users)
 
 @app.route('/projects')
 def projects():
-    return render_template('projects.html', title='Projects')
+    projects = Post.query.all()
+    # comments = projects.comments
+    return render_template('projects.html', title='Projects', projects=projects)
 
 @app.route('/forgot-password')
 def forgot_password():
@@ -137,10 +141,26 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/projects/<int:post_id>')
+@app.route('/projects/<int:post_id>', methods=['GET','POST'])
 def post(post_id):
+    form = CommentForm()
+    bidform = BidForm()
+
     post = Post.query.get_or_404(post_id)
-    return render_template('single-project.html', title=post.title , post=post)
+    bids = post.bids
+    comments = post.comments
+    if form.validate_on_submit():
+        comment = Comment(content=form.content.data, comment_author=current_user, host=post)
+        db.session.add(comment)
+        db.session.commit()
+        return redirect(url_for('post',post_id=post.id, comment=comment, post=post, title=post.title, form=form, bidform=bidform))
+
+    if bidform.validate_on_submit():
+        bid = Bid(min_rate=bidform.min_rate.data, max_rate=bidform.max_rate.data, delivery_duration=bidform.delivery_duration.data, bid_owner=current_user, bid_host=post)
+        db.session.add(bid)
+        db.session.commit()
+        return redirect(url_for('post',post_id=post.id, bid=bid, post=post, title=post.title, bidform=bidform, form=form))
+    return render_template('single-project.html', title=post.title , post=post, bids=bids, form=form,comments=comments, bidform=bidform)
 
 
 @app.route('/projects/<int:post_id>/update', methods=['GET','POST'])
