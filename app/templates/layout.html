@@ -52,7 +52,7 @@
                         </a>
                     </div>
                     <div class="header-user">
-                        <a href="#" class="user-img">
+                        <a href="{{ url_for('profile') }}" class="user-img">
                             <img src="{{ image_file }}" alt="user">
                         </a>
                         <a href="{{ url_for('profile') }}" class="user-name"><span>{{ current_user.username }}</span></a>

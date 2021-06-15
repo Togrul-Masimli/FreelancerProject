@@ -1,3 +1,4 @@
+from inspect import currentframe
 from itertools import count
 import os
 import secrets
@@ -14,6 +15,8 @@ from flask_login import login_user, current_user, logout_user, login_required
 @app.route('/home')
 def index():
     posts = Post.query.all()
+    comments = Comment.query.filter(Comment.post_id == Post.id).all()
+    print(comments)    
     sidebox_posts = Post.query.order_by(Post.date_posted.desc()).paginate(per_page=5)
     users = User.query.order_by(User.id).paginate(per_page=5)
     new_users = User.query.order_by(User.id.desc()).paginate(per_page=5)
@@ -26,12 +29,13 @@ def index():
 @login_required
 def add_prj():
     form = PostForm()
+    image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
     if form.validate_on_submit():
         post = Post(title=form.title.data, content=form.content.data, min_pay=form.cost_min.data, max_pay=form.cost_max.data, author=current_user)
         db.session.add(post)
         db.session.commit()
         return redirect(url_for('index'))
-    return render_template('add-project.html', title='Add Project', form=form, legend='New Project')
+    return render_template('add-project.html', title='Add Project', form=form, legend='New Project', image_file=image_file)
 
 @app.route('/profile')
 def profile():
@@ -86,15 +90,16 @@ def settings():
     #     return redirect(url_for('settings'))
     if formInfo.validate_on_submit():
         userinfo = UserInfo(speciality=formInfo.speciality.data, location=formInfo.location.data, age=formInfo.age.data, experience=formInfo.experience.data, owner=current_user)
+        current_user.speciality = formInfo.speciality.data
         db.session.add(userinfo)
         db.session.commit()
+        print(userinfo.speciality)
+        # s = current_user.speciality
+        print(current_user.speciality)
         return redirect(url_for('settings'))
-    # elif request.method == 'GET':
-    #     owner = current_user
-    #     formInfo.speciality.data = current_user.speciality
-    #     formInfo.location.data = current_user.info.location
-    #     formInfo.age.data = current_user.info.age
-    #     formInfo.experience.data = current_user.info.experience
+        # return render_template('profile_settings.html', title='Settings', form=form, formInfo=formInfo)
+    if request.method == 'GET':
+        print('-------------------', current_user.info)
     image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
     return render_template('profile_settings.html', title='Settings', image_file=image_file, form=form, formInfo=formInfo)
 
@@ -102,15 +107,17 @@ def settings():
 def profiles():
     users = User.query.all()
     count = len(users)
-    return render_template('profiles.html', title='Profiles', users=users, count=count)
+    image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
+    return render_template('profiles.html', title='Profiles', users=users, count=count, image_file=image_file)
 
 @app.route('/projects')
 def projects():
     projects = Post.query.all()
     sidebox_posts = Post.query.order_by(Post.date_posted.desc()).paginate(per_page=5)
     new_users = User.query.order_by(User.id.desc()).paginate(per_page=5)
+    image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
     # comments = projects.comments
-    return render_template('projects.html', title='Projects', projects=projects, sidebox_posts=sidebox_posts, new_users=new_users)
+    return render_template('projects.html', title='Projects', projects=projects, sidebox_posts=sidebox_posts, new_users=new_users, image_file=image_file)
 
 @app.route('/forgot-password')
 def forgot_password():
@@ -135,6 +142,7 @@ def sign_up():
         return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
+        global user
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         user = User(username=form.username.data, email=form.email.data, password = hashed_password)
         db.session.add(user)
@@ -156,24 +164,26 @@ def post(post_id):
     post = Post.query.get_or_404(post_id)
     bids = post.bids
     comments = post.comments
+    image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
     if form.validate_on_submit():
         comment = Comment(content=form.content.data, comment_author=current_user, host=post)
         db.session.add(comment)
         db.session.commit()
-        return redirect(url_for('post',post_id=post.id, comment=comment, post=post, title=post.title, form=form, bidform=bidform))
+        return redirect(url_for('post',post_id=post.id, comment=comment, post=post, title=post.title, form=form, bidform=bidform, image_file=image_file))
 
     if bidform.validate_on_submit():
         bid = Bid(min_rate=bidform.min_rate.data, max_rate=bidform.max_rate.data, delivery_duration=bidform.delivery_duration.data, bid_owner=current_user, bid_host=post)
         db.session.add(bid)
         db.session.commit()
-        return redirect(url_for('post',post_id=post.id, bid=bid, post=post, title=post.title, bidform=bidform, form=form))
-    return render_template('single-project.html', title=post.title , post=post, bids=bids, form=form,comments=comments, bidform=bidform)
+        return redirect(url_for('post',post_id=post.id, bid=bid, post=post, title=post.title, bidform=bidform, form=form, image_file=image_file))
+    return render_template('single-project.html', title=post.title , post=post, bids=bids, form=form,comments=comments, bidform=bidform, image_file=image_file)
 
 
 @app.route('/projects/<int:post_id>/update', methods=['GET','POST'])
 @login_required
 def update_post(post_id):
     post = Post.query.get_or_404(post_id)
+    image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
     if post.author != current_user:
         abort(403)
     form = PostForm()
@@ -189,7 +199,7 @@ def update_post(post_id):
         form.content.data = post.content
         form.cost_min.data = post.min_pay
         form.cost_max.data = post.max_pay
-    return render_template('add-project.html', title='Update Post' , post=post, legend='Update Post', form=form)
+    return render_template('add-project.html', title='Update Post' , post=post, legend='Update Post', form=form, image_file=image_file)
 
 
 @app.route('/projects/<int:post_id>/delete', methods=['GET','POST'])
@@ -208,4 +218,5 @@ def user_profile(username):
     user = User.query.filter_by(username=username).first_or_404()
     posts = Post.query.filter_by(author=user)
     count = posts.count()
-    return render_template('user.html', posts=posts, user=user, count=count)
+    image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
+    return render_template('user.html', posts=posts, user=user, count=count, image_file=image_file)

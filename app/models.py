@@ -1,7 +1,7 @@
 from datetime import date, datetime
 from enum import unique
 from sqlalchemy.orm import backref
-from app import db, login_manager
+from app import db, login_manager, admin, ModelView
 from flask_login import UserMixin
 
 
@@ -62,7 +62,7 @@ class Comment(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
 
     def __repr__(self):
-        return f"Comment('{self.content}"
+        return f"Comment('{self.content})"
 
 
 class Bid(db.Model):
@@ -75,3 +75,10 @@ class Bid(db.Model):
 
     def __repr__(self):
         return f"Bid('{self.min_rate}"
+
+
+
+admin.add_view(ModelView(Post, db.session))
+admin.add_view(ModelView(User, db.session))
+admin.add_view(ModelView(Comment, db.session))
+admin.add_view(ModelView(Bid, db.session))
