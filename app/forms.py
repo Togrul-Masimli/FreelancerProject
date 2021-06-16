@@ -80,3 +80,6 @@ class BidForm(FlaskForm):
     max_rate = StringField('Max', validators=[DataRequired()])
     delivery_duration = StringField('Set Your Delivery Time', validators=[DataRequired()])
     submit = SubmitField('PLACE A BID')
+
+class DeleteForm(FlaskForm):
+    submit = SubmitField('Submit')

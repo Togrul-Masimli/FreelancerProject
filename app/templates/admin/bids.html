@@ -1,0 +1,28 @@
+{% extends "admin/base.html" %}
+{% block content %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Owner</th>
+                <th scope="col">Min Rate</th>
+                <th scope="col">Max Rate</th>
+                <th scope="col">Delivery Duration</th>
+                <th scope="col">Host Post</th>
+            </tr>
+        </thead>
+        {% for bid in bids %}
+        <tbody>
+            <tr>
+                <th scope="row">{{ bid.id }}</th>
+                <td>{{ bid.bid_owner.username }}</td>
+                <td>{{bid.min_rate }}</td>
+                <td>{{bid.max_rate }}</td>
+                <td>{{bid.delivery_duration }}</td>
+                <td>{{bid.bid_host.id }}</td>
+                <td><a href="{{url_for('admin_delete_bid', bid_id=bid.id)}}">Delete</a></td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+{% endblock %}

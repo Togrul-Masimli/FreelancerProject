@@ -1,7 +1,7 @@
 from datetime import date, datetime
 from enum import unique
 from sqlalchemy.orm import backref
-from app import db, login_manager, admin, ModelView
+from app import db, login_manager
 from flask_login import UserMixin
 
 
@@ -16,10 +16,10 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
-    posts = db.relationship('Post', backref='author', lazy=True)
-    comments = db.relationship('Comment', backref='comment_author', lazy=True)
-    bids = db.relationship('Bid', backref='bid_owner', lazy=True)
-    info = db.relationship('UserInfo', backref='owner', lazy=True)
+    posts = db.relationship('Post', backref='author', lazy=True, cascade='all,delete')
+    comments = db.relationship('Comment', backref='comment_author', lazy=True, cascade='all,delete')
+    bids = db.relationship('Bid', backref='bid_owner', lazy=True, cascade='all,delete')
+    info = db.relationship('UserInfo', backref='owner', lazy=True, cascade='all,delete')
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
@@ -75,10 +75,3 @@ class Bid(db.Model):
 
     def __repr__(self):
         return f"Bid('{self.min_rate}"
-
-
-
-admin.add_view(ModelView(Post, db.session))
-admin.add_view(ModelView(User, db.session))
-admin.add_view(ModelView(Comment, db.session))
-admin.add_view(ModelView(Bid, db.session))

@@ -1,0 +1,30 @@
+{% extends "admin/base.html" %}
+{% block content %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Title</th>
+                <th scope="col">Date Posted</th>
+                <th scope="col">Min Pay</th>
+                <th scope="col">Max Pay</th>
+                <th scope="col">Post Content</th>
+                <th scope="col">Author's Username</th>
+            </tr>
+        </thead>
+        {% for post in posts %}
+        <tbody>
+            <tr>
+                <th scope="row">{{ post.id }}</th>
+                <td>{{ post.title }}</td>
+                <td>{{ post.date_posted }}</td>
+                <td>{{ post.min_pay }}</td>
+                <td>{{ post.max_pay }}</td>
+                <td>{{ post.content }}</td>
+                <td>{{ post.author.username }}</td>
+                <td><a href="{{url_for('admin_delete_post', post_id=post.id)}}">Delete</a></td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    {% endblock %}

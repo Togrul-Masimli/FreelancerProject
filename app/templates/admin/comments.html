@@ -1,0 +1,26 @@
+{% extends "admin/base.html" %}
+{% block content %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Content</th>
+                <th scope="col">Date Writed</th>
+                <th scope="col">Author</th>
+                <th scope="col">Host Post</th>
+            </tr>
+        </thead>
+        {% for comment in comments %}
+        <tbody>
+            <tr>
+                <th scope="row">{{ comment.id }}</th>
+                <td>{{ comment.content }}</td>
+                <td>{{comment.date_writed }}</td>
+                <td>{{comment.comment_author.username }}</td>
+                <td>{{comment.host.id }}</td>
+                <td><a href="{{url_for('admin_delete_comment', comment_id=comment.id)}}">Delete</a></td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    {% endblock %}

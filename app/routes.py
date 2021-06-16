@@ -6,7 +6,7 @@ from PIL import Image
 from flask import render_template, url_for, redirect, request, abort
 from wtforms.validators import Email
 from app import app, db, bcrypt
-from app.forms import RegistrationForm, LoginForm, UpdateInfoForm, UpdateProfileForm, PostForm, CommentForm, BidForm
+from app.forms import DeleteForm, RegistrationForm, LoginForm, UpdateInfoForm, UpdateProfileForm, PostForm, CommentForm, BidForm
 from app.models import User, Post, UserInfo, Comment, Bid
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -15,15 +15,16 @@ from flask_login import login_user, current_user, logout_user, login_required
 @app.route('/home')
 def index():
     posts = Post.query.all()
-    comments = Comment.query.filter(Comment.post_id == Post.id).all()
-    print(comments)    
+    comment = Comment.query.filter(Post.comments.id==Comment.id).all()
+    print(comment)
     sidebox_posts = Post.query.order_by(Post.date_posted.desc()).paginate(per_page=5)
     users = User.query.order_by(User.id).paginate(per_page=5)
     new_users = User.query.order_by(User.id.desc()).paginate(per_page=5)
+    comment_count = Comment.query.filter(Comment.post_id == Post.id).count()
     if current_user.is_authenticated:
         image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
-        return render_template('index.html', image_file=image_file, posts=posts, sidebox_posts=sidebox_posts, users=users, new_users=new_users)
-    return render_template('index.html', posts=posts, sidebox_posts=sidebox_posts, users=users, new_users=new_users)
+        return render_template('index.html', image_file=image_file, posts=posts, sidebox_posts=sidebox_posts, users=users, new_users=new_users,comment_count=comment_count)
+    return render_template('index.html', posts=posts, sidebox_posts=sidebox_posts, users=users, new_users=new_users, comment_count=comment_count)
 
 @app.route('/add-project', methods=['GET','POST'])
 @login_required
@@ -165,6 +166,7 @@ def post(post_id):
     bids = post.bids
     comments = post.comments
     image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
+    comment_count = Comment.query.filter(Comment.post_id == Post.id).count()
     if form.validate_on_submit():
         comment = Comment(content=form.content.data, comment_author=current_user, host=post)
         db.session.add(comment)
@@ -176,7 +178,7 @@ def post(post_id):
         db.session.add(bid)
         db.session.commit()
         return redirect(url_for('post',post_id=post.id, bid=bid, post=post, title=post.title, bidform=bidform, form=form, image_file=image_file))
-    return render_template('single-project.html', title=post.title , post=post, bids=bids, form=form,comments=comments, bidform=bidform, image_file=image_file)
+    return render_template('single-project.html', title=post.title , post=post, bids=bids, form=form,comments=comments, bidform=bidform, image_file=image_file, comment_count=comment_count)
 
 
 @app.route('/projects/<int:post_id>/update', methods=['GET','POST'])
@@ -220,3 +222,58 @@ def user_profile(username):
     count = posts.count()
     image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
     return render_template('user.html', posts=posts, user=user, count=count, image_file=image_file)
+
+
+@app.route('/admin')
+def admin():
+    return render_template('admin/home.html')
+
+@app.route('/admin/posts', methods=['GET','POST'])
+def admin_posts():
+    posts = Post.query.all()
+    return render_template('admin/posts.html', posts=posts)
+
+@app.route('/admin/users', methods=['GET','POST'])
+def admin_users():
+    users = User.query.all()
+    form = DeleteForm()
+    return render_template('admin/users.html', users=users, form=form)
+
+@app.route('/admin/comments', methods=['GET','POST'])
+def admin_comments():
+    comments = Comment.query.all()
+    return render_template('admin/comments.html', comments=comments)
+
+@app.route('/admin/bids', methods=['GET','POST'])
+def admin_bids():
+    bids = Bid.query.all()
+    return render_template('admin/bids.html', bids=bids)
+
+@app.route('/admin/<int:user_id>/delete', methods=['GET','POST'])
+def admin_delete(user_id):
+    deleted_user = User.query.get_or_404(user_id)
+    db.session.delete(deleted_user)
+    db.session.commit()
+    return redirect(url_for('admin_users'))
+
+@app.route('/admin/posts/<int:post_id>/delete', methods=['GET','POST'])
+def admin_delete_post(post_id):
+    deleted_post = Post.query.get_or_404(post_id)
+    db.session.delete(deleted_post)
+    db.session.commit()
+    return redirect(url_for('admin_posts'))
+
+@app.route('/admin/comments/<int:comment_id>/delete', methods=['GET','POST'])
+def admin_delete_comment(comment_id):
+    deleted_comment = Comment.query.get_or_404(comment_id)
+    db.session.delete(deleted_comment)
+    db.session.commit()
+    return redirect(url_for('admin_comments'))
+
+
+@app.route('/admin/bids/<int:bid_id>/delete', methods=['GET','POST'])
+def admin_delete_bid(bid_id):
+    deleted_bid = Bid.query.get_or_404(bid_id)
+    db.session.delete(deleted_bid)
+    db.session.commit()
+    return redirect(url_for('admin_bids'))
