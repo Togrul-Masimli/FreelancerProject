@@ -6,7 +6,7 @@ from PIL import Image
 from flask import render_template, url_for, redirect, request, abort
 from wtforms.validators import Email
 from app import app, db, bcrypt
-from app.forms import DeleteForm, RegistrationForm, LoginForm, UpdateInfoForm, UpdateProfileForm, PostForm, CommentForm, BidForm
+from app.forms import RegistrationForm, LoginForm, UpdateInfoForm, UpdateProfileForm, PostForm, CommentForm, BidForm
 from app.models import User, Post, UserInfo, Comment, Bid
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -15,8 +15,6 @@ from flask_login import login_user, current_user, logout_user, login_required
 @app.route('/home')
 def index():
     posts = Post.query.all()
-    comment = Comment.query.filter(Post.comments.id==Comment.id).all()
-    print(comment)
     sidebox_posts = Post.query.order_by(Post.date_posted.desc()).paginate(per_page=5)
     users = User.query.order_by(User.id).paginate(per_page=5)
     new_users = User.query.order_by(User.id.desc()).paginate(per_page=5)
@@ -224,7 +222,7 @@ def user_profile(username):
     return render_template('user.html', posts=posts, user=user, count=count, image_file=image_file)
 
 
-@app.route('/admin')
+@app.route('/admin/')
 def admin():
     return render_template('admin/home.html')
 
@@ -236,8 +234,7 @@ def admin_posts():
 @app.route('/admin/users', methods=['GET','POST'])
 def admin_users():
     users = User.query.all()
-    form = DeleteForm()
-    return render_template('admin/users.html', users=users, form=form)
+    return render_template('admin/users.html', users=users)
 
 @app.route('/admin/comments', methods=['GET','POST'])
 def admin_comments():

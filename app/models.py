@@ -1,6 +1,6 @@
 from datetime import date, datetime
 from enum import unique
-from sqlalchemy.orm import backref
+from sqlalchemy.orm import backref, lazyload
 from app import db, login_manager
 from flask_login import UserMixin
 
@@ -9,6 +9,10 @@ from flask_login import UserMixin
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+post_tags=db.Table('post_tags',
+    db.Column('tag_id', db.Integer, db.ForeignKey('tag.tag_id')),
+    db.Column('id', db.Integer, db.ForeignKey('post.id'))
+)
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -75,3 +79,18 @@ class Bid(db.Model):
 
     def __repr__(self):
         return f"Bid('{self.min_rate}"
+
+class Tag(db.Model):
+    tag_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20))
+    posttags = db.relationship('Post', secondary=post_tags, backref=db.backref('tags', lazy='dynamic'))
+
+    def __repr__(self):
+        return f"Tag('{self.name})"
+
+class Privacy(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text, nullable=False)
+
+    def __repr__(self):
+        return f"Privacy('{self.content})"

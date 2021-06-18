@@ -1,6 +1,9 @@
 {% extends "admin/base.html" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+{% endblock %}
 {% block content %}
-    <table class="table table-striped">
+    <table class="content-table">
         <thead>
             <tr>
                 <th scope="col">Id</th>
@@ -9,6 +12,7 @@
                 <th scope="col">Max Rate</th>
                 <th scope="col">Delivery Duration</th>
                 <th scope="col">Host Post</th>
+                <th scope="col">Delete</th>
             </tr>
         </thead>
         {% for bid in bids %}
@@ -20,7 +24,7 @@
                 <td>{{bid.max_rate }}</td>
                 <td>{{bid.delivery_duration }}</td>
                 <td>{{bid.bid_host.id }}</td>
-                <td><a href="{{url_for('admin_delete_bid', bid_id=bid.id)}}">Delete</a></td>
+                <td><a href="{{url_for('admin_delete_bid', bid_id=bid.id)}}"><i class="far fa-trash-alt" style="color: red;"></i></a></td>
             </tr>
         </tbody>
         {% endfor %}

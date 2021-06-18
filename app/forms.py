@@ -1,10 +1,12 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, SelectField
 from wtforms import validators
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from app.models import User, UserInfo
+from app.models import User, UserInfo, Tag
+
+tags = Tag.query.all()
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)], render_kw={"placeholder": "Username"})
@@ -81,5 +83,3 @@ class BidForm(FlaskForm):
     delivery_duration = StringField('Set Your Delivery Time', validators=[DataRequired()])
     submit = SubmitField('PLACE A BID')
 
-class DeleteForm(FlaskForm):
-    submit = SubmitField('Submit')

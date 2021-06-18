@@ -1,6 +1,9 @@
 {% extends "admin/base.html" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+{% endblock %}
 {% block content %}
-    <table class="table table-striped">
+    <table class="content-table">
         <thead>
             <tr>
                 <th scope="col">Id</th>
@@ -10,21 +13,23 @@
                 <th scope="col">Max Pay</th>
                 <th scope="col">Post Content</th>
                 <th scope="col">Author's Username</th>
+                <th scope="col">Delete</th>
             </tr>
         </thead>
         {% for post in posts %}
         <tbody>
             <tr>
-                <th scope="row">{{ post.id }}</th>
+                <td>{{ post.id }}</th>
                 <td>{{ post.title }}</td>
                 <td>{{ post.date_posted }}</td>
                 <td>{{ post.min_pay }}</td>
                 <td>{{ post.max_pay }}</td>
                 <td>{{ post.content }}</td>
                 <td>{{ post.author.username }}</td>
-                <td><a href="{{url_for('admin_delete_post', post_id=post.id)}}">Delete</a></td>
+                <td><a href="{{url_for('admin_delete_post', post_id=post.id)}}"><i class="far fa-trash-alt" style="color: red;"></i></a></td>
             </tr>
         </tbody>
         {% endfor %}
     </table>
+    <script src="../../static/js/script.js"></script>
     {% endblock %}
