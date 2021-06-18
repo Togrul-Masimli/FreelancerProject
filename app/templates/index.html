@@ -12,7 +12,7 @@
                                 <img src="{{ image_file }}" alt="user">
                             </figure>
                             <span class="user-name-span">{{ current_user.username }}</span>
-                            <span class="speciality">Front-end Developer</span>
+                            <span class="speciality">{{ current_user.speciality }}</span>
                         </div>
                         <div class="button-field">
                             <a href="{{url_for('add_prj')}}" class="btn-project">Post a project</a>
@@ -59,11 +59,11 @@
                             </div>
                             {% if post.author == current_user %}
                                 <div class="hasDropdown dots">
-                                    <a href="#" class="post-dropdown-container">
+                                    <a href="#/" class="post-dropdown-container">
                                         <i class="fas fa-ellipsis-v"></i>
                                         <ul class="post-dropdown">
                                             <li><a href="{{url_for('update_post', post_id=post.id)}}">Update</a></li>
-                                            <li><a href="#">Delete</a></li>
+                                            <li><a href="{{url_for('delete_post', post_id=post.id)}}">Delete</a></li>
                                         </ul>
                                     </a>
                                 </div>
@@ -73,7 +73,7 @@
                             <div class="post-icons-left">
                                 <div class="post-company">
                                     <i class="fas fa-briefcase"></i>
-                                    <span>Front-end Developer</span>
+                                    <span>{{ post.author.speciality }}</span>
                                 </div>
                             </div>
                             <div class="post-icons-right">
@@ -183,7 +183,7 @@
                                 </div>
                                 <div class="sidebox-job-speciality">
                                     <i class="fas fa-briefcase"></i>
-                                    <span>Front-end Developer</span>
+                                    <span>{{ post.author.speciality }}</span>
                                 </div>
                             </div>
                             {% endfor %}

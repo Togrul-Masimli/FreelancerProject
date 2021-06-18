@@ -4,7 +4,7 @@ from flask_login import current_user
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, SelectField
 from wtforms import validators
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from app.models import User, UserInfo, Tag
+from app.models import User, Tag
 
 tags = Tag.query.all()
 

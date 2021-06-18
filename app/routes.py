@@ -7,7 +7,7 @@ from flask import render_template, url_for, redirect, request, abort
 from wtforms.validators import Email
 from app import app, db, bcrypt
 from app.forms import RegistrationForm, LoginForm, UpdateInfoForm, UpdateProfileForm, PostForm, CommentForm, BidForm
-from app.models import User, Post, UserInfo, Comment, Bid
+from app.models import User, Post, Comment, Bid
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -40,13 +40,15 @@ def add_prj():
 def profile():
     posts = Post.query.filter_by(author=current_user)
     count = posts.count()
+    sidebox_posts = Post.query.order_by(Post.date_posted.desc()).paginate(per_page=5)
     image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
-    return render_template('profile.html', title='Profile', image_file=image_file, posts=posts, count=count)
+    return render_template('profile.html', title='Profile', image_file=image_file, posts=posts, count=count, sidebox_posts=sidebox_posts)
 
 @app.route('/profile/info')
 def info():
     image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
-    return render_template('profile_info.html', title='User Info', image_file=image_file)
+    sidebox_posts = Post.query.order_by(Post.date_posted.desc()).paginate(per_page=5)
+    return render_template('profile_info.html', title='User Info', image_file=image_file, sidebox_posts=sidebox_posts)
 
 
 def save_picture(form_picture):
@@ -66,6 +68,7 @@ def save_picture(form_picture):
 def settings():
     form = UpdateProfileForm()
     formInfo = UpdateInfoForm()
+    sidebox_posts = Post.query.order_by(Post.date_posted.desc()).paginate(per_page=5)
     if form.validate_on_submit():
         if form.picture.data:
             picture_file = save_picture(form.picture.data)
@@ -79,28 +82,20 @@ def settings():
         form.email.data = current_user.email
 
     
-    # if formInfo.validate_on_submit():
-    #     owner = current_user
-    #     owner.speciality = formInfo.speciality.data
-    #     current_user.info.location = formInfo.location.data
-    #     current_user.info.age = formInfo.age.data
-    #     current_user.info.experience = formInfo.experience.data
-    #     db.session.commit()
-    #     return redirect(url_for('settings'))
     if formInfo.validate_on_submit():
-        userinfo = UserInfo(speciality=formInfo.speciality.data, location=formInfo.location.data, age=formInfo.age.data, experience=formInfo.experience.data, owner=current_user)
         current_user.speciality = formInfo.speciality.data
-        db.session.add(userinfo)
+        current_user.experience = formInfo.experience.data
+        current_user.location = formInfo.location.data
+        current_user.age = formInfo.age.data
         db.session.commit()
-        print(userinfo.speciality)
-        # s = current_user.speciality
-        print(current_user.speciality)
-        return redirect(url_for('settings'))
-        # return render_template('profile_settings.html', title='Settings', form=form, formInfo=formInfo)
+    #     return redirect(url_for('settings'))
     if request.method == 'GET':
-        print('-------------------', current_user.info)
+        formInfo.speciality.data = current_user.speciality
+        formInfo.experience.data = current_user.experience
+        formInfo.location.data = current_user.location
+        formInfo.age.data = current_user.age
     image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
-    return render_template('profile_settings.html', title='Settings', image_file=image_file, form=form, formInfo=formInfo)
+    return render_template('profile_settings.html', title='Settings', image_file=image_file, form=form, formInfo=formInfo, sidebox_posts=sidebox_posts)
 
 @app.route('/profiles')
 def profiles():
@@ -218,8 +213,9 @@ def user_profile(username):
     user = User.query.filter_by(username=username).first_or_404()
     posts = Post.query.filter_by(author=user)
     count = posts.count()
+    sidebox_posts = Post.query.order_by(Post.date_posted.desc()).paginate(per_page=5)
     image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
-    return render_template('user.html', posts=posts, user=user, count=count, image_file=image_file)
+    return render_template('user.html', posts=posts, user=user, count=count, image_file=image_file, sidebox_posts=sidebox_posts)
 
 
 @app.route('/admin/')

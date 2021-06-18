@@ -44,11 +44,11 @@
                     </div>
                     {% if current_user.is_authenticated %}
                     <div class="header-contact">
-                        <a href="#">
-                            <i class="fas fa-envelope"></i>
+                        <a href="{{ url_for('logout') }}">
+                            <i class="fas fa-sign-out-alt"></i>
                         </a>
-                        <a href="#" class="bell-dropdown-container dropdown-container">
-                            <i class="fas fa-bell"></i>
+                        <a href="{{ url_for('settings') }}" class="bell-dropdown-container dropdown-container">
+                            <i class="fas fa-cog"></i>
                         </a>
                     </div>
                     <div class="header-user">

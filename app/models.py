@@ -20,27 +20,18 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
-    posts = db.relationship('Post', backref='author', lazy=True, cascade='all,delete')
-    comments = db.relationship('Comment', backref='comment_author', lazy=True, cascade='all,delete')
-    bids = db.relationship('Bid', backref='bid_owner', lazy=True, cascade='all,delete')
-    info = db.relationship('UserInfo', backref='owner', lazy=True, cascade='all,delete')
-
-    def __repr__(self):
-        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
-
-
-class UserInfo(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
     about_user = db.Column(db.Text)
     education = db.Column(db.Text)
     speciality = db.Column(db.String(20))
     location = db.Column(db.String(20))
     age = db.Column(db.Integer)
     experience = db.Column(db.Integer)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    posts = db.relationship('Post', backref='author', lazy=True, cascade='all,delete')
+    comments = db.relationship('Comment', backref='comment_author', lazy=True, cascade='all,delete')
+    bids = db.relationship('Bid', backref='bid_owner', lazy=True, cascade='all,delete')
 
     def __repr__(self):
-        return f"UserInfo('{self.about_user}')"
+        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
 
 class Post(db.Model):

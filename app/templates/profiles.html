@@ -64,6 +64,7 @@
                 </div>
                 <div class="col-9 d-flex flex-wrap">
                     {% for user in users %}
+                    {% if user != current_user %}
                     <div class="profile-card">
                         <div class="profiles-top">
                             <a href="{{ url_for('user_profile', username=user.username) }}" class="profile-user-img">
@@ -71,14 +72,14 @@
                             </a>
                             <div class="profile-user-title">
                                 <h2 class="prefiles-user-name"><a href="{{ url_for('user_profile', username=user.username) }}">{{ user.username }}</a></h2>
-                                <p>Graphic Designer</p>
+                                <p>{{ user.speciality }}</p>
                             </div>
                         </div>
                         <div class="profiles-bottom">
                             <div class="profile-icons">
                                 <div>
                                     <i class="fas fa-compass"></i>
-                                    <span class="location-span">Vietnam</span>
+                                    <span class="location-span">{{ user.location }}</span>
                                 </div>
                                 <div class="profile-actions">
                                     <a href="#" class="green-btn">
@@ -94,6 +95,7 @@
                             </div>
                         </div>
                     </div>
+                    {% endif %}
                     {% endfor %}
                     {% if count > 9 %}
                     <button class="more-post" type="button">Load more</button>

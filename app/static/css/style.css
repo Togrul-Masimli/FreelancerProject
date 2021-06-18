@@ -165,7 +165,7 @@ a.logo img {
     position: relative;
 }
 
-.header-contact a::before {
+/* .header-contact a::before {
     content: '';
     position: absolute;
     width: 5px;
@@ -175,7 +175,7 @@ a.logo img {
     background-color: #3796f6;
     border-radius: 50%;
     border: 1px solid #dadedf;
-}
+} */
 
 .header-contact a:hover {
     color: rgba(255, 255, 255, 0.6);

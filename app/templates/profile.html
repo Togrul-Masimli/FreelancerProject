@@ -22,13 +22,13 @@
                                 <img src="{{ image_file }}" alt="user">
                             </figure>
                             <span class="user-name-span">{{ current_user.username }}</span>
-                            <span class="speciality">Front-end Developer</span>
+                            <span class="speciality">{{ current_user.speciality }}</span>
                         </div>
                         <div class="profile-buttons profiles-bottom">
                             <div class="profile-icons">
                                 <div>
                                     <i class="fas fa-compass"></i>
-                                    <span class="location-span">Vietnam</span>
+                                    <span class="location-span">{{ current_user.location }}</span>
                                 </div>
                                 <div class="profile-actions">
                                     <a href="#" class="green-btn">
@@ -51,11 +51,11 @@
                                 </li>
                                 <li>
                                     <span>Age:</span>
-                                    <span>21</span>
+                                    <span>{{ current_user.age }}</span>
                                 </li>
                                 <li>
                                     <span>Experience:</span>
-                                    <span>5 Year</span>
+                                    <span>{{ current_user.experience }} Years</span>
                                 </li>
                                 <li>
                                     <span>Job Done:</span>
@@ -135,7 +135,7 @@
                                 <div class="post-icons-left">
                                     <div class="post-company">
                                         <i class="fas fa-briefcase"></i>
-                                        <span>Front-end Developer</span>
+                                        <span>{{ current_user.speciality }}</span>
                                     </div>
                                 </div>
                                 <div class="post-icons-right">
@@ -247,54 +247,18 @@
                         </div>
                         <div class="sidebox-content">
                             <div class="sidebox-job">
-                                <div class="sidebox-job-title">
-                                    <a href="#">PSD to HTML</a>
-                                    <span>$200 - $250</span>
+                                {% for post in sidebox_posts.items %}
+                                <div class="sidebox-job">
+                                    <div class="sidebox-job-title">
+                                        <a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a>
+                                        <span>${{ post.min_pay }} - ${{ post.max_pay }}</span>
+                                    </div>
+                                    <div class="sidebox-job-speciality">
+                                        <i class="fas fa-briefcase"></i>
+                                        <span>{{ post.author.speciality }}</span>
+                                    </div>
                                 </div>
-                                <div class="sidebox-job-speciality">
-                                    <i class="fas fa-briefcase"></i>
-                                    <span>Front-end Developer</span>
-                                </div>
-                            </div>
-                            <div class="sidebox-job">
-                                <div class="sidebox-job-title">
-                                    <a href="#">Mobile App</a>
-                                    <span>$7000</span>
-                                </div>
-                                <div class="sidebox-job-speciality">
-                                    <i class="fas fa-briefcase"></i>
-                                    <span>Java Developer</span>
-                                </div>
-                            </div>
-                            <div class="sidebox-job">
-                                <div class="sidebox-job-title">
-                                    <a href="#">Landing Page</a>
-                                    <span>$400</span>
-                                </div>
-                                <div class="sidebox-job-speciality">
-                                    <i class="fas fa-briefcase"></i>
-                                    <span>UX/UI Designer</span>
-                                </div>
-                            </div>
-                            <div class="sidebox-job">
-                                <div class="sidebox-job-title">
-                                    <a href="#">Site design</a>
-                                    <span>$4000 - $5000</span>
-                                </div>
-                                <div class="sidebox-job-speciality">
-                                    <i class="fas fa-briefcase"></i>
-                                    <span>UX/UI Designer</span>
-                                </div>
-                            </div>
-                            <div class="sidebox-job">
-                                <div class="sidebox-job-title">
-                                    <a href="#">WP Plugin</a>
-                                    <span>$3800</span>
-                                </div>
-                                <div class="sidebox-job-speciality">
-                                    <i class="fas fa-briefcase"></i>
-                                    <span>Wordpress Developer</span>
-                                </div>
+                                {% endfor %}
                             </div>
                         </div>
                         <a href="#" class="view-profile">View more</a>
