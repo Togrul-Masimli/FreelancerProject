@@ -162,7 +162,8 @@
     line-height: 24px;
 }
 
-.privacy_text {
+.privacy_text,
+.privacy p {
     color: #364e65;
     font-size: 14px;
     line-height: 24px;

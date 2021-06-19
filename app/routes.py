@@ -2,6 +2,7 @@ from inspect import currentframe
 from itertools import count
 import os
 import secrets
+import bleach
 from PIL import Image
 from flask import render_template, url_for, redirect, request, abort
 from wtforms.validators import Email
@@ -271,14 +272,31 @@ def admin_delete_bid(bid_id):
     db.session.commit()
     return redirect(url_for('admin_bids'))
 
+
 @app.route('/privacy')
 def privacy():
+    privacy = Privacy.query.filter_by().first()
     image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
-    return render_template('privacy.html', image_file=image_file)
+    return render_template('privacy.html', image_file=image_file, privacy=privacy.content)
 
-@app.route('/add-privacy', methods=['GET','POST'])
-def add_privacy():
+
+
+@app.route('/admin/add-privacy', methods=['GET','POST'])
+def admin_add_privacy():
+    legend = 'Add Content'
     if request.method == "POST":
-        new_data = Privacy(content=request.form.get('editor1'))
-    image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
-    return render_template('add-privacy.html', image_file=image_file)
+        privacy = Privacy(content=request.form.get('editor1'))
+        db.session.add(privacy)
+        db.session.commit()
+    return render_template('admin/add-privacy.html', legend=legend)
+
+
+@app.route('/admin/update/privacy', methods=['GET','POST'])
+def admin_update_privacy():
+    privacy = Privacy.query.filter_by().first()
+    legend = 'Update Content'
+    if request.method == "POST":
+        privacy.content = request.form.get('editor1')
+        db.session.commit()
+        return redirect(url_for('privacy'))
+    return render_template('admin/add-privacy.html', legend=legend)
