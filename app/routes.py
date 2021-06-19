@@ -7,7 +7,7 @@ from flask import render_template, url_for, redirect, request, abort
 from wtforms.validators import Email
 from app import app, db, bcrypt
 from app.forms import RegistrationForm, LoginForm, UpdateInfoForm, UpdateProfileForm, PostForm, CommentForm, BidForm
-from app.models import User, Post, Comment, Bid
+from app.models import User, Post, Comment, Bid, Privacy
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -270,3 +270,15 @@ def admin_delete_bid(bid_id):
     db.session.delete(deleted_bid)
     db.session.commit()
     return redirect(url_for('admin_bids'))
+
+@app.route('/privacy')
+def privacy():
+    image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
+    return render_template('privacy.html', image_file=image_file)
+
+@app.route('/add-privacy', methods=['GET','POST'])
+def add_privacy():
+    if request.method == "POST":
+        new_data = Privacy(content=request.form.get('editor1'))
+    image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
+    return render_template('add-privacy.html', image_file=image_file)

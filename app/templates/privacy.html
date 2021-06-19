@@ -1,0 +1,70 @@
+{% extends "layout.html" %} {% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/add-project.css') }}"> {% endblock %} {% block content %}
+<main>
+    <div class="projects-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <ul class="page-to-page">
+                        <li class="page_home"><a href="#">Home</a></li>
+                        <span><i class="fas fa-long-arrow-alt-right"></i></span>
+                        <li class="page_projects"><a href="#">Post a project</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-9">
+                    <div class="row">
+                        <div class="col-12 form-area">
+                            <div class="form privacy">
+
+                                <h2>Privacy policy</h2>
+                                <p class="privacy_text">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p> 
+
+                                <p class="privacy_text">Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
+
+                                <p class="privacy_text">All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.</p>
+
+                                <p class="privacy_text">Determination of personal information of users
+                                If you are going to use a passage of Lorem Ipsum:
+                                All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.
+                                It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
+                                There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.
+                                Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                                Reasons for collecting and processing user personal information
+                                It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.
+                                All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet:
+                                It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged;
+                                It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages;
+                                Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like);
+                                Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text;</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="sidebox-desk sidebox">
+                        <h4 class="sidebox-title">FAQ</h4>
+                        <div class="sidebox-content">
+                            <div class="sidebox-faq">
+                                <h5>Is there a fee to post a project?</h5>
+                                <p>There are pricing plans monthly and yearly for project on Workland. It is a paid service that we offer bith for the employer and the freelancer.</p>
+                            </div>
+                            <div class="sidebox-faq">
+                                <h5>How do I find freelancers for my project?</h5>
+                                <p>Posting a project on Workland will get your project in front of the most qualified freelancers and agencies by bids. You will then get bids for the project with the applicant’s details and reasons why they are the best
+                                    fit for the projects. You can also search for freelancers and invite them to apply.</p>
+                            </div>
+                            <div class="sidebox-faq">
+                                <h5>How do I pay freelancers &amp; agencies?</h5>
+                                <p>You’re free to pay your freelancer and agencies. you can pay automatically for their work through Paypal, Payoneer, or (which allows you to pay via credit card, debit card).</p>
+                            </div>
+                        </div>
+                        <a href="#" class="view-profile">View more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
