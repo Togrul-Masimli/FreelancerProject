@@ -5,10 +5,11 @@ import secrets
 import bleach
 from PIL import Image
 from flask import render_template, url_for, redirect, request, abort
+from wtforms import form
 from wtforms.validators import Email
 from app import app, db, bcrypt
-from app.forms import RegistrationForm, LoginForm, UpdateInfoForm, UpdateProfileForm, PostForm, CommentForm, BidForm
-from app.models import User, Post, Comment, Bid, Privacy
+from app.forms import RegistrationForm, LoginForm, UpdateInfoForm, UpdateProfileForm, PostForm, CommentForm, BidForm, AboutForm, TagForm
+from app.models import User, Post, Comment, Bid, Privacy, Tag
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -33,6 +34,9 @@ def add_prj():
     if form.validate_on_submit():
         post = Post(title=form.title.data, content=form.content.data, min_pay=form.cost_min.data, max_pay=form.cost_max.data, author=current_user)
         db.session.add(post)
+        db.session.commit()
+        tag = Tag.query.filter(Tag.id == Post.id).all()[-1]
+        tag.posts.append(post)
         db.session.commit()
         return redirect(url_for('index'))
     return render_template('add-project.html', title='Add Project', form=form, legend='New Project', image_file=image_file)
@@ -69,6 +73,7 @@ def save_picture(form_picture):
 def settings():
     form = UpdateProfileForm()
     formInfo = UpdateInfoForm()
+    aboutform = AboutForm()
     sidebox_posts = Post.query.order_by(Post.date_posted.desc()).paginate(per_page=5)
     if form.validate_on_submit():
         if form.picture.data:
@@ -88,15 +93,29 @@ def settings():
         current_user.experience = formInfo.experience.data
         current_user.location = formInfo.location.data
         current_user.age = formInfo.age.data
+        current_user.hourly_rate = formInfo.hourly_rate.data
+        current_user.job_done = formInfo.job_done.data
         db.session.commit()
-    #     return redirect(url_for('settings'))
-    if request.method == 'GET':
+        return redirect(url_for('settings'))
+    elif request.method == 'GET':
         formInfo.speciality.data = current_user.speciality
         formInfo.experience.data = current_user.experience
         formInfo.location.data = current_user.location
         formInfo.age.data = current_user.age
+        formInfo.hourly_rate.data = current_user.hourly_rate
+        formInfo.job_done.data = current_user.job_done
+
+    if aboutform.validate_on_submit():
+        current_user.about_user = aboutform.about_user.data
+        current_user.education = aboutform.education.data
+        db.session.commit()
+        return redirect(url_for('info'))
+    elif request.method == 'GET':
+        aboutform.about_user.data = current_user.about_user
+        aboutform.education.data = current_user.education
+
     image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
-    return render_template('profile_settings.html', title='Settings', image_file=image_file, form=form, formInfo=formInfo, sidebox_posts=sidebox_posts)
+    return render_template('profile_settings.html', title='Settings', image_file=image_file, form=form, formInfo=formInfo, aboutform=aboutform, sidebox_posts=sidebox_posts)
 
 @app.route('/profiles')
 def profiles():
@@ -300,3 +319,20 @@ def admin_update_privacy():
         db.session.commit()
         return redirect(url_for('privacy'))
     return render_template('admin/add-privacy.html', legend=legend)
+
+
+@app.route('/tags/<int:id>/')
+def tag_detail(id):
+    tag = Tag.query.filter(Tag.id == id).first()
+    return render_template('tags.html', tag=tag)
+
+
+@app.route('/tag-add', methods=['GET', 'POST'])
+def tag_add():
+    form = TagForm()
+    if form.validate_on_submit():
+        tag = Tag(title=form.title.data)
+        db.session.add(tag)
+        db.session.commit()
+        return redirect(url_for('add_prj'))
+    return render_template('tag-add.html', form=form)

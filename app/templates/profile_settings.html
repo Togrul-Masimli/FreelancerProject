@@ -47,7 +47,7 @@
                             <ul class="info-about-user">
                                 <li>
                                     <span>Hourly Rate:</span>
-                                    <span>$50 / hr</span>
+                                    <span>${{ current_user.hourly_rate }} / hr</span>
                                 </li>
                                 <li>
                                     <span>Age:</span>
@@ -59,7 +59,7 @@
                                 </li>
                                 <li>
                                     <span>Job Done:</span>
-                                    <span>113</span>
+                                    <span>{{ current_user.job_done }}</span>
                                 </li>
                             </ul>
                         </div>
@@ -215,6 +215,73 @@
                                                 </div>
                                             {% else %} 
                                                 {{ formInfo.experience(class="form-input") }} 
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="w-100 mr-30">
+                                        <div class="form-group">
+                                            {{ formInfo.hourly_rate.label(class="form-label") }}
+                                            {% if formInfo.hourly_rate.errors %} 
+                                                {{ formInfo.hourly_rate(class="form-input is-invalid") }}
+                                                <div class="invalid-feedback">
+                                                    {% for error in formInfo.hourly_rate.errors %}
+                                                    <span>{{ error }}</span> 
+                                                    {% endfor %}
+                                                </div>
+                                            {% else %} 
+                                                {{ formInfo.hourly_rate(class="form-input") }} 
+                                            {% endif %}
+                                        </div>
+                                        <div class="form-group">
+                                            {{ formInfo.job_done.label(class="form-label") }}
+                                            {% if formInfo.job_done.errors %} 
+                                                {{ formInfo.job_done(class="form-input is-invalid") }}
+                                                <div class="invalid-feedback">
+                                                    {% for error in formInfo.job_done.errors %}
+                                                    <span>{{ error }}</span> 
+                                                    {% endfor %}
+                                                </div>
+                                            {% else %} 
+                                                {{ formInfo.job_done(class="form-input") }} 
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    {{ formInfo.submit(class='form-button') }}
+                                </div>
+                            </div>
+                        </form>
+                        <form action="#", method="POST">
+                            {{ form.hidden_tag() }}
+                            <div class="profile-box-last profile-box">
+                                <h3 class="profile-box-title">Update info</h3>
+                                <div class="form-group-container">
+                                    <div class="w-100 mr-30">
+                                        <div class="form-group">
+                                            {{ aboutform.about_user.label(class="form-label") }}
+                                            {% if aboutform.about_user.errors %} 
+                                                {{ aboutform.about_user(class="form-textarea is-invalid") }}
+                                                <div class="invalid-feedback">
+                                                    {% for error in aboutform.about_user.errors %}
+                                                    <span>{{ error }}</span> 
+                                                    {% endfor %}
+                                                </div>
+                                            {% else %} 
+                                                {{ aboutform.about_user(class="form-textarea") }} 
+                                            {% endif %}
+                                        </div>
+                                        <div class="form-group">
+                                            {{ aboutform.education.label(class="form-label") }}
+                                            {% if aboutform.education.errors %} 
+                                                {{ aboutform.education(class="form-textarea is-invalid") }}
+                                                <div class="invalid-feedback">
+                                                    {% for error in aboutform.education.errors %}
+                                                    <span>{{ error }}</span> 
+                                                    {% endfor %}
+                                                </div>
+                                            {% else %} 
+                                                {{ aboutform.education(class="form-textarea") }} 
                                             {% endif %}
                                         </div>
                                     </div>

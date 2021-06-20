@@ -9,10 +9,6 @@ from flask_login import UserMixin
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-post_tags=db.Table('post_tags',
-    db.Column('tag_id', db.Integer, db.ForeignKey('tag.tag_id')),
-    db.Column('id', db.Integer, db.ForeignKey('post.id'))
-)
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -26,6 +22,8 @@ class User(db.Model, UserMixin):
     location = db.Column(db.String(20))
     age = db.Column(db.Integer)
     experience = db.Column(db.Integer)
+    hourly_rate = db.Column(db.Integer)
+    job_done = db.Column(db.Integer)
     posts = db.relationship('Post', backref='author', lazy=True, cascade='all,delete')
     comments = db.relationship('Comment', backref='comment_author', lazy=True, cascade='all,delete')
     bids = db.relationship('Bid', backref='bid_owner', lazy=True, cascade='all,delete')
@@ -42,6 +40,7 @@ class Post(db.Model):
     max_pay = db.Column(db.Integer)
     content = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    tag = db.relationship('Tag', secondary='posts_tags', backref=db.backref('posts', lazy='dynamic'))
     comments = db.relationship('Comment', backref='host', lazy=True)
     bids = db.relationship('Bid', backref='bid_host', lazy=True)
 
@@ -72,12 +71,16 @@ class Bid(db.Model):
         return f"Bid('{self.min_rate}"
 
 class Tag(db.Model):
-    tag_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20))
-    posttags = db.relationship('Post', secondary=post_tags, backref=db.backref('tags', lazy='dynamic'))
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(20), nullable=False)
+    db.column = db.relationship(Post, backref='tags', lazy=True)
 
     def __repr__(self):
-        return f"Tag('{self.name})"
+        return f'{self.title}'
+
+posts_tags = db.Table('posts_tags',
+    db.Column('post_id', db.Integer, db.ForeignKey('post.id')),
+    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')))
 
 class Privacy(db.Model):
     id = db.Column(db.Integer, primary_key=True)

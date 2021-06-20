@@ -4,9 +4,8 @@ from flask_login import current_user
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, SelectField
 from wtforms import validators
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from app.models import User, Tag
+from app.models import User
 
-tags = Tag.query.all()
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)], render_kw={"placeholder": "Username"})
@@ -61,7 +60,13 @@ class UpdateInfoForm(FlaskForm):
     location = StringField('Location')
     age = StringField('Age')
     experience = StringField('Experience')
+    hourly_rate = StringField('Hourly Rate')
+    job_done = StringField('Job Done')
     submit = SubmitField('UPDATE')
+
+class AboutForm(FlaskForm):
+    about_user = TextAreaField('About')
+    education = TextAreaField('Education')
 
 
 class PostForm(FlaskForm):
@@ -83,3 +88,7 @@ class BidForm(FlaskForm):
     delivery_duration = StringField('Set Your Delivery Time', validators=[DataRequired()])
     submit = SubmitField('PLACE A BID')
 
+
+class TagForm(FlaskForm):
+    title = StringField('Tag title', validators=[DataRequired()])
+    submit = SubmitField('Add a tag')

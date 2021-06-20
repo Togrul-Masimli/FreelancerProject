@@ -59,9 +59,9 @@
                             </div>
                             {% if post.author == current_user %}
                                 <div class="hasDropdown dots">
-                                    <a href="#/" class="post-dropdown-container">
+                                    <a href="#/" class="post-dropdown-container" data-filter1="{{ post.id }}">
                                         <i class="fas fa-ellipsis-v"></i>
-                                        <ul class="post-dropdown">
+                                        <ul class="post-dropdown" data-filter1="{{ post.id }}">
                                             <li><a href="{{url_for('update_post', post_id=post.id)}}">Update</a></li>
                                             <li><a href="{{url_for('delete_post', post_id=post.id)}}">Delete</a></li>
                                         </ul>
@@ -98,11 +98,11 @@
                         <div class="post-description">
                             <p>{{ post.content }}</p>
                         </div>
+                        {% for tag in post.tag %}
                         <div class="post-tags">
-                            <a href="#">HTML</a>
-                            <a href="#">CSS</a>
-                            <a href="#">PHP</a>
+                            <a href="{{ url_for('tag_detail', id=tag.id) }}">{{ tag }}</a>
                         </div>
+                        {% endfor %}
                         <div class="post-status">
                             <div class="heart-comment">
                                 <div class="like-comment">

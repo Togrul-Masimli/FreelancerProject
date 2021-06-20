@@ -47,7 +47,7 @@
                             <ul class="info-about-user">
                                 <li>
                                     <span>Hourly Rate:</span>
-                                    <span>$50 / hr</span>
+                                    <span>${{ current_user.hourly_rate }} / hr</span>
                                 </li>
                                 <li>
                                     <span>Age:</span>
@@ -59,7 +59,7 @@
                                 </li>
                                 <li>
                                     <span>Job Done:</span>
-                                    <span>113</span>
+                                    <span>{{ current_user.job_done }}</span>
                                 </li>
                             </ul>
                         </div>
@@ -110,25 +110,13 @@
                         <div class="profile-box">
                             <h3 class="profile-box-title">About</h3>
                             <p class="profile-box-text">
-                                It is a long fact that a reader will be <b>distracted</b> by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.
-                            </p>
-                            <ul class="post-description-ul">
-                                <li>Theme Forest</li>
-                                <li>Graphic River</li>
-                                <li>Audio Jungle</li>
-                                <li>3D Ocean</li>
-                            </ul>
-                            <p class="profile-box-text">
-                                It is a long fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.
+                                {{ current_user.about_user }}
                             </p>
                         </div>
                         <div class="profile-box">
                             <h3 class="profile-box-title">Education</h3>
                             <p class="profile-box-text">
-                                <strong>Master of Computer Science</strong>
-                                <br>
-                                <span>2018-2020</span> <br> It is a long fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution
-                                of letters.
+                                {{ current_user.education }}
                             </p>
                         </div>
                         <div class="profile-tags-box profile-box">
