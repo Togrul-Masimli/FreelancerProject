@@ -1,9 +1,11 @@
 {% extends "layout.html" %} {% block css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/add-project.css') }}"> {% endblock %} {% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/add-project.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tag-add.css') }}">
+ {% endblock %} {% block content %}
 <main>
 <div class="projects-content">
 
-<form action="#" class="form" method="POST">
+<form action="#" class="form" method="POST" style="margin: 50px auto; width: 600px;">
     {{ form.hidden_tag() }}
   <div class="row">
         <div class="col-12 form-area">
@@ -18,7 +20,7 @@
             {% else %}
                 {{ form.title(class="form-input max") }}
             {% endif %}
-            <div class="form-group">
+            <div class="form-group" style="margin-top: 10px;">
                 {{ form.submit(class='form-button') }}
             </div>
         </div>

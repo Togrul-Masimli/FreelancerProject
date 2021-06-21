@@ -90,8 +90,8 @@ class BidForm(FlaskForm):
 
 
 class TagForm(FlaskForm):
-    title = StringField('Tag title', validators=[DataRequired()])
-    submit = SubmitField('Add a tag')
+    title = StringField('Tag title', validators=[DataRequired()], render_kw={"placeholder": "Tag"})
+    submit = SubmitField('ADD A TAG')
 
 
 class RequestResetForm(FlaskForm):

@@ -87,7 +87,7 @@ class Bid(db.Model):
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(20), nullable=False)
-    db.column = db.relationship(Post, backref='tags', lazy=True)
+    db.column = db.relationship(Post, backref='tags', lazy=True, cascade='all,delete')
 
     def __repr__(self):
         return f'{self.title}'

@@ -22,56 +22,47 @@
                                 <img src="{{url_for('static', filename='profile-pictures/' + user.image_file )}}" alt="user">
                             </figure>
                             <span class="user-name-span">{{ user.username }}</span>
-                            <span class="speciality">{{ user.speciality }}</span>
+                            {% if user.speciality %}
+                                <span class="speciality">{{ user.speciality }}</span>
+                            {% endif %}
                         </div>
                         <div class="profile-buttons profiles-bottom">
                             <div class="profile-icons">
-                                <div>
-                                    <i class="fas fa-compass"></i>
-                                    <span class="location-span">{{ user.location }}</span>
-                                </div>
-                                <div class="profile-actions">
-                                    <a href="#" class="green-btn">
-                                        <i class="fas fa-bookmark"></i>
-                                    </a>
-                                    <a href="#" class="red-btn">
-                                        <i class="fas fa-envelope"></i>
-                                    </a>
-                                    <a href="#" class="hire">
-                                        <span>Hire</span>
-                                    </a>
-                                </div>
+                                {% if user.location %}
+                                    <div>
+                                        <i class="fas fa-compass"></i>
+                                        <span class="location-span">{{ user.location }}</span>
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="about-user">
                             <ul class="info-about-user">
                                 <li>
                                     <span>Hourly Rate:</span>
-                                    <span>$50 / hr</span>
+                                    {% if user.hourly_rate %}
+                                        <span>${{ user.hourly_rate }} / hr</span>
+                                    {% endif %}
                                 </li>
                                 <li>
                                     <span>Age:</span>
-                                    <span>{{ user.age }}</span>
+                                    {% if user.age %}
+                                        <span>{{ user.age }}</span>
+                                    {% endif %}
                                 </li>
                                 <li>
                                     <span>Experience:</span>
-                                    <span>{{ user.experience }} Years</span>
+                                    {% if user.experience %}
+                                        <span>{{ user.experience }} Years</span>
+                                    {% endif %}
                                 </li>
                                 <li>
                                     <span>Job Done:</span>
-                                    <span>113</span>
+                                    {% if user.job_done %}
+                                        <span>{{ user.job_done }}</span>
+                                    {% endif %}
                                 </li>
                             </ul>
-                        </div>
-                        <div class="follow">
-                            <div class="follow-count count-common">
-                                <span class="following">Following</span>
-                                <span class="count">26</span>
-                            </div>
-                            <div class="follower-count count-common">
-                                <span class="followers">Followers</span>
-                                <span class="count">88</span>
-                            </div>
                         </div>
                     </div>
                     <div class="sidebox-social sidebox">
@@ -103,7 +94,7 @@
                 <div class="col-6">
                     <ul class="profile-nav">
                         <li><a href="{{ url_for('profile') }}" class="profile-filter" data-filter="feeds">Feed</a></li>
-                        <li><a href="{{ url_for('info') }}" class="profile-filter" data-filter="user-information">About</a></li>
+                        <li><a href="{{ url_for('user_info', username=user.username) }}" class="profile-filter" data-filter="user-information">About</a></li>
                     </ul>
                     <div class="toggle feeds">
                         {% for post in posts %}
@@ -131,25 +122,14 @@
                             {% endif %}
                         </div>
                         <div class="post-icons">
-                            <div class="post-icons-left">
-                                <div class="post-company">
-                                    <i class="fas fa-briefcase"></i>
-                                    <span>{{ post.author.speciality }}</span>
+                            {% if post.author.speciality %}
+                                <div class="post-icons-left">
+                                    <div class="post-company">
+                                        <i class="fas fa-briefcase"></i>
+                                        <span>{{ post.author.speciality }}</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="post-icons-right">
-                                <div class="post-actions">
-                                    <a href="#" class="btn-green">
-                                        <i class="fas fa-bookmark"></i>
-                                    </a>
-                                    <a href="#" class="btn-red">
-                                        <i class="fas fa-envelope"></i>
-                                    </a>
-                                    <a href="#" class="bid-now">
-                                        <span>Bid now</span>
-                                    </a>
-                                </div>
-                            </div>
+                            {% endif %}
                         </div>
                         <div class="post-title">
                             <h2>
@@ -162,11 +142,11 @@
                         <div class="post-description">
                             <p>{{ post.content }}</p>
                         </div>
+                        {% for tag in post.tag %}
                         <div class="post-tags">
-                            <a href="#">HTML</a>
-                            <a href="#">CSS</a>
-                            <a href="#">PHP</a>
+                            <a href="#">{{ tag }}</a>
                         </div>
+                        {% endfor %}
                         <div class="post-status">
                             <div class="heart-comment">
                                 <div class="like-comment">
@@ -177,56 +157,15 @@
                                 </div>
                                 <div class="post-comments">
                                     <div class="like-comment">
-                                        <button class="accordion" data-filter="{{ post.id }}">
+                                        <a href="{{ url_for('post', post_id=post.id) }}" class="accordion" data-filter="{{ post.id }}">
                                                 <i class="fas fa-comment"></i>
-                                            </button>
-                                        <span>2</span>
+                                        </a> 
                                     </div>
                                 </div>
                             </div>
                             <div class="post-views">
                                 <i class="fas fa-eye"></i>
                                 <span>214</span>
-                            </div>
-                        </div>
-                        <div class="comment {{ post.id }}" style="display: none;">
-                            <form action="#" class="comment-form">
-                                <input type="text" placeholder="Type your comment...">
-                                <button type="button">
-                                        <i class="fab fa-telegram-plane"></i>
-                                    </button>
-                            </form>
-                            <div class="comment-area">
-                                <div class="comment-content">
-                                    <div class="comment-photo-text">
-                                        <a href="#" class="comment-photo">
-                                            <img src="{{url_for('static', filename='img/user9.jpg')}}" alt="profile_photo">
-                                        </a>
-                                        <div class="user-comment">
-                                            <h5>Alan Patrick</h5>
-                                            <p>20 min ago</p>
-                                        </div>
-                                    </div>
-                                    <div class="comment-text">
-                                        <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="comment-area">
-                                <div class="comment-content">
-                                    <div class="comment-photo-text">
-                                        <a href="#" class="comment-photo">
-                                            <img src="{{url_for('static', filename='img/user2.jpg')}}" alt="profile_photo">
-                                        </a>
-                                        <div class="user-comment">
-                                            <h5>Diego Costa</h5>
-                                            <p>22 min ago</p>
-                                        </div>
-                                    </div>
-                                    <div class="comment-text">
-                                        <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                             </div>
@@ -250,12 +189,12 @@
                                     </div>
                                     <div class="sidebox-job-speciality">
                                         <i class="fas fa-briefcase"></i>
-                                        <span>{{ post.author.speciality }}</span>
+                                        <span>{{ post.author.username }}</span>
                                     </div>
                                 </div>
                             {% endfor %}
                         </div>
-                        <a href="#" class="view-profile">View more</a>
+                        <a href="{{ url_for('projects') }}" class="view-profile">View more</a>
                     </div>
                 </div>
             </div>

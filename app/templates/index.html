@@ -12,10 +12,12 @@
                                 <img src="{{ image_file }}" alt="user">
                             </figure>
                             <span class="user-name-span">{{ current_user.username }}</span>
+                            {% if current_user.speciality %}
                             <span class="speciality">{{ current_user.speciality }}</span>
+                            {% endif %}
                         </div>
                         <div class="button-field">
-                            <a href="{{url_for('add_prj')}}" class="btn-project">Post a project</a>
+                            <a href="{{url_for('tag_add')}}" class="btn-project">Post a project</a>
                             <a href="{{url_for('projects')}}" class="btn-job">Find a project</a>
                         </div>
                         <a href="{{url_for('profile')}}" class="view-profile">View profile</a>
@@ -35,9 +37,13 @@
                                     <h5>
                                         <a href="#">{{ user.username }}</a>
                                     </h5>
-                                    <p>Herbalist</p>
+                                    {% if user.speciality %}
+                                    <p>{{ user.speciality }}</p>
+                                    {% endif %}
                                 </div>
-                                <div class="user-title-price">$112/hr</div>
+                                {% if user.hourly_rate %}
+                                    <div class="user-title-price">${{ user.hourly_rate }}/hr</div>
+                                {% endif %}
                             </div>
                             {% endfor %}
                         </div>
@@ -71,21 +77,22 @@
                         </div>
                         <div class="post-icons">
                             <div class="post-icons-left">
+                                {% if post.author.speciality %}
                                 <div class="post-company">
                                     <i class="fas fa-briefcase"></i>
                                     <span>{{ post.author.speciality }}</span>
                                 </div>
+                                {% endif %}
                             </div>
+                            {% if post.author != current_user and current_user.is_authenticated %}
                             <div class="post-icons-right">
                                 <div class="post-actions">
-                                    <a href="#" class="btn-red">
-                                        <i class="fas fa-envelope"></i>
-                                    </a>
                                     <a href="{{ url_for('post', post_id=post.id) }}" class="bid-now">
                                         <span>Bid now</span>
                                     </a>
                                 </div>
                             </div>
+                            {% endif %}
                         </div>
                         <div class="post-title">
                             <h2>
@@ -100,7 +107,7 @@
                         </div>
                         {% for tag in post.tag %}
                         <div class="post-tags">
-                            <a href="{{ url_for('tag_detail', id=tag.id) }}">{{ tag }}</a>
+                            <a href="#">{{ tag }}</a>
                         </div>
                         {% endfor %}
                         <div class="post-status">
@@ -113,10 +120,9 @@
                                 </div>
                                 <div class="post-comments">
                                     <div class="like-comment">
-                                        <button class="accordion" data-filter="{{ post.id }}">
+                                        <a href="{{ url_for('post', post_id=post.id) }}" class="accordion" data-filter="{{ post.id }}">
                                                 <i class="fas fa-comment"></i>
-                                            </button>
-                                        <span>{{ comment_count }}</span>
+                                        </a> 
                                     </div>
                                 </div>
                             </div>
@@ -125,46 +131,14 @@
                                 <span>214</span>
                             </div>
                         </div>
-                        <div class="comment {{ post.id }}" style="display: none;">
-                            <form action="#" class="comment-form">
+                        <!-- <div class="comment {{ post.id }}" style="display: none;"> -->
+                            <!-- <form action="#" class="comment-form">
                                 <input type="text" placeholder="Type your comment...">
                                 <button type="button">
                                         <i class="fab fa-telegram-plane"></i>
-                                    </button>
-                            </form>
-                            <div class="comment-area">
-                                <div class="comment-content">
-                                    <div class="comment-photo-text">
-                                        <a href="#" class="comment-photo">
-                                            <img src="{{url_for('static', filename='img/user9.jpg')}}" alt="profile_photo">
-                                        </a>
-                                        <div class="user-comment">
-                                            <h5>Alan Patrick</h5>
-                                            <p>20 min ago</p>
-                                        </div>
-                                    </div>
-                                    <div class="comment-text">
-                                        <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="comment-area">
-                                <div class="comment-content">
-                                    <div class="comment-photo-text">
-                                        <a href="#" class="comment-photo">
-                                            <img src="{{url_for('static', filename='img/user2.jpg')}}" alt="profile_photo">
-                                        </a>
-                                        <div class="user-comment">
-                                            <h5>Diego Costa</h5>
-                                            <p>22 min ago</p>
-                                        </div>
-                                    </div>
-                                    <div class="comment-text">
-                                        <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                </button>
+                            </form> -->
+                        <!-- </div> -->
                     </div>
                     {% endfor %}
                     <button class="more-post" type="button">Load more</button>
@@ -183,7 +157,7 @@
                                 </div>
                                 <div class="sidebox-job-speciality">
                                     <i class="fas fa-briefcase"></i>
-                                    <span>{{ post.author.speciality }}</span>
+                                        <span>{{ post.author.username }}</span>
                                 </div>
                             </div>
                             {% endfor %}
@@ -204,9 +178,13 @@
                                     <h5>
                                         <a href="{{ url_for('user_profile', username=user.username) }}">{{ user.username }}</a>
                                     </h5>
-                                    <p>Herbalist</p>
+                                    {% if user.speciality %}
+                                    <p>{{ user.speciality }}</p>
+                                    {% endif %}
                                 </div>
-                                <div class="user-title-price">$112/hr</div>
+                                {% if user.hourly_rate %}
+                                    <div class="user-title-price">${{ user.hourly_rate }}/hr</div>
+                                {% endif %}
                             </div>
                             {% endfor %}
                         </div>

@@ -10,7 +10,7 @@
                     <ul class="page-to-page">
                         <li class="page_home"><a href="#">Home</a></li>
                         <span><i class="fas fa-long-arrow-alt-right"></i></span>
-                        <li class="page_projects"><a href="#">Profile</a></li>
+                        <li class="page_projects"><a href="#">{{ user.username }}</a></li>
                         <span><i class="fas fa-long-arrow-alt-right"></i></span>
                         <li class="page_projects"><a href="#">Info</a></li>
                     </ul>
@@ -23,15 +23,17 @@
                             <figure>
                                 <img src="{{ image_file }}" alt="user">
                             </figure>
-                            <span class="user-name-span">{{ current_user.username }}</span>
-                            <span class="speciality">{{ current_user.speciality }}</span>
+                            <span class="user-name-span">{{ user.username }}</span>
+                            {% if user.speciality %}
+                                <span class="speciality">{{ user.speciality }}</span>
+                            {% endif %}
                         </div>
                         <div class="profile-buttons profiles-bottom">
                             <div class="profile-icons">
-                                {% if current_user.location %}
+                                {% if user.location %}
                                 <div>
                                     <i class="fas fa-compass"></i>
-                                    <span class="location-span">{{ current_user.location }}</span>
+                                    <span class="location-span">{{ user.location }}</span>
                                 </div>
                                 {% endif %}
                             </div>
@@ -40,19 +42,27 @@
                             <ul class="info-about-user">
                                 <li>
                                     <span>Hourly Rate:</span>
-                                    <span>${{ current_user.hourly_rate }} / hr</span>
+                                    {% if user.hourly_rate %}
+                                        <span>${{ user.hourly_rate }} / hr</span>
+                                    {% endif %}
                                 </li>
                                 <li>
                                     <span>Age:</span>
-                                    <span>{{ current_user.age }}</span>
+                                    {% if user.age %}
+                                        <span>{{ user.age }}</span>
+                                    {% endif %}
                                 </li>
                                 <li>
                                     <span>Experience:</span>
-                                    <span>{{ current_user.experience }} Years</span>
+                                    {% if user.experience %}
+                                        <span>{{ user.experience }} Years</span>
+                                    {% endif %}
                                 </li>
                                 <li>
                                     <span>Job Done:</span>
-                                    <span>{{ current_user.job_done }}</span>
+                                    {% if user.job_done %}
+                                        <span>{{ user.job_done }}</span>
+                                    {% endif %}
                                 </li>
                             </ul>
                         </div>
@@ -85,24 +95,23 @@
                 </div>
                 <div class="col-6">
                     <ul class="profile-nav">
-                        <li><a href="{{ url_for('profile') }}" class="profile-filter" data-filter="feeds">Feed</a></li>
-                        <li><a href="{{ url_for('info') }}" class="profile-filter" data-filter="user-information">Profile</a></li>
-                        <li><a href="{{ url_for('settings') }}" class="profile-filter" data-filter="settingss">Settings</a></li>
+                        <li><a href="{{ url_for('user_profile', username=user.username) }}" class="profile-filter" data-filter="feeds">Feed</a></li>
+                        <li><a href="{{ url_for('user_info', username=user.username) }}" class="profile-filter" data-filter="user-information">About</a></li>
                     </ul>
                     <div class="toggle user-information" style="display: block;">
                         <div class="profile-box">
                             <h3 class="profile-box-title">About</h3>
-                            {% if current_user.about_user %}
+                            {% if user.about_user %}
                                 <p class="profile-box-text">
-                                    {{ current_user.about_user }}
+                                    {{ user.about_user }}
                                 </p>
                             {% endif %}
                         </div>
                         <div class="profile-box">
                             <h3 class="profile-box-title">Education</h3>
-                            {% if current_user.education %}
+                            {% if user.education %}
                                 <p class="profile-box-text">
-                                    {{ current_user.education }}
+                                    {{ user.education }}
                                 </p>
                             {% endif %}
                         </div>

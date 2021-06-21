@@ -1,4 +1,5 @@
 {% extends "layout.html" %} {% block css %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
 <link rel="stylesheet" href="{{url_for('static',filename='css/projects.css')}}"> {% endblock %} {% block javascript %}
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 {% endblock %} {% block content %}
@@ -78,11 +79,11 @@
                             </div>
                             {% if post.author == current_user %}
                                 <div class="hasDropdown dots">
-                                    <a href="#" class="post-dropdown-container">
+                                    <a href="#/" class="post-dropdown-container" data-filter1="{{ post.id }}">
                                         <i class="fas fa-ellipsis-v"></i>
-                                        <ul class="post-dropdown">
+                                        <ul class="post-dropdown {{ post.id }}">
                                             <li><a href="{{url_for('update_post', post_id=post.id)}}">Update</a></li>
-                                            <li><a href="#">Delete</a></li>
+                                            <li><a href="{{url_for('delete_post', post_id=post.id)}}">Delete</a></li>
                                         </ul>
                                     </a>
                                 </div>
@@ -90,24 +91,22 @@
                         </div>
                         <div class="post-icons">
                             <div class="post-icons-left">
+                                {% if post.author.speciality %}
                                 <div class="post-company">
                                     <i class="fas fa-briefcase"></i>
-                                    <span>Front-end Developer</span>
+                                    <span>{{ post.author.speciality }}</span>
                                 </div>
+                                {% endif %}
                             </div>
+                            {% if post.author != current_user and current_user.is_authenticated %}
                             <div class="post-icons-right">
                                 <div class="post-actions">
-                                    <a href="#" class="btn-green">
-                                        <i class="fas fa-bookmark"></i>
-                                    </a>
-                                    <a href="#" class="btn-red">
-                                        <i class="fas fa-envelope"></i>
-                                    </a>
-                                    <a href="#" class="bid-now">
+                                    <a href="{{ url_for('post', post_id=post.id) }}" class="bid-now">
                                         <span>Bid now</span>
                                     </a>
                                 </div>
                             </div>
+                            {% endif %}
                         </div>
                         <div class="post-title">
                             <h2>
@@ -120,11 +119,11 @@
                         <div class="post-description">
                             <p>{{ post.content }}</p>
                         </div>
+                        {% for tag in post.tag %}
                         <div class="post-tags">
-                            <a href="#">HTML</a>
-                            <a href="#">CSS</a>
-                            <a href="#">PHP</a>
+                            <a href="#">{{ tag }}</a>
                         </div>
+                        {% endfor %}
                         <div class="post-status">
                             <div class="heart-comment">
                                 <div class="like-comment">
@@ -135,10 +134,9 @@
                                 </div>
                                 <div class="post-comments">
                                     <div class="like-comment">
-                                        <button class="accordion" data-filter="{{ post.id }}">
+                                        <a href="{{ url_for('post', post_id=post.id) }}" class="accordion" data-filter="{{ post.id }}">
                                                 <i class="fas fa-comment"></i>
-                                            </button>
-                                        <span>2</span>
+                                        </a> 
                                     </div>
                                 </div>
                             </div>
@@ -147,48 +145,14 @@
                                 <span>214</span>
                             </div>
                         </div>
-                        <div class="comment {{ post.id }}" style="display: none;">
+                        <!-- <div class="comment {{ post.id }}" style="display: none;">
                             <form action="#" class="comment-form">
                                 <input type="text" placeholder="Type your comment...">
                                 <button type="button">
                                         <i class="fab fa-telegram-plane"></i>
                                     </button>
                             </form>
-                            {% for comment in comments %}
-                                    <div class="comment-area">
-                                        <div class="comment-content">
-                                            <div class="comment-photo-text">
-                                                <a href="#" class="comment-photo">
-                                                    <img src="{{ url_for('static', filename='profile-pictures/' + comment.comment_author.image_file ) }}" alt="profile_photo">
-                                                </a>
-                                                <div class="user-comment">
-                                                    <h5>{{ comment.comment_author.username }}</h5>
-                                                    <p>{{ comment.date_writed.strftime('%Y-%m-%d') }}</p>
-                                                </div>
-                                            </div>
-                                            <div class="comment-text">
-                                                <p>{{ comment.content }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                            {% endfor %}
-                            <div class="comment-area">
-                                <div class="comment-content">
-                                    <div class="comment-photo-text">
-                                        <a href="#" class="comment-photo">
-                                            <img src="{{url_for('static', filename='img/user2.jpg')}}" alt="profile_photo">
-                                        </a>
-                                        <div class="user-comment">
-                                            <h5>Diego Costa</h5>
-                                            <p>22 min ago</p>
-                                        </div>
-                                    </div>
-                                    <div class="comment-text">
-                                        <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        </div> -->
                     </div>
                     {% endfor %}
                     <button class="more-post" type="button">Load more</button>
@@ -207,7 +171,7 @@
                                 </div>
                                 <div class="sidebox-job-speciality">
                                     <i class="fas fa-briefcase"></i>
-                                    <span>Front-end Developer</span>
+                                    <span>{{ post.author.username }}</span>
                                 </div>
                             </div>
                             {% endfor %}
@@ -228,9 +192,13 @@
                                     <h5>
                                         <a href="{{ url_for('user_profile', username=user.username) }}">{{ user.username }}</a>
                                     </h5>
-                                    <p>Herbalist</p>
+                                    {% if user.speciality %}
+                                        <p>{{ user.speciality }}</p>
+                                    {% endif %}
                                 </div>
-                                <div class="user-title-price">$112/hr</div>
+                                {% if user.hourly_rate %}
+                                    <div class="user-title-price">${{ user.hourly_rate }}/hr</div>
+                                {% endif %}
                             </div>
                             {% endfor %}
                         </div>

@@ -152,3 +152,7 @@
 .more-post {
     margin: 10px auto 40px;
 }
+
+.prefiles-user-name a {
+    color: #364e65;
+}

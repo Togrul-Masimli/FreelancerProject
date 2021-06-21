@@ -43,6 +43,7 @@ def add_prj():
     return render_template('add-project.html', title='Add Project', form=form, legend='New Project', image_file=image_file)
 
 @app.route('/profile')
+@login_required
 def profile():
     posts = Post.query.filter_by(author=current_user)
     count = posts.count()
@@ -55,6 +56,8 @@ def info():
     image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
     sidebox_posts = Post.query.order_by(Post.date_posted.desc()).paginate(per_page=5)
     return render_template('profile_info.html', title='User Info', image_file=image_file, sidebox_posts=sidebox_posts)
+
+
 
 
 def save_picture(form_picture):
@@ -122,17 +125,20 @@ def settings():
 def profiles():
     users = User.query.all()
     count = len(users)
-    image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
-    return render_template('profiles.html', title='Profiles', users=users, count=count, image_file=image_file)
+    if current_user.is_authenticated:
+        image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
+        return render_template('profiles.html', title='Profiles', users=users, count=count, image_file=image_file)
+    return render_template('profiles.html', title='Profiles', users=users, count=count)
 
 @app.route('/projects')
 def projects():
     projects = Post.query.all()
     sidebox_posts = Post.query.order_by(Post.date_posted.desc()).paginate(per_page=5)
     new_users = User.query.order_by(User.id.desc()).paginate(per_page=5)
-    image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
-    # comments = projects.comments
-    return render_template('projects.html', title='Projects', projects=projects, sidebox_posts=sidebox_posts, new_users=new_users, image_file=image_file)
+    if current_user.is_authenticated:
+        image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
+        return render_template('projects.html', title='Projects', projects=projects, sidebox_posts=sidebox_posts, new_users=new_users, image_file=image_file)
+    return render_template('projects.html', title='Projects', projects=projects, sidebox_posts=sidebox_posts, new_users=new_users)
 
 
 
@@ -237,58 +243,102 @@ def user_profile(username):
     return render_template('user.html', posts=posts, user=user, count=count, image_file=image_file, sidebox_posts=sidebox_posts)
 
 
+@app.route('/profiles/info/<string:username>')
+def user_info(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
+    sidebox_posts = Post.query.order_by(Post.date_posted.desc()).paginate(per_page=5)
+    return render_template('user_info.html', title='User Info', image_file=image_file, sidebox_posts=sidebox_posts, user=user)
+
 @app.route('/admin/')
 def admin():
-    return render_template('admin/home.html')
+    if current_user.username == 'Togrul':
+        return render_template('admin/home.html')
+    else:
+        abort(403)
 
 @app.route('/admin/posts', methods=['GET','POST'])
 def admin_posts():
-    posts = Post.query.all()
-    return render_template('admin/posts.html', posts=posts)
+    if current_user.username == 'Togrul':
+        posts = Post.query.all()
+        return render_template('admin/posts.html', posts=posts)
+    else:
+        abort(403)
 
 @app.route('/admin/users', methods=['GET','POST'])
 def admin_users():
-    users = User.query.all()
-    return render_template('admin/users.html', users=users)
+    if current_user.username == 'Togrul':
+        users = User.query.all()
+        return render_template('admin/users.html', users=users)
+    else:
+        abort(403)
 
 @app.route('/admin/comments', methods=['GET','POST'])
 def admin_comments():
-    comments = Comment.query.all()
-    return render_template('admin/comments.html', comments=comments)
+    if current_user.username == 'Togrul':
+        comments = Comment.query.all()
+        return render_template('admin/comments.html', comments=comments)
+    else:
+        abort(403)
 
 @app.route('/admin/bids', methods=['GET','POST'])
 def admin_bids():
-    bids = Bid.query.all()
-    return render_template('admin/bids.html', bids=bids)
+    if current_user.username == 'Togrul':
+        bids = Bid.query.all()
+        return render_template('admin/bids.html', bids=bids)
+    else:
+        abort(403)
 
 @app.route('/admin/<int:user_id>/delete', methods=['GET','POST'])
 def admin_delete(user_id):
-    deleted_user = User.query.get_or_404(user_id)
-    db.session.delete(deleted_user)
-    db.session.commit()
-    return redirect(url_for('admin_users'))
+    if current_user.username == 'Togrul':
+        deleted_user = User.query.get_or_404(user_id)
+        db.session.delete(deleted_user)
+        db.session.commit()
+        return redirect(url_for('admin_users'))
+    else:
+        abort(403)
 
 @app.route('/admin/posts/<int:post_id>/delete', methods=['GET','POST'])
 def admin_delete_post(post_id):
-    deleted_post = Post.query.get_or_404(post_id)
-    db.session.delete(deleted_post)
-    db.session.commit()
-    return redirect(url_for('admin_posts'))
+    if current_user.username == 'Togrul':
+        deleted_post = Post.query.get_or_404(post_id)
+        db.session.delete(deleted_post)
+        db.session.commit()
+        return redirect(url_for('admin_posts'))
+    else:
+        abort(403)
 
 @app.route('/admin/comments/<int:comment_id>/delete', methods=['GET','POST'])
 def admin_delete_comment(comment_id):
-    deleted_comment = Comment.query.get_or_404(comment_id)
-    db.session.delete(deleted_comment)
-    db.session.commit()
-    return redirect(url_for('admin_comments'))
+    if current_user.username == 'Togrul':
+        deleted_comment = Comment.query.get_or_404(comment_id)
+        db.session.delete(deleted_comment)
+        db.session.commit()
+        return redirect(url_for('admin_comments'))
+    else:
+        abort(403)
 
 
 @app.route('/admin/bids/<int:bid_id>/delete', methods=['GET','POST'])
 def admin_delete_bid(bid_id):
-    deleted_bid = Bid.query.get_or_404(bid_id)
-    db.session.delete(deleted_bid)
-    db.session.commit()
-    return redirect(url_for('admin_bids'))
+    if current_user.username == 'Togrul':
+        deleted_bid = Bid.query.get_or_404(bid_id)
+        db.session.delete(deleted_bid)
+        db.session.commit()
+        return redirect(url_for('admin_bids'))
+    else:
+        abort(403)
+
+@app.route('/admin/tags/<int:tag_id>/delete', methods=['GET','POST'])
+def admin_delete_tag(tag_id):
+    if current_user.username == 'Togrul':
+        deleted_tag = Tag.query.get_or_404(tag_id)
+        db.session.delete(deleted_tag)
+        db.session.commit()
+        return redirect(url_for('admin_tags'))
+    else:
+        abort(403)
 
 
 @app.route('/privacy')
@@ -301,40 +351,57 @@ def privacy():
 
 @app.route('/admin/add-privacy', methods=['GET','POST'])
 def admin_add_privacy():
-    legend = 'Add Content'
-    if request.method == "POST":
-        privacy = Privacy(content=request.form.get('editor1'))
-        db.session.add(privacy)
-        db.session.commit()
-    return render_template('admin/add-privacy.html', legend=legend)
+    if current_user.username == 'Togrul':
+        legend = 'Add Content'
+        if request.method == "POST":
+            privacy = Privacy(content=request.form.get('editor1'))
+            db.session.add(privacy)
+            db.session.commit()
+        return render_template('admin/add-privacy.html', legend=legend)
+    else:
+        abort(403)
 
 
 @app.route('/admin/update/privacy', methods=['GET','POST'])
 def admin_update_privacy():
-    privacy = Privacy.query.filter_by().first()
-    legend = 'Update Content'
-    if request.method == "POST":
-        privacy.content = request.form.get('editor1')
-        db.session.commit()
-        return redirect(url_for('privacy'))
-    return render_template('admin/add-privacy.html', legend=legend)
+    if current_user.username == 'Togrul':
+        privacy = Privacy.query.filter_by().first()
+        legend = 'Update Content'
+        if request.method == "POST":
+            privacy.content = request.form.get('editor1')
+            db.session.commit()
+            return redirect(url_for('privacy'))
+        return render_template('admin/add-privacy.html', legend=legend)
+    else:
+        abort(403)
 
 
-@app.route('/tags/<int:id>/')
-def tag_detail(id):
-    tag = Tag.query.filter(Tag.id == id).first()
-    return render_template('tags.html', tag=tag)
+@app.route('/admin/tags')
+def admin_tags():
+    if current_user.username == 'Togrul':
+        tags = Tag.query.all()
+        return render_template('admin/tags.html', tags=tags)
+    else:
+        abort(403)
+
+
+# @app.route('/tags/<int:id>/')
+# def tag_detail(id):
+#     tag = Tag.query.filter(Tag.id == id).first()
+#     return render_template('tags.html', tag=tag)
 
 
 @app.route('/tag-add', methods=['GET', 'POST'])
+@login_required
 def tag_add():
     form = TagForm()
+    image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
     if form.validate_on_submit():
         tag = Tag(title=form.title.data)
         db.session.add(tag)
         db.session.commit()
         return redirect(url_for('add_prj'))
-    return render_template('tag-add.html', form=form)
+    return render_template('tag-add.html', form=form, legend='Write tag of the post:', image_file=image_file)
 
 
 def send_reset_email(user):

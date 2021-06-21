@@ -72,27 +72,20 @@
                             </a>
                             <div class="profile-user-title">
                                 <h2 class="prefiles-user-name"><a href="{{ url_for('user_profile', username=user.username) }}">{{ user.username }}</a></h2>
-                                <p>{{ user.speciality }}</p>
+                                {% if user.speciality %}
+                                    <p>{{ user.speciality }}</p>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="profiles-bottom">
-                            <div class="profile-icons">
-                                <div>
-                                    <i class="fas fa-compass"></i>
-                                    <span class="location-span">{{ user.location }}</span>
+                            {% if user.location %}
+                                <div class="profile-icons">
+                                    <div>
+                                        <i class="fas fa-compass"></i>
+                                        <span class="location-span">{{ user.location }}</span>
+                                    </div>
                                 </div>
-                                <div class="profile-actions">
-                                    <a href="#" class="green-btn">
-                                        <i class="fas fa-bookmark"></i>
-                                    </a>
-                                    <a href="#" class="red-btn">
-                                        <i class="fas fa-envelope"></i>
-                                    </a>
-                                    <a href="#" class="hire">
-                                        <span>Hire</span>
-                                    </a>
-                                </div>
-                            </div>
+                            {% endif %}
                         </div>
                     </div>
                     {% endif %}

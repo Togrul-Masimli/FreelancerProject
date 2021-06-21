@@ -510,7 +510,7 @@ a.logo img {
     display: flex;
 }
 
-.post-icons .post-icons-right .post-actions a {
+.post-icons .post-icons-right a {
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -521,6 +521,26 @@ a.logo img {
     transition: 0.4s;
     position: relative;
     margin-left: 10px;
+}
+
+.empty {
+    margin-bottom: auto;
+}
+
+.dots i {
+    color: #8599ab;
+}
+
+.dots:hover i {
+    color: #3796F6
+}
+
+.bid-now:hover {
+    background: linear-gradient(45deg, rgba(55,150,246,0.5) 0%, rgba(55,150,246,0.05) 100%);
+}
+
+.bid-now:hover span {
+    color: #3796F6;
 }
 
 .post-actions .btn-green {

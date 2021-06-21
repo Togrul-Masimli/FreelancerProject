@@ -47,20 +47,9 @@
                             <div class="post-icons-left">
                                 <div class="post-company">
                                     <i class="fas fa-briefcase"></i>
-                                    <span>Front-end Developer</span>
-                                </div>
-                            </div>
-                            <div class="post-icons-right">
-                                <div class="post-actions">
-                                    <a href="#" class="btn-green">
-                                        <i class="fas fa-bookmark"></i>
-                                    </a>
-                                    <a href="#" class="btn-red">
-                                        <i class="fas fa-envelope"></i>
-                                    </a>
-                                    <a href="#" class="bid-now">
-                                        <span>Bid now</span>
-                                    </a>
+                                    {% if post.author.speciality %}
+                                        <span>{{ post.author.speciality }}</span>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -137,11 +126,14 @@
                             </a>
                             <div class="freelancer">
                                 <h5 class="freelancer-name">
-                                    <a href="#">{{ bid.bid_owner.username }}</a></h5>
-                                <p>
-                                    <i class="fas fa-compass"></i>
-                                    <span>USA</span>
-                                </p>
+                                    <a href="#">{{ bid.bid_owner.username }}</a>
+                                </h5>
+                                {% if bid.bid_owner.location %}
+                                    <p>
+                                        <i class="fas fa-compass"></i>
+                                        <span>{{ bid.bid_owner.location }}</span>
+                                    </p>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="freelancer-bid-cost">

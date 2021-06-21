@@ -10,7 +10,7 @@
                     <ul class="page-to-page">
                         <li class="page_home"><a href="#">Home</a></li>
                         <span><i class="fas fa-long-arrow-alt-right"></i></span>
-                        <li class="page_projects"><a href="#">Projects</a></li>
+                        <li class="page_projects"><a href="#">Settings</a></li>
                     </ul>
                 </div>
             </div>
@@ -26,21 +26,12 @@
                         </div>
                         <div class="profile-buttons profiles-bottom">
                             <div class="profile-icons">
-                                <div>
-                                    <i class="fas fa-compass"></i>
-                                    <span class="location-span">{{ current_user.location }}</span>
-                                </div>
-                                <div class="profile-actions">
-                                    <a href="#" class="green-btn">
-                                        <i class="fas fa-bookmark"></i>
-                                    </a>
-                                    <a href="#" class="red-btn">
-                                        <i class="fas fa-envelope"></i>
-                                    </a>
-                                    <a href="#" class="hire">
-                                        <span>Hire</span>
-                                    </a>
-                                </div>
+                                {% if current_user.location %}
+                                    <div>
+                                        <i class="fas fa-compass"></i>
+                                        <span class="location-span">{{ current_user.location }}</span>
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="about-user">
@@ -62,16 +53,6 @@
                                     <span>{{ current_user.job_done }}</span>
                                 </li>
                             </ul>
-                        </div>
-                        <div class="follow">
-                            <div class="follow-count count-common">
-                                <span class="following">Following</span>
-                                <span class="count">26</span>
-                            </div>
-                            <div class="follower-count count-common">
-                                <span class="followers">Followers</span>
-                                <span class="count">88</span>
-                            </div>
                         </div>
                     </div>
                     <div class="sidebox-social sidebox">
@@ -333,12 +314,12 @@
                                     </div>
                                     <div class="sidebox-job-speciality">
                                         <i class="fas fa-briefcase"></i>
-                                        <span>{{ post.author.speciality }}</span>
+                                        <span>{{ post.author.username }}</span>
                                     </div>
                                 </div>
                             {% endfor %}
                         </div>
-                        <a href="#" class="view-profile">View more</a>
+                        <a href="{{ url_for('projects') }}" class="view-profile">View more</a>
                     </div>
                 </div>
             </div>

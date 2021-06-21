@@ -1,0 +1,24 @@
+{% extends "admin/base.html" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+{% endblock %}
+{% block content %}
+    <table class="content-table">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Title</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        {% for tag in tags %}
+        <tbody>
+            <tr>
+                <th scope="row">{{ tag.id }}</th>
+                <td>{{ tag.title }}</td>
+                <td><a href="{{url_for('admin_delete_tag', tag_id=tag.id)}}"><i class="far fa-trash-alt" style="color: red;"></i></a></td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+{% endblock %}
