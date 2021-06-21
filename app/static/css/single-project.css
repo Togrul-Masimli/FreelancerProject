@@ -177,3 +177,59 @@
 
 
 /* End of the reusable Social */
+
+.bid-form {
+    height: 30px;
+    font-size: 14px;
+    padding: 0 20px;
+    color: #364e65;
+    background-color: #fafafa;
+    border: 1px solid rgba(133, 153, 171, 0.2);
+    border-radius: 4px;
+    transition: 0.4s;
+}
+
+
+
+.min-form {
+    height: 30px;
+    width: 80px;
+    font-size: 14px;
+    padding: 0 10px;
+    color: #364e65;
+    background-color: #fafafa;
+    border: 1px solid rgba(133, 153, 171, 0.2);
+    border-radius: 4px;
+    transition: 0.4s;
+}
+
+.mr-20 {
+    margin-right: 20px;
+}
+
+.min_max_container {
+    display: flex;
+    justify-content: space-between;
+}
+.min_max_container p{
+    margin-top: 4px;
+}
+
+.bid-button {
+    width: 100%;
+    height: 40px;
+    background-color: #3796f6;
+    color: #fff;
+    font-size: 13px;
+    border-radius: 4px;
+    font-weight: 600;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: 0.4s ease;
+}
+
+.bid-button:hover {
+    color: #3796f6;
+    background: linear-gradient( 45deg, rgba(55, 150, 246, 0.5) 0%, rgba(55, 150, 246, 0.05) 100%);
+}

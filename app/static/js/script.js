@@ -68,6 +68,6 @@ document.querySelector('.dropdown-container').addEventListener('click', () => {
 $(document).ready(function() {
     $(".post-dropdown-container").click(function() {
         const val = $(this).attr("data-filter1")
-        $(".post-dropdown").filter('.' + val).css("opacity", "1");
+        $(".post-dropdown").filter('.' + val).toggleClass("random");
     })
 });

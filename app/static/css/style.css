@@ -1094,3 +1094,7 @@ a.logo img {
     align-items: center;
     justify-content: space-between;
 }
+
+.random {
+    opacity: 1;
+}

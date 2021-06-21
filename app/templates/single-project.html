@@ -160,17 +160,17 @@
                             </div>
                             <div class="filter-group">
                                 <label class="filter-label">Set Your Minimal Rate ($):</label>
-                                <div class="filter-range">
-                                    {{ bidform.min_rate }}
-                                    {{ bidform.max_rate }}
+                                <div class="min_max_container">
+                                    <p class="filter-label">Min:</p>{{ bidform.min_rate(class="min-form") }}
+                                    <p class="filter-label">Max:</p>{{ bidform.max_rate(class="min-form") }}
                                 </div>
                             </div>
                             <div class="filter-group">
                                 {{ bidform.delivery_duration.label(class="filter-label") }}
-                                {{ bidform.delivery_duration(class="form-input") }}
+                                {{ bidform.delivery_duration(class="bid-form") }}
                             </div>
                             <div class="filter-group">
-                                {{ bidform.submit(class='form-button') }}
+                                {{ bidform.submit(class='bid-button') }}
                             </div>
                         </div>
                     </form>
