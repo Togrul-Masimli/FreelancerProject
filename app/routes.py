@@ -184,7 +184,7 @@ def post(post_id):
     bids = post.bids
     comments = post.comments
     image_file = url_for('static', filename='profile-pictures/' + current_user.image_file )
-    comment_count = Comment.query.filter(Comment.post_id == Post.id).count()
+    comment_count = Comment.query.filter(Comment.post_id == post.id).count()
     if form.validate_on_submit():
         comment = Comment(content=form.content.data, comment_author=current_user, host=post)
         db.session.add(comment)
@@ -251,13 +251,16 @@ def user_info(username):
     return render_template('user_info.html', title='User Info', image_file=image_file, sidebox_posts=sidebox_posts, user=user)
 
 @app.route('/admin/')
+@login_required
 def admin():
+    users = User.query.all()
     if current_user.username == 'Togrul':
-        return render_template('admin/home.html')
+        return render_template('admin/users.html', users=users)
     else:
         abort(403)
 
 @app.route('/admin/posts', methods=['GET','POST'])
+@login_required
 def admin_posts():
     if current_user.username == 'Togrul':
         posts = Post.query.all()
@@ -266,6 +269,7 @@ def admin_posts():
         abort(403)
 
 @app.route('/admin/users', methods=['GET','POST'])
+@login_required
 def admin_users():
     if current_user.username == 'Togrul':
         users = User.query.all()
@@ -274,6 +278,7 @@ def admin_users():
         abort(403)
 
 @app.route('/admin/comments', methods=['GET','POST'])
+@login_required
 def admin_comments():
     if current_user.username == 'Togrul':
         comments = Comment.query.all()
@@ -282,6 +287,7 @@ def admin_comments():
         abort(403)
 
 @app.route('/admin/bids', methods=['GET','POST'])
+@login_required
 def admin_bids():
     if current_user.username == 'Togrul':
         bids = Bid.query.all()
@@ -290,6 +296,7 @@ def admin_bids():
         abort(403)
 
 @app.route('/admin/<int:user_id>/delete', methods=['GET','POST'])
+@login_required
 def admin_delete(user_id):
     if current_user.username == 'Togrul':
         deleted_user = User.query.get_or_404(user_id)
@@ -300,6 +307,7 @@ def admin_delete(user_id):
         abort(403)
 
 @app.route('/admin/posts/<int:post_id>/delete', methods=['GET','POST'])
+@login_required
 def admin_delete_post(post_id):
     if current_user.username == 'Togrul':
         deleted_post = Post.query.get_or_404(post_id)
@@ -310,6 +318,7 @@ def admin_delete_post(post_id):
         abort(403)
 
 @app.route('/admin/comments/<int:comment_id>/delete', methods=['GET','POST'])
+@login_required
 def admin_delete_comment(comment_id):
     if current_user.username == 'Togrul':
         deleted_comment = Comment.query.get_or_404(comment_id)
@@ -321,6 +330,7 @@ def admin_delete_comment(comment_id):
 
 
 @app.route('/admin/bids/<int:bid_id>/delete', methods=['GET','POST'])
+@login_required
 def admin_delete_bid(bid_id):
     if current_user.username == 'Togrul':
         deleted_bid = Bid.query.get_or_404(bid_id)
@@ -331,6 +341,7 @@ def admin_delete_bid(bid_id):
         abort(403)
 
 @app.route('/admin/tags/<int:tag_id>/delete', methods=['GET','POST'])
+@login_required
 def admin_delete_tag(tag_id):
     if current_user.username == 'Togrul':
         deleted_tag = Tag.query.get_or_404(tag_id)
@@ -350,6 +361,7 @@ def privacy():
 
 
 @app.route('/admin/add-privacy', methods=['GET','POST'])
+@login_required
 def admin_add_privacy():
     if current_user.username == 'Togrul':
         legend = 'Add Content'
@@ -363,6 +375,7 @@ def admin_add_privacy():
 
 
 @app.route('/admin/update/privacy', methods=['GET','POST'])
+@login_required
 def admin_update_privacy():
     if current_user.username == 'Togrul':
         privacy = Privacy.query.filter_by().first()
@@ -377,6 +390,7 @@ def admin_update_privacy():
 
 
 @app.route('/admin/tags')
+@login_required
 def admin_tags():
     if current_user.username == 'Togrul':
         tags = Tag.query.all()
