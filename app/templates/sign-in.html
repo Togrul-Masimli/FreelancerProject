@@ -11,12 +11,16 @@
                             <img src="{{ url_for('static',filename='img/logo.svg') }}" alt="logo">
                         </a>
                         <div class="sign-group">
-                            {% if form.email.errors %} {{ form.email(class="sign-input is-invalid") }}
+                            {% if form.email.errors %}
+                            {{ form.email(class="sign-input is-invalid") }}
                             <div class="invalid-feedback">
                                 {% for error in form.email.errors %}
-                                <span>{{ error }}</span> {% endfor %}
+                                <span>{{ error }}</span> 
+                                {% endfor %}
                             </div>
-                            {% else %} {{ form.email(class="sign-input") }} {% endif %}
+                            {% else %} 
+                            {{ form.email(class="sign-input") }} 
+                            {% endif %}
                         </div>
                         <div class="sign-group">
                             {% if form.password.errors %} {{ form.password(class="sign-input is-invalid") }}
@@ -34,7 +38,7 @@
                         <span class="sign-text">Don't have an account?
                             <a href="{{ url_for('sign_up') }}">Sign up!</a>
                         </span>
-                        <span class="sign-text"><a href="forgot-password.html">Forgot password?</a></span>
+                        <span class="sign-text"><a href="{{ url_for('reset_request') }}">Forgot password?</a></span>
                     </form>
                 </div>
             </div>
